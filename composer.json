@@ -1,0 +1,52 @@
+{
+  "name": "mimmi20/coding-standard",
+  "type": "phpcodesniffer-standard",
+  "description": "The Coding Standard is a set of PHPCS rules.",
+  "keywords": [
+    "coding",
+    "standard",
+    "cs",
+    "code",
+    "style",
+    "sniffer",
+    "rules",
+    "sniffs",
+    "checks"
+  ],
+  "homepage": "https://github.com/mimmi20/coding-standard",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Müller",
+      "homepage": "https://github.com/mimmi20",
+      "role": "Developer"
+    },
+    {
+      "name": "Contributors",
+      "homepage": "https://github.com/mimmi20/coding-standard/graphs/contributors"
+    }
+  ],
+  "require": {
+    "php": "^7.1.3 || ^8.0.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+    "friendsofphp/php-cs-fixer": "^2.16.3",
+    "slevomat/coding-standard": "^6.3.5",
+    "squizlabs/php_codesniffer": "^3.5.5"
+  },
+  "require-dev": {
+    "ergebnis/composer-normalize": "^2.5.1"
+  },
+  "config": {
+    "platform": {
+      "php": "7.1.3"
+    },
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "support": {
+    "issues": "https://github.com/mimmi20/coding-standard/issues",
+    "source": "https://github.com/mimmi20/coding-standard"
+  }
+}
