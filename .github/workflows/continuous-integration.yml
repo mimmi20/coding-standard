@@ -149,4 +149,4 @@ jobs:
         run: "vendor/bin/php-cs-fixer fix --dry-run -vv"
 
       - name: "Run squizlabs/php_codesniffer"
-        run: "vendor/bin/phpcs --colors"
+        run: "vendor/bin/phpcs -wps --colors --standard=src/mimmi20-cs/ruleset.xml src .php_cs"

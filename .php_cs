@@ -1,8 +1,8 @@
 <?php
 /**
- * This file is part of the browser-detector package.
+ * This file is part of the coding-standard package.
  *
- * Copyright (c) 2012-2020, Thomas Mueller <mimmi20@live.de>
+ * Copyright (c) 2020, Thomas Mueller <mimmi20@live.de>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -31,15 +31,16 @@ return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setRules(
         array_merge(
-        $rules,
-        [
-        'header_comment' => [
-                'header' => $header,
-                'comment_type' => 'PHPDoc',
-                'location' => 'after_open',
-                'separate' => 'bottom',
+            $rules,
+            [
+                'header_comment' => [
+                    'header' => $header,
+                    'comment_type' => 'PHPDoc',
+                    'location' => 'after_open',
+                    'separate' => 'bottom',
+                ],
             ]
-        ])
+        )
     )
     ->setUsingCache(true)
     ->setFinder($finder);

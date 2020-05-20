@@ -11,6 +11,7 @@
         <!-- checked by SlevomatCodingStandard.Namespaces.UseSpacing -->
         <exclude name="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse"/>
         <exclude name="PSR12.Files.FileHeader"/>
+        <exclude name="PSR12.Files.DeclareStatement"/>
 
         <!-- checked by SlevomatCodingStandard.Namespaces.NamespaceSpacing -->
         <exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter"/>
@@ -62,22 +63,12 @@
     <!-- Forbid inline HTML in PHP code -->
     <rule ref="Generic.Files.InlineHTML"/>
 
-    <!-- Align corresponding assignment statement tokens -->
-    <rule ref="Generic.Formatting.MultipleStatementAlignment">
-        <properties>
-            <property name="error" value="true"/>
-        </properties>
-    </rule>
-
     <!-- Force whitespace after a type cast -->
     <rule ref="Generic.Formatting.SpaceAfterCast">
         <properties>
             <property name="spacing" value="1"/>
         </properties>
     </rule>
-
-    <!-- Force whitespace after `!` -->
-    <rule ref="Generic.Formatting.SpaceAfterNot"/>
 
     <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman">
         <exclude name="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine"/>
@@ -193,18 +184,6 @@
     <!-- Forbid dead code -->
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements"/>
 
-    <!-- Forbid prefix and suffix "Abstract" for abstract classes -->
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming"/>
-
-    <!-- Forbid prefix and suffix "Exception" for exception classes -->
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
-
-    <!-- Forbid prefix and suffix "Interface" for interfaces -->
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming"/>
-
-    <!-- Forbid suffix "Trait" for traits -->
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousTraitNaming"/>
-
     <!-- Require specific order of phpDoc annotations with empty newline between specific groups -->
     <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
         <properties>
@@ -213,10 +192,6 @@
             <property name="linesCountBetweenDescriptionAndAnnotations" value="1"/>
             <property name="linesCountBetweenAnnotationsGroups" value="1"/>
             <property name="annotationsGroups" type="array">
-                <element value="
-                    @internal,
-                    @deprecated,
-                "/>
                 <element value="
                     @link,
                     @see,
@@ -227,9 +202,14 @@
                     @ODM\,
                     @PHPCR\,
                 "/>
+                <element value="@dataProvider"/>
                 <element value="@param"/>
-                <element value="@return"/>
                 <element value="@throws"/>
+                <element value="@return"/>
+                <element value="
+                    @internal,
+                    @deprecated,
+                "/>
             </property>
         </properties>
     </rule>
@@ -268,9 +248,6 @@
         </properties>
     </rule>
 
-    <!-- Report invalid format of inline phpDocs with @var -->
-    <rule ref="SlevomatCodingStandard.Commenting.InlineDocCommentDeclaration"/>
-
     <!-- Require comments with single line written as one-liners -->
     <rule ref="SlevomatCodingStandard.Commenting.RequireOneLinePropertyDocComment"/>
 
@@ -295,26 +272,8 @@
         </properties>
     </rule>
 
-    <!-- Forbid fancy yoda conditions -->
-    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/>
-
     <!-- Require usage of early exit -->
     <rule ref="SlevomatCodingStandard.ControlStructures.EarlyExit"/>
-
-    <!-- Require consistent spacing for jump statements -->
-    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">
-        <properties>
-            <property name="linesCountBeforeWhenFirstInCaseOrDefault" value="0"/>
-            <property name="linesCountAfterWhenLastInCaseOrDefault" value="1"/>
-            <property name="linesCountAfterWhenLastInLastCaseOrDefault" value="0"/>
-            <property name="tokensToCheck" type="array">
-                <element value="T_RETURN" />
-                <element value="T_THROW" />
-                <element value="T_YIELD" />
-                <element value="T_YIELD_FROM" />
-            </property>
-        </properties>
-    </rule>
 
     <!-- Require language constructs without parentheses -->
     <rule ref="SlevomatCodingStandard.ControlStructures.LanguageConstructWithParentheses"/>
@@ -360,24 +319,6 @@
 
     <!-- Forbid multiple use statements on same line -->
     <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
-
-    <!-- Require newlines around namespace declaration -->
-    <rule ref="SlevomatCodingStandard.Namespaces.NamespaceSpacing"/>
-
-    <!-- Forbid using absolute class name references (except global ones) -->
-    <rule ref="SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly">
-        <properties>
-            <property name="allowFallbackGlobalConstants" value="false"/>
-            <property name="allowFallbackGlobalFunctions" value="false"/>
-            <property name="allowFullyQualifiedGlobalClasses" value="false"/>
-            <property name="allowFullyQualifiedGlobalConstants" value="false"/>
-            <property name="allowFullyQualifiedGlobalFunctions" value="false"/>
-            <property name="allowFullyQualifiedNameForCollidingClasses" value="true"/>
-            <property name="allowFullyQualifiedNameForCollidingConstants" value="true"/>
-            <property name="allowFullyQualifiedNameForCollidingFunctions" value="true"/>
-            <property name="searchAnnotations" value="true"/>
-        </properties>
-    </rule>
 
     <!-- Forbid unused use statements -->
     <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
@@ -425,24 +366,6 @@
     <!-- Forbid use of longhand cast operators -->
     <rule ref="SlevomatCodingStandard.PHP.TypeCast"/>
 
-    <!-- Require presence of declare(strict_types=1) -->
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
-        <properties>
-            <property
-                name="newlinesCountBetweenOpenTagAndDeclare"
-                value="2"
-            />
-            <property
-                name="spacesCountAroundEqualsSign"
-                value="0"
-            />
-            <property
-                name="newlinesCountAfterDeclare"
-                value="2"
-            />
-        </properties>
-    </rule>
-
     <!-- Forbid useless parentheses -->
     <rule ref="SlevomatCodingStandard.PHP.UselessParentheses"/>
 
@@ -470,56 +393,10 @@
             <property name="spacesCountBeforeColon" value="0"/>
         </properties>
     </rule>
-
-    <!-- Require types to be written as natively if possible;
-         require iterable types to specify phpDoc with their content;
-         forbid useless/duplicated information in phpDoc -->
-    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
-        <properties>
-            <property name="traversableTypeHints" type="array">
-                <element value="Traversable"/>
-                <element value="Iterator"/>
-                <element value="IteratorAggregate"/>
-                <element value="Doctrine\Common\Collections\Collection"/>
-            </property>
-        </properties>
-    </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
-        <properties>
-            <property name="traversableTypeHints" type="array">
-                <element value="Traversable"/>
-                <element value="Iterator"/>
-                <element value="IteratorAggregate"/>
-                <element value="Doctrine\Common\Collections\Collection"/>
-            </property>
-        </properties>
-    </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
-    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
-        <properties>
-            <property name="traversableTypeHints" type="array">
-                <element value="Traversable"/>
-                <element value="Iterator"/>
-                <element value="IteratorAggregate"/>
-                <element value="Doctrine\Common\Collections\Collection"/>
-            </property>
-        </properties>
-    </rule>
 
     <!-- Forbid useless @var for constants -->
     <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
-
-    <!-- Forbid useless phpDocs for functions -->
-    <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment">
-        <properties>
-            <property name="traversableTypeHints" type="array">
-                <element value="Traversable"/>
-                <element value="Iterator"/>
-                <element value="IteratorAggregate"/>
-                <element value="Doctrine\Common\Collections\Collection"/>
-            </property>
-        </properties>
-    </rule>
 
     <!-- Forbid useless inherit doc comment -->
     <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
@@ -581,6 +458,9 @@
         <!-- Forces incorrect types -->
         <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/>
 
+        <!-- does not work with __clone() -->
+        <exclude name="Squiz.Commenting.FunctionComment.InvalidNoReturn"/>
+
         <!-- Breaks with compound return types, i.e. `string|null` -->
         <exclude name="Squiz.Commenting.FunctionComment.InvalidReturnNotVoid"/>
 
@@ -602,6 +482,9 @@
         <!-- `@throws` lines can often be read as a sentence,
              i.e. `@throws RuntimeException if the file could not be written.` -->
         <exclude name="Squiz.Commenting.FunctionComment.ThrowsNotCapital"/>
+
+        <!-- `@throws` lines can often be read as a sentence, but shall not end with an Dot -->
+        <exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop"/>
 
         <!-- Doesn't work with self as typehint -->
         <exclude name="Squiz.Commenting.FunctionComment.TypeHintMissing"/>

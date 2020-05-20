@@ -92,7 +92,7 @@ jobs:
       os: linux
       php: 7.1
       env: COMPOSER_FLAGS=""
-      script: vendor/bin/phpcs -wps --colors --standard=./src/mimmi20-cs/ruleset.xml
+      script: vendor/bin/phpcs -wps --colors --standard=src/mimmi20-cs/ruleset.xml src .php_cs
 
     - stage: static code analysis
       os: linux
