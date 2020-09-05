@@ -29,8 +29,8 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-versions }}"
-          extensions: "mbstring, dom, xmlwriter, opcache, bcmath, curl, intl, json"
-          ini-values: "opcache.enable=1, opcache.enable_cli=1, zend.assertions=1, assert.exception=On"
+          #extensions: ""
+          #ini-values: ""
           coverage: "none"
 
       - name: "Validate composer.json"
@@ -81,8 +81,8 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-versions }}"
-          extensions: "mbstring, dom, xmlwriter, opcache, bcmath, curl, intl, json"
-          ini-values: "opcache.enable=1, opcache.enable_cli=1, zend.assertions=1, assert.exception=On"
+          #extensions: ""
+          #ini-values: ""
           coverage: "none"
 
       - name: "Determine composer cache directory"
@@ -126,8 +126,8 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-versions }}"
-          extensions: "mbstring, dom, xmlwriter, opcache, bcmath, curl, intl, json"
-          ini-values: "opcache.enable=1, opcache.enable_cli=1, zend.assertions=1, assert.exception=On"
+          #extensions: ""
+          #ini-values: ""
           coverage: "none"
 
       - name: "Determine composer cache directory"
