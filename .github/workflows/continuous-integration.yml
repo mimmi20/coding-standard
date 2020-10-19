@@ -29,8 +29,8 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-versions }}"
-          extensions: "mbstring, dom, xmlwriter, opcache, bcmath, curl, intl, json"
-          ini-values: "opcache.enable=1, opcache.enable_cli=1, zend.assertions=1, assert.exception=On"
+          #extensions: ""
+          #ini-values: ""
           coverage: "none"
 
       - name: "Validate composer.json"
@@ -41,7 +41,7 @@ jobs:
         run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
 
       - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v1"
+        uses: "actions/cache@v2.1.2"
         with:
           path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
           key: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
@@ -81,8 +81,8 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-versions }}"
-          extensions: "mbstring, dom, xmlwriter, opcache, bcmath, curl, intl, json"
-          ini-values: "opcache.enable=1, opcache.enable_cli=1, zend.assertions=1, assert.exception=On"
+          #extensions: ""
+          #ini-values: ""
           coverage: "none"
 
       - name: "Determine composer cache directory"
@@ -90,7 +90,7 @@ jobs:
         run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
 
       - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v1"
+        uses: "actions/cache@v2.1.2"
         with:
           path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
           key: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
@@ -126,8 +126,8 @@ jobs:
         uses: "shivammathur/setup-php@v2"
         with:
           php-version: "${{ matrix.php-versions }}"
-          extensions: "mbstring, dom, xmlwriter, opcache, bcmath, curl, intl, json"
-          ini-values: "opcache.enable=1, opcache.enable_cli=1, zend.assertions=1, assert.exception=On"
+          #extensions: ""
+          #ini-values: ""
           coverage: "none"
 
       - name: "Determine composer cache directory"
@@ -135,7 +135,7 @@ jobs:
         run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
 
       - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v1"
+        uses: "actions/cache@v2.1.2"
         with:
           path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
           key: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
