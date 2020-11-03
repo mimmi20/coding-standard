@@ -29,29 +29,15 @@ jobs:
         uses: "shivammathur/setup-php@2.7.0"
         with:
           php-version: "${{ matrix.php-versions }}"
-          #extensions: ""
-          #ini-values: ""
           coverage: "none"
 
       - name: "Validate composer.json"
         run: "composer validate --strict"
 
-      - name: "Determine composer cache directory"
-        id: "determine-composer-cache-directory"
-        run: "echo \"::set-output name=directory::$(composer config cache-dir)\""
-
-      - name: "Cache dependencies installed with composer"
-        uses: "actions/cache@v2.1.2"
-        with:
-          path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
-          key: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
-          restore-keys: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-"
-
-      - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
-
       - name: "Run composer-normalize"
-        run: "composer normalize --dry-run"
+        uses: "docker://ergebnis/composer-normalize-action:latest"
+        with:
+          args: "--dry-run"
 
   install:
     name: "Check dependencies"
@@ -81,8 +67,6 @@ jobs:
         uses: "shivammathur/setup-php@2.7.0"
         with:
           php-version: "${{ matrix.php-versions }}"
-          #extensions: ""
-          #ini-values: ""
           coverage: "none"
 
       - name: "Determine composer cache directory"
@@ -126,8 +110,6 @@ jobs:
         uses: "shivammathur/setup-php@2.7.0"
         with:
           php-version: "${{ matrix.php-versions }}"
-          #extensions: ""
-          #ini-values: ""
           coverage: "none"
 
       - name: "Determine composer cache directory"
