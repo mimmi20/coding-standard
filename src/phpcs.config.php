@@ -102,6 +102,7 @@ return [
         'author',
     ],
     'global_namespace_import' => false,
+    'heredoc_indentation' => false,
     'linebreak_after_opening_tag' => true,
     'list_syntax' => ['syntax' => 'short'],
     'mb_str_functions' => true,
