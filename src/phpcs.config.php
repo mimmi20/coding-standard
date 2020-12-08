@@ -21,8 +21,13 @@ return [
     '@PHP71Migration' => true,
     '@PHP71Migration:risky' => true,
     '@PHP73Migration' => true,
+    '@PHP74Migration' => true,
+    '@PHP74Migration:risky' => true,
+    '@PHP80Migration' => true,
+    '@PHP80Migration:risky' => true,
     '@PHPUnit60Migration:risky' => true,
     '@PHPUnit75Migration:risky' => true,
+    '@PHPUnit84Migration:risky' => true,
 
     // @PSR2 rules configured different from default
     'blank_line_after_namespace' => true,
@@ -51,12 +56,14 @@ return [
         'tokens' => ['break', 'case', 'continue', 'curly_brace_block', 'default', 'extra', 'parenthesis_brace_block', 'return', 'square_brace_block', 'switch', 'throw', 'use', 'useTrait', 'use_trait'],
     ],
     'no_useless_return' => false,
+    'no_whitespace_before_comma_in_array' => ['after_heredoc' => false],
     'php_unit_test_class_requires_covers' => false,
     'phpdoc_add_missing_param_annotation' => ['only_untyped' => false],
     'phpdoc_no_empty_return' => false,
     'phpdoc_summary' => false,
     'single_blank_line_before_namespace' => false,
     'single_line_comment_style' => ['comment_types' => ['hash']],
+    'trailing_comma_in_multiline_array' => ['after_heredoc' => false],
 
     // @PhpCsFixer:risky rules configured different from default
     'php_unit_strict' => ['assertions' => ['assertAttributeEquals', 'assertAttributeNotEquals', 'assertNotEquals']],
@@ -85,6 +92,9 @@ return [
     // @PHPUnit60Migration:risky rules configured different from default
     'php_unit_dedicate_assert' => ['target' => 'newest'],
 
+    //@PHP73Migration rules configured different from default
+    'heredoc_indentation' => false,
+
     // other rules
     'backtick_to_shell_exec' => true,
     'class_keyword_remove' => false,
@@ -102,7 +112,6 @@ return [
         'author',
     ],
     'global_namespace_import' => false,
-    'heredoc_indentation' => false,
     'linebreak_after_opening_tag' => true,
     'list_syntax' => ['syntax' => 'short'],
     'mb_str_functions' => true,
@@ -125,7 +134,6 @@ return [
         'null_adjustment' => 'always_last',
         'sort_algorithm' => 'alpha',
     ],
-    'psr0' => true,
     'self_static_accessor' => true,
     'simplified_null_return' => false,
     'static_lambda' => true,
