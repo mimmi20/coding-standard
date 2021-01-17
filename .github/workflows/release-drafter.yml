@@ -21,7 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   generate-changelog:
-    name: "Check Coding Standards"
+    name: "Generate Changelog"
 
     needs: "update-release-draft"
 
