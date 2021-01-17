@@ -31,19 +31,18 @@ jobs:
           pullRequests: true
           prWoLabels: true
           unreleased: true
-          breakingLabel: "**💥Breaking:**"
+          breakingLabel: "**💥 Breaking:**"
           breakingLabels: 'BC Break'
-          enhancementLabel: "**🍰Enhancements:**"
-          bugsLabel: "**🐞Bugs:**"
-          deprecatedLabel: "**💀Deprecated:**"
-          removedLabel: "**🗑Removed:**"
-          securityLabel: "**🛡Security:**"
-          addSections: '{"dependencies":{"prefix":"**🕸Dependencies:**","labels":["dependencies"]}, "maintenance":{"prefix":"**🧹 Maintenance:**","labels":["maintenance"]}, "documentation": {"prefix":"**📦 Documentation:**","labels":["documentation"]}}'
+          enhancementLabel: "**🍰 Enhancements:**"
+          bugsLabel: "**🐞 Bugs:**"
+          deprecatedLabel: "**💀 Deprecated:**"
+          removedLabel: "**🗑 Removed:**"
+          securityLabel: "**🛡 Security:**"
+          addSections: '{"dependencies":{"prefix":"**🕸 Dependencies:**","labels":["dependencies"]},"maintenance":{"prefix":"**🧹 Maintenance:**","labels":["maintenance"]},"documentation":{"prefix":"**📦 Documentation:**","labels":["documentation"]}}'
           stripGeneratorNotice: true
           author: true
           usernamesAsGithubLogins: true
           httpCache: false
           filterByMilestone: false
           verbose: true
-          compareLink: true
-          exclude-labels: 'duplicate,question,invalid,wontfix'
+          excludeLabels: 'duplicate,question,invalid,wontfix'
