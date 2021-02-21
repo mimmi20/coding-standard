@@ -6,17 +6,27 @@ on:
 
 name: "Continuous Integration"
 
+env:
+  PHP_EXTENSIONS: "opcache"
+  PHP_INI_VALUES: "opcache.enable=1, opcache.enable_cli=1, zend.assertions=1, assert.exception=On"
+
 jobs:
   validate:
     name: "Validate composer"
 
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ matrix.operating-system }}"
+
+    continue-on-error: false
 
     strategy:
       fail-fast: false
+
       matrix:
-        php-versions:
-          - "7.1"
+        operating-system:
+          - "ubuntu-latest"
+
+        php-version:
+          - "7.4"
 
         dependencies:
           - ""
@@ -28,37 +38,76 @@ jobs:
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.9.0"
         with:
-          php-version: "${{ matrix.php-versions }}"
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
+          tools: "composer:v2, composer-normalize"
 
       - name: "Validate composer.json"
         run: "composer validate --strict"
 
       - name: "Run composer-normalize"
-        uses: "docker://ergebnis/composer-normalize-action:latest"
-        with:
-          args: "--dry-run"
+        run: "composer-normalize --dry-run"
 
   install:
     name: "Check dependencies"
 
     needs: "validate"
 
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ matrix.operating-system }}"
+
+    continue-on-error: ${{ matrix.continue-on-error }}
 
     strategy:
       fail-fast: false
+
       matrix:
-        php-versions:
+        operating-system:
+          - "ubuntu-latest"
+          - "windows-latest"
+          - "macos-latest"
+
+        php-version:
           - "7.1"
           - "7.2"
           - "7.3"
           - "7.4"
+          - "8.0"
 
         dependencies:
           - "--prefer-lowest"
           - ""
 
+        continue-on-error:
+          - false
+
+        include:
+          - operating-system: "ubuntu-latest"
+            php-version: "8.1"
+            dependencies: "--prefer-lowest"
+            continue-on-error: true
+          - operating-system: "ubuntu-latest"
+            php-version: "8.1"
+            dependencies: ""
+            continue-on-error: true
+          - operating-system: "windows-latest"
+            dependencies: "--prefer-lowest"
+            php-version: "8.1"
+            continue-on-error: true
+          - operating-system: "windows-latest"
+            dependencies: ""
+            php-version: "8.1"
+            continue-on-error: true
+          - operating-system: "macos-latest"
+            dependencies: "--prefer-lowest"
+            php-version: "8.1"
+            continue-on-error: true
+          - operating-system: "macos-latest"
+            dependencies: ""
+            php-version: "8.1"
+            continue-on-error: true
+
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v2.3.4"
@@ -66,8 +115,11 @@ jobs:
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.9.0"
         with:
-          php-version: "${{ matrix.php-versions }}"
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
+          tools: "composer:v2"
 
       - name: "Determine composer cache directory"
         id: "determine-composer-cache-directory"
@@ -77,26 +129,32 @@ jobs:
         uses: "actions/cache@v2.1.4"
         with:
           path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
-          key: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
-          restore-keys: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-"
+          key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv --ansi ${{ matrix.dependencies }}"
 
       - name: "Check dependencies with composer"
         run: "composer outdated --direct --strict"
 
-  coding-standards:
-    name: "Check Coding Standards"
+  php-cs-fixer:
+    name: "Check Coding Standards with PHP-CS-Fixer"
 
     needs: "install"
 
-    runs-on: "ubuntu-latest"
+    runs-on: "${{ matrix.operating-system }}"
+
+    continue-on-error: false
 
     strategy:
       fail-fast: false
+
       matrix:
-        php-versions:
+        operating-system:
+          - "ubuntu-latest"
+
+        php-version:
           - "7.1"
 
         dependencies:
@@ -109,8 +167,11 @@ jobs:
       - name: "Install PHP"
         uses: "shivammathur/setup-php@2.9.0"
         with:
-          php-version: "${{ matrix.php-versions }}"
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
+          tools: "composer:v2"
 
       - name: "Determine composer cache directory"
         id: "determine-composer-cache-directory"
@@ -120,14 +181,11 @@ jobs:
         uses: "actions/cache@v2.1.4"
         with:
           path: "${{ steps.determine-composer-cache-directory.outputs.directory }}"
-          key: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
-          restore-keys: "php-${{ matrix.php-versions }}-composer-${{ matrix.dependencies }}-"
+          key: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('composer.lock') }}"
+          restore-keys: "php-${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
 
       - name: "Update dependencies with composer"
-        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction --no-suggest -vv ${{ matrix.dependencies }}"
-
-      - name: "Run friendsofphp/php-cs-fixer"
-        run: "vendor/bin/php-cs-fixer fix --dry-run -vv"
+        run: "composer update --optimize-autoloader --prefer-dist --prefer-stable --no-progress --no-interaction -vv --ansi ${{ matrix.dependencies }}"
 
       - name: "Run squizlabs/php_codesniffer"
         run: "vendor/bin/phpcs -wps --colors --standard=src/mimmi20-cs/ruleset.xml src .php_cs"
