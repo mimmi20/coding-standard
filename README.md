@@ -6,8 +6,6 @@
 
 ## Code Status
 
-[![Build Status](https://travis-ci.org/mimmi20/coding-standard.svg?branch=master)](https://travis-ci.org/mimmi20/coding-standard)
-[![codecov](https://codecov.io/gh/mimmi20/coding-standard/branch/master/graph/badge.svg)](https://codecov.io/gh/mimmi20/coding-standard)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mimmi20/coding-standard.svg)](http://isitmaintained.com/project/mimmi20/coding-standard "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/mimmi20/coding-standard.svg)](http://isitmaintained.com/project/mimmi20/coding-standard "Percentage of issues still open")
 

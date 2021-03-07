@@ -57,7 +57,7 @@ jobs:
 
     runs-on: "${{ matrix.operating-system }}"
 
-    continue-on-error: ${{ matrix.continue-on-error }}
+    continue-on-error: false
 
     strategy:
       fail-fast: false
@@ -65,8 +65,6 @@ jobs:
       matrix:
         operating-system:
           - "ubuntu-latest"
-          - "windows-latest"
-          - "macos-latest"
 
         php-version:
           - "7.4"
@@ -75,35 +73,6 @@ jobs:
         dependencies:
           - "--prefer-lowest"
           - ""
-
-        continue-on-error:
-          - false
-
-#        include:
-#          - operating-system: "ubuntu-latest"
-#            php-version: "8.1"
-#            dependencies: "--prefer-lowest"
-#            continue-on-error: true
-#          - operating-system: "ubuntu-latest"
-#            php-version: "8.1"
-#            dependencies: ""
-#            continue-on-error: true
-#          - operating-system: "windows-latest"
-#            dependencies: "--prefer-lowest"
-#            php-version: "8.1"
-#            continue-on-error: true
-#          - operating-system: "windows-latest"
-#            dependencies: ""
-#            php-version: "8.1"
-#            continue-on-error: true
-#          - operating-system: "macos-latest"
-#            dependencies: "--prefer-lowest"
-#            php-version: "8.1"
-#            continue-on-error: true
-#          - operating-system: "macos-latest"
-#            dependencies: ""
-#            php-version: "8.1"
-#            continue-on-error: true
 
     steps:
       - name: "Checkout"
