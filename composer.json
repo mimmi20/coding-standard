@@ -29,8 +29,8 @@
   "require": {
     "php": "^7.4.0 || ^8.0.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+    "doctrine/coding-standard": "^8.2.0",
     "friendsofphp/php-cs-fixer": "^2.18.4",
-    "slevomat/coding-standard": "^6.4.1",
     "squizlabs/php_codesniffer": "^3.5.8"
   },
   "config": {
