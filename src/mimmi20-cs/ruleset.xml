@@ -94,8 +94,6 @@
                 <element value="Traversable"/>
                 <element value="Iterator"/>
                 <element value="IteratorAggregate"/>
-                <element value="iterable"/>
-                <element value="Generator"/>
             </property>
         </properties>
     </rule>
@@ -106,8 +104,6 @@
                 <element value="Traversable"/>
                 <element value="Iterator"/>
                 <element value="IteratorAggregate"/>
-                <element value="iterable"/>
-                <element value="Generator"/>
             </property>
         </properties>
     </rule>
@@ -118,8 +114,6 @@
                 <element value="Traversable"/>
                 <element value="Iterator"/>
                 <element value="IteratorAggregate"/>
-                <element value="iterable"/>
-                <element value="Generator"/>
             </property>
         </properties>
     </rule>
