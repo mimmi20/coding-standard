@@ -28,7 +28,7 @@
   ],
   "require": {
     "php": "^7.4.0 || ^8.0.0",
-    "dealerdirect/phpcodesniffer-composer-installer": "dev-master as 0.7.2",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
     "doctrine/coding-standard": "^9.0.0",
     "friendsofphp/php-cs-fixer": "^3.0.0",
     "squizlabs/php_codesniffer": "^3.6.0"
