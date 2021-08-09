@@ -12,24 +12,17 @@ declare(strict_types = 1);
 
 return [
     '@PSR12' => true,
+    '@PSR12:risky' => true,
     '@PhpCsFixer' => true,
     '@PhpCsFixer:risky' => true,
     '@Symfony' => true,
     '@Symfony:risky' => true,
-    '@PHP74Migration' => true,
-    '@PHP74Migration:risky' => true,
     '@PHP80Migration' => true,
     '@PHP80Migration:risky' => true,
-    '@PHPUnit60Migration:risky' => true,
-    '@PHPUnit75Migration:risky' => true,
     '@PHPUnit84Migration:risky' => true,
 
     // @PSR12 rules configured different from default
-    'class_definition' => [
-        'single_line' => false,
-        'single_item_single_line' => true,
-        'multi_line_extends_each_single_line' => true,
-    ],
+    'class_definition' => false,
     'method_argument_space' => [
         'on_multiline' => 'ensure_fully_multiline',
         'keep_multiple_spaces_after_comma' => false,
@@ -87,7 +80,7 @@ return [
 
     // other rules
     'final_class' => true,
-    'final_public_method_for_abstract_class' => true,
+    'final_public_method_for_abstract_class' => false,
     'general_phpdoc_annotation_remove' => [
         'annotations' => [
             'expectedExceptionMessageRegExp',

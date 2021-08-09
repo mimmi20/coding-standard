@@ -11,7 +11,7 @@
 
 ## Requirements
 
-This library requires PHP 7.1+.
+This library requires PHP 7.4+.
 
 ## Installation
 
