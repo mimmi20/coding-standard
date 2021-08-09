@@ -22,6 +22,7 @@ return [
     '@PHPUnit84Migration:risky' => true,
 
     // @PSR12 rules configured different from default
+    'class_definition' => false,
     'method_argument_space' => [
         'on_multiline' => 'ensure_fully_multiline',
         'keep_multiple_spaces_after_comma' => false,
