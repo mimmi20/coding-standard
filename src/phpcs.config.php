@@ -62,7 +62,7 @@ return [
     'phpdoc_no_empty_return' => false,
     'phpdoc_summary' => false,
     'single_line_comment_style' => ['comment_types' => ['hash']],
-    'types_spaces' => 'single',
+    'types_spaces' => ['space' => 'single'],
 
     // @PhpCsFixer:risky rules configured different from default
     'no_alias_functions' => ['sets' => ['@all']],
