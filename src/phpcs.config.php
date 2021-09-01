@@ -37,11 +37,8 @@ return [
     ],
     'concat_space' => ['spacing' => 'one'],
     'declare_equal_normalize' => ['space' => 'single'],
-    'phpdoc_order' => false,
-    'phpdoc_separation' => false,
-    'php_unit_internal_class' => false,
-    'no_superfluous_phpdoc_tags' => ['allow_mixed' => true, 'allow_unused_params' => true, 'remove_inheritdoc' => true],
     'multiline_whitespace_before_semicolons' => ['strategy' => 'no_multi_line'],
+    'no_superfluous_phpdoc_tags' => ['allow_mixed' => true, 'allow_unused_params' => true, 'remove_inheritdoc' => true],
     'no_extra_blank_lines' => [
         'tokens' => [
             'break',
@@ -57,10 +54,14 @@ return [
             'use_trait',
         ],
     ],
-    'php_unit_test_class_requires_covers' => false,
     'phpdoc_add_missing_param_annotation' => false,
+    'phpdoc_align' => false,
     'phpdoc_no_empty_return' => false,
+    'phpdoc_order' => false,
+    'phpdoc_separation' => false,
     'phpdoc_summary' => false,
+    'php_unit_internal_class' => false,
+    'php_unit_test_class_requires_covers' => false,
     'single_line_comment_style' => ['comment_types' => ['hash']],
     'types_spaces' => ['space' => 'single'],
 
@@ -69,12 +70,12 @@ return [
 
     // @Symfony rules configured different from default
     'no_blank_lines_after_phpdoc' => false,
+    'single_line_throw' => false,
     'yoda_style' => [
         'equal' => true,
         'identical' => true,
         'less_and_greater' => true,
     ],
-    'single_line_throw' => false,
 
     // @PHPUnit60Migration:risky rules configured different from default
     'php_unit_dedicate_assert' => ['target' => 'newest'],
@@ -96,7 +97,6 @@ return [
     'mb_str_functions' => true,
     'native_constant_invocation' => false,
     'native_function_invocation' => false,
-    'single_blank_line_before_namespace' => true,
     'nullable_type_declaration_for_default_null_value' => ['use_nullable_type_declaration' => true],
     'ordered_class_elements' => [
         'order' => [
@@ -124,5 +124,6 @@ return [
         'sort_algorithm' => 'alpha',
     ],
     'self_static_accessor' => true,
+    'single_blank_line_before_namespace' => true,
     'static_lambda' => true,
 ];
