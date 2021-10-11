@@ -51,7 +51,6 @@ return [
             'square_brace_block',
             'switch',
             'throw',
-            'use_trait',
         ],
     ],
     'phpdoc_add_missing_param_annotation' => false,
