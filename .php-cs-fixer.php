@@ -25,7 +25,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/src')
     ->append([__FILE__]);
 
-$rules = require 'src/phpcs.config.php';
+$rules = require 'src/php-cs-fixer.config.php';
 
 $config = new PhpCsFixer\Config();
 
