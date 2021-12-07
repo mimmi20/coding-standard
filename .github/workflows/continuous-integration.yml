@@ -57,7 +57,7 @@ jobs:
 
     runs-on: "${{ matrix.operating-system }}"
 
-    continue-on-error: false
+    continue-on-error: ${{ matrix.experimental }}
 
     strategy:
       fail-fast: false
@@ -74,6 +74,18 @@ jobs:
         dependencies:
           - "--prefer-lowest"
           - ""
+
+        experimental: [false]
+
+        include:
+          - operating-system: "ubuntu-20.04"
+            php-version: "8.1"
+            dependencies: ""
+            experimental: true
+          - operating-system: "ubuntu-20.04"
+            php-version: "8.2"
+            dependencies: ""
+            experimental: true
 
     steps:
       - name: "Checkout"
