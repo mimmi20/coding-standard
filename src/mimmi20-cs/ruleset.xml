@@ -35,6 +35,13 @@
         <exclude name="Generic.Formatting.SpaceAfterNot"/>
     </rule>
 
+    <!-- Require use statements to be alphabetically sorted -->
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaFunctionCall">
+        <properties>
+            <property name="enableOnObjects" value="false"/>
+        </properties>
+    </rule>
+
     <!-- Disallows use of continue without integer operand in switch because it emits a warning in PHP 7.3 and higher -->
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
 
@@ -95,6 +102,9 @@
                 <element value="Iterator"/>
                 <element value="IteratorAggregate"/>
             </property>
+            <property name="enableObjectTypeHint" value="true"/>
+            <property name="enableMixedTypeHint" value="false"/>
+            <property name="enableUnionTypeHint" value="false"/>
         </properties>
     </rule>
 
@@ -105,6 +115,9 @@
                 <element value="Iterator"/>
                 <element value="IteratorAggregate"/>
             </property>
+            <property name="enableNativeTypeHint" value="true"/>
+            <property name="enableMixedTypeHint" value="false"/>
+            <property name="enableUnionTypeHint" value="false"/>
         </properties>
     </rule>
 
@@ -115,6 +128,10 @@
                 <element value="Iterator"/>
                 <element value="IteratorAggregate"/>
             </property>
+            <property name="enableObjectTypeHint" value="true"/>
+            <property name="enableStaticTypeHint" value="false"/>
+            <property name="enableMixedTypeHint" value="false"/>
+            <property name="enableUnionTypeHint" value="false"/>
         </properties>
     </rule>
 
