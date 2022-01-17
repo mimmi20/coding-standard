@@ -8,7 +8,7 @@ name: "Continuous Integration"
 
 env:
   PHP_EXTENSIONS: "opcache"
-  PHP_INI_VALUES: "opcache.enable=1, opcache.enable_cli=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
+  PHP_INI_VALUES: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
   COMPOSER_OPTIONS: "--optimize-autoloader --prefer-dist --prefer-stable -v"
   TOOLS: "composer:v2"
 
@@ -172,6 +172,7 @@ jobs:
 
         dependencies:
           - "highest"
+          - "lowest"
 
     steps:
       - name: "Checkout"
@@ -216,6 +217,7 @@ jobs:
 
         dependencies:
           - "highest"
+          - "lowest"
 
     steps:
       - name: "Checkout"
