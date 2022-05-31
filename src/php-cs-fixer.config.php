@@ -33,7 +33,7 @@ return [
     'align_multiline_comment' => ['comment_type' => 'all_multiline'],
     'binary_operator_spaces' => [
         'default' => 'single_space',
-        'operators' => ['=' => null, '-=' => null, '.=' => null],
+        'operators' => ['=' => null, '-=' => null, '.=' => null, '+=' => null],
     ],
     'concat_space' => ['spacing' => 'one'],
     'declare_equal_normalize' => ['space' => 'single'],
