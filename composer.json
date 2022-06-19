@@ -36,7 +36,7 @@
     "doctrine/coding-standard": "^9.0.0",
     "friendsofphp/php-cs-fixer": "^3.8.0",
     "slevomat/coding-standard": "^7.2.1",
-    "squizlabs/php_codesniffer": "^3.6.2"
+    "squizlabs/php_codesniffer": "^3.7.1"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
