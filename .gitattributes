@@ -16,7 +16,6 @@
 *.ini            text eol=lf
 *.sh             text eol=lf
 *.tmp            text eol=lf
-LICENSE          text eol=lf
 
 # binary files
 *.zip            -text binary
@@ -26,6 +25,7 @@ LICENSE          text eol=lf
 .editorconfig        export-ignore text eol=lf
 .gitattributes       export-ignore text eol=lf
 .gitignore           export-ignore text eol=lf
+.mega-linter.yml     export-ignore text eol=lf
 .php-cs-fixer.php    export-ignore text eol=lf
+.phplint.yml         export-ignore text eol=lf
 /.github             export-ignore
-/.dependabot         export-ignore

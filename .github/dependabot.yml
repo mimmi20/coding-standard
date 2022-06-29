@@ -6,10 +6,7 @@ updates:
   - package-ecosystem: "composer"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "04:00"
-      timezone: "Europe/Berlin"
+      interval: "daily"
     open-pull-requests-limit: 10
     reviewers:
       - "mimmi20"
@@ -25,10 +22,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "sunday"
-      time: "04:00"
-      timezone: "Europe/Berlin"
+      interval: "daily"
     open-pull-requests-limit: 10
     reviewers:
       - "mimmi20"
