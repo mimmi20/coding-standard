@@ -216,7 +216,7 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Lint PHP"
-        uses: "overtrue/phplint@7.4"
+        uses: "overtrue/phplint@8.1"
 
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
