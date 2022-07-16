@@ -45,6 +45,24 @@
     <!-- Disallows use of continue without integer operand in switch because it emits a warning in PHP 7.3 and higher -->
     <rule ref="SlevomatCodingStandard.ControlStructures.DisallowContinueWithoutIntegerOperandInSwitch"/>
 
+    <!-- Require consistent spacing for jump statements -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">
+        <properties>
+            <property name="linesCountBeforeWhenFirstInCaseOrDefault" value="0"/>
+            <property name="linesCountAfterWhenLastInCaseOrDefault" value="0"/>
+            <property name="linesCountAfterWhenLastInLastCaseOrDefault" value="0"/>
+            <property name="jumpStatements" type="array">
+                <element value="break" />
+                <element value="continue" />
+                <element value="goto" />
+                <element value="return" />
+                <element value="throw" />
+                <element value="yield" />
+                <element value="yield_from" />
+            </property>
+        </properties>
+    </rule>
+
     <!-- Require usage of yoda comparison -->
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
 
