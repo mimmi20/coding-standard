@@ -24,4 +24,10 @@ composer require mimmi20/coding-standard
 ## Issues and feature requests
 
 Please report your issues and ask for new features on the GitHub Issue Tracker
-at https://github.com/mimmi20/coding-standard/issues
+at <https://github.com/mimmi20/coding-standard/issues>
+
+## License
+
+This package is licensed using the MIT License.
+
+Please have a look at [`LICENSE.md`](LICENSE.md).
