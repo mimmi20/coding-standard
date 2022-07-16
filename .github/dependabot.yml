@@ -14,10 +14,17 @@ updates:
       - "mimmi20"
     labels:
       - "dependencies"
-    versioning-strategy: "widen"
+    versioning-strategy: "increase"
     commit-message:
       include: "scope"
       prefix: "composer"
+    ignore:
+      - dependency-name: slevomat/coding-standard
+        versions:
+          - ">= 0"
+#      - dependency-name: phpunit/phpunit
+#        versions:
+#          - ">= 0"
 
   - package-ecosystem: "github-actions"
     directory: "/"
