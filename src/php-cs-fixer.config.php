@@ -59,6 +59,7 @@ return [
     'phpdoc_order' => false,
     'phpdoc_separation' => false,
     'phpdoc_summary' => false,
+    'phpdoc_to_comment' => ['ignored_tags' => ['var', 'todo']],
     'php_unit_internal_class' => false,
     'php_unit_test_class_requires_covers' => false,
     'single_line_comment_style' => ['comment_types' => ['hash']],
