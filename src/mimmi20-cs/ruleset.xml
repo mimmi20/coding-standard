@@ -212,6 +212,8 @@
                 <element value="~^\S+ [gs]etter\.\z~i"/>
                 <element value="~^(Class|Interface|Trait) \S+\z~i"/>
                 <element value="~^Create an object~i"/>
+                <element value="~^Construtor of the class~i"/>
+                <element value="~^Construtor~i"/>
             </property>
         </properties>
     </rule>
