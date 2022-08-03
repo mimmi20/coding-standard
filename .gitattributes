@@ -16,7 +16,6 @@
 *.ini            text eol=lf
 *.sh             text eol=lf
 *.tmp            text eol=lf
-LICENSE          text eol=lf
 
 # binary files
 *.zip            -text binary
