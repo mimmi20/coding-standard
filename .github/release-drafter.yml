@@ -36,3 +36,6 @@ categories:
   - title: '**📦 Documentation:**'
     labels:
       - 'documentation'
+
+commitish: 2.9.x
+filter-by-commitish: true
