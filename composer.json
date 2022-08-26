@@ -33,7 +33,7 @@
   "require": {
     "php": "^8.1.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
-    "doctrine/coding-standard": "^9.0.0",
+    "doctrine/coding-standard": "^9.0.1",
     "friendsofphp/php-cs-fixer": "^v3.10.0",
     "slevomat/coding-standard": "^7.2.1 || ^8.3.0",
     "squizlabs/php_codesniffer": "^3.7.1"
