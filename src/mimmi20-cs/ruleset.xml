@@ -153,6 +153,15 @@
         </properties>
     </rule>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
+        <properties>
+            <property name="enable" value="true"/>
+            <property name="withSpaces" value="yes"/>
+            <property name="shortNullable" value="no"/>
+            <property name="nullPosition" value="last"/>
+        </properties>
+    </rule>
+
     <!-- Force rules for function phpDoc -->
     <rule ref="Squiz.Commenting.FunctionComment">
         <!-- Allow `@throws` without description -->
