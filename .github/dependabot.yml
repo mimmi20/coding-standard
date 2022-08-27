@@ -16,6 +16,7 @@ updates:
     labels:
       - "dependencies"
     versioning-strategy: "increase"
+    target-branch: "master"
     commit-message:
       include: "scope"
       prefix: "composer"
@@ -38,6 +39,7 @@ updates:
       - "mimmi20"
     labels:
       - "dependencies"
+    target-branch: "master"
     commit-message:
       include: "scope"
       prefix: "github-actions"
@@ -81,4 +83,4 @@ updates:
     target-branch: "2.9.x"
     commit-message:
       include: "scope"
-      prefix: "github-actions"      
+      prefix: "github-actions"
