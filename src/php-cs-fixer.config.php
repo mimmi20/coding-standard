@@ -63,7 +63,7 @@ return [
     'php_unit_internal_class' => false,
     'php_unit_test_class_requires_covers' => false,
     'single_line_comment_style' => ['comment_types' => ['hash']],
-    'types_spaces' => ['space' => 'none'],
+    'types_spaces' => ['space' => 'single'],
 
     // @PhpCsFixer:risky rules configured different from default
     'no_alias_functions' => ['sets' => ['@all']],
