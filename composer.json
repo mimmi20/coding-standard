@@ -32,11 +32,11 @@
   },
   "require": {
     "php": "^8.1.0",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
-    "doctrine/coding-standard": "^10.0.0",
-    "friendsofphp/php-cs-fixer": "^v3.11.0",
-    "slevomat/coding-standard": "^7.2.1 || ^8.4.0",
-    "squizlabs/php_codesniffer": "^3.7.1"
+    "dealerdirect/phpcodesniffer-composer-installer": "0.7.2",
+    "doctrine/coding-standard": "10.0.0",
+    "friendsofphp/php-cs-fixer": "3.11.0",
+    "slevomat/coding-standard": "8.4.0",
+    "squizlabs/php_codesniffer": "3.7.1"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
