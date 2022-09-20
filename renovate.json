@@ -20,7 +20,7 @@
   "lockFileMaintenance": {"enabled": false, "extends": ["schedule:daily"]},
   "platformAutomerge": false,
   "schedule": [
-    "at 3am"
+    "at 3am every day"
   ],
   "updateLockFiles": false
 }
