@@ -35,6 +35,5 @@ infection.json            export-ignore text eol=lf
 phpcs.xml                 export-ignore text eol=lf
 phpstan.neon              export-ignore text eol=lf
 phpunit.xml               export-ignore text eol=lf
-renovate.json             export-ignore text eol=lf
 /tests                    export-ignore
 /.github                  export-ignore
