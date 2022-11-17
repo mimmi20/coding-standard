@@ -148,7 +148,7 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
           composer-options: "${{ env.COMPOSER_OPTIONS }}${{ matrix.composer-options }}"
@@ -196,7 +196,7 @@ jobs:
           tools: "${{ env.TOOLS }}"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -291,7 +291,7 @@ jobs:
           tools: "${{ env.TOOLS }}, cs2pr"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
@@ -340,7 +340,7 @@ jobs:
           tools: "${{ env.TOOLS }}, cs2pr"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v2"
         with:
           dependency-versions: "highest"
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
