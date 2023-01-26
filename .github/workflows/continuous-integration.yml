@@ -1,10 +1,17 @@
 # https://help.github.com/en/categories/automating-your-workflow-with-github-actions
 
+name: "Continuous Integration"
+
 on:
   - pull_request
   - push
 
-name: "Continuous Integration"
+permissions:
+  contents: read
+
+concurrency:
+  group: "${{ github.event_name }}-${{ github.workflow }}-${{ github.head_ref || github.run_id }}-${{ github.ref }}"
+  cancel-in-progress: true
 
 env:
   PHP_EXTENSIONS: "json, opcache"
