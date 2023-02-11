@@ -51,6 +51,10 @@ jobs:
           ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
           tools: "${{ env.TOOLS }}"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Validate composer.json"
         run: "composer validate --strict"
@@ -81,26 +85,9 @@ jobs:
           - "highest"
           - "lowest"
 
-        composer-options:
-          - ""
-
-        include:
-          - operating-system: "ubuntu-20.04"
-            php-version: "8.2"
-            dependencies: "highest"
-            composer-options: " --ignore-platform-reqs"
-          - operating-system: "ubuntu-20.04"
-            php-version: "8.2"
-            dependencies: "lowest"
-            composer-options: " --ignore-platform-reqs"
-          - operating-system: "ubuntu-22.04"
-            php-version: "8.2"
-            dependencies: "highest"
-            composer-options: " --ignore-platform-reqs"
-          - operating-system: "ubuntu-22.04"
-            php-version: "8.2"
-            dependencies: "lowest"
-            composer-options: " --ignore-platform-reqs"
+        ts:
+          - "ts"
+          - "nts"
 
     steps:
       - name: "Checkout"
@@ -119,12 +106,24 @@ jobs:
           ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
           tools: "${{ env.TOOLS }}"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "${{ matrix.ts }}"
 
       - name: "Update dependencies with composer"
+        if: ${{ '8.3' != matrix.php-version }}
         uses: "ramsey/composer-install@2.2.0"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "${{ env.COMPOSER_OPTIONS }}${{ matrix.composer-options }}"
+          composer-options: "${{ env.COMPOSER_OPTIONS }}"
+
+      - name: "Update dependencies with composer"
+        if: ${{ '8.3' == matrix.php-version }}
+        uses: "ramsey/composer-install@2.2.0"
+        with:
+          dependency-versions: "${{ matrix.dependencies }}"
+          composer-options: "${{ env.COMPOSER_OPTIONS }} --ignore-platform-reqs"
 
       - name: "Check dependencies with composer"
         run: "composer outdated --direct"
@@ -166,6 +165,10 @@ jobs:
           ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
           tools: "${{ env.TOOLS }}"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
@@ -217,6 +220,10 @@ jobs:
           ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
           tools: "${{ env.TOOLS }}"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Lint PHP"
         uses: "overtrue/phplint@6.1.0"
@@ -260,6 +267,10 @@ jobs:
           ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
           tools: "${{ env.TOOLS }}, cs2pr"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
@@ -309,6 +320,10 @@ jobs:
           ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
           tools: "${{ env.TOOLS }}, cs2pr"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
@@ -318,3 +333,28 @@ jobs:
 
       - name: "Run squizlabs/php_codesniffer"
         run: "vendor/bin/phpcs -wps --colors --standard=src/mimmi20-cs/ruleset.xml --report=checkstyle -q src .php-cs-fixer.php | cs2pr"
+
+  # This is a meta job to avoid to have to constantly change the protection rules
+  # whenever we touch the matrix.
+  tests-status:
+    name: "Validate & Lint Status"
+
+    runs-on: "ubuntu-22.04"
+
+    if: always()
+
+    needs:
+      - "validate"
+      - "mega-lint"
+      - "php-lint"
+      - "php-cs-fixer"
+      - "phpcs"
+
+    steps:
+      - name: Successful run
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
+
+      - name: Failing run
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
