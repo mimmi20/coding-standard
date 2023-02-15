@@ -226,7 +226,7 @@ jobs:
           phpts: "ts"
 
       - name: "Lint PHP"
-        uses: "overtrue/phplint@6.1.0"
+        uses: "overtrue/phplint@9.0.3"
 
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
