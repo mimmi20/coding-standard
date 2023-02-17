@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset
-    name="mimmi20-cs"
+    name="Mimmi20CodingStandard"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../vendor/squizlabs/php_codesniffer/phpcs.xsd"
 >
@@ -225,5 +225,9 @@
                 <element value="~^Construtor~i"/>
             </property>
         </properties>
+    </rule>
+
+    <!-- Force rules for function phpDoc -->
+    <rule ref="Mimmi20CodingStandard.Commenting.FunctionCommentThrowTag">
     </rule>
 </ruleset>

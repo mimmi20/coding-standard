@@ -332,7 +332,7 @@ jobs:
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
 
       - name: "Run squizlabs/php_codesniffer"
-        run: "vendor/bin/phpcs -wps --colors --standard=src/mimmi20-cs/ruleset.xml --report=checkstyle -q src .php-cs-fixer.php | cs2pr"
+        run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --report=checkstyle -q src .php-cs-fixer.php | cs2pr"
 
   # This is a meta job to avoid to have to constantly change the protection rules
   # whenever we touch the matrix.
