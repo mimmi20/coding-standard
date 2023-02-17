@@ -40,6 +40,11 @@
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Mimmi20CodingStandard\\": "src/Mimmi20CodingStandard/"
+    }
+  },
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,
