@@ -864,7 +864,7 @@
         <exclude name="Squiz.Commenting.FunctionComment.ParamNameNoMatch"/>
 
         <!-- Doesn't respect inheritance -->
-        <!-- <exclude name="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing"/> -->
+        <exclude name="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing"/>
 
         <!-- `@throws` lines can often be read as a sentence,
             i.e. `@throws RuntimeException if the file could not be written.` -->

@@ -20,6 +20,7 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 
+use function array_keys;
 use function array_unique;
 use function count;
 use function explode;
@@ -47,7 +48,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
     /**
      * Returns an array of tokens this test wants to listen for.
      *
-     * @return int[]
+     * @return array<int>
      *
      * @throws void
      */
@@ -80,6 +81,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
         $find[] = T_WHITESPACE;
 
         $commentEnd = $phpcsFile->findPrevious($find, $stackPtr - 1, null, true);
+
         if (T_DOC_COMMENT_CLOSE_TAG !== $tokens[$commentEnd]['code']) {
             // Function doesn't have a doc comment or is using the wrong type of comment.
             return;
@@ -94,6 +96,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
         do {
             $currPos = $phpcsFile->findNext([T_THROW, T_ANON_CLASS, T_CLOSURE], $currPos + 1, $stackPtrEnd);
+
             if (false === $currPos) {
                 break;
             }
@@ -119,6 +122,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
              */
 
             $nextToken = $phpcsFile->findNext(T_WHITESPACE, $currPos + 1, null, true);
+
             if (
                 T_NEW === $tokens[$nextToken]['code']
                 || T_NS_SEPARATOR === $tokens[$nextToken]['code']
@@ -181,6 +185,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
                     if ($tokens[$thrownVar]['content'] === $tokens[$nextToken]['content']) {
                         $exceptions = explode('|', $phpcsFile->getTokensAsString($tokens[$catch]['parenthesis_opener'] + 1, $thrownVar - $tokens[$catch]['parenthesis_opener'] - 1));
+
                         foreach ($exceptions as $exception) {
                             $thrownExceptions[] = trim($exception);
                         }
@@ -208,6 +213,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
             $exception = $tokens[$tag + 2]['content'];
             $space     = mb_strpos($exception, ' ');
+
             if (false !== $space) {
                 $exception = mb_substr($exception, 0, $space);
             }
@@ -238,7 +244,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 continue;
             }
 
-            foreach ($throwTags as $tag => $ignore) {
+            foreach (array_keys($throwTags) as $tag) {
                 if (mb_strrpos($tag, $throw) === mb_strlen($tag) - mb_strlen($throw)) {
                     continue 2;
                 }
