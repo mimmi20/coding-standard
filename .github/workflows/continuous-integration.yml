@@ -226,7 +226,10 @@ jobs:
           phpts: "ts"
 
       - name: "Lint PHP"
-        uses: "overtrue/phplint@9.0.3"
+        run: |
+          curl -Ls https://github.com/overtrue/phplint/releases/download/9.0.3/phplint.phar -o /usr/local/bin/phplint
+          chmod +x /usr/local/bin/phplint
+          /usr/local/bin/phplint -v --no-cache
 
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
