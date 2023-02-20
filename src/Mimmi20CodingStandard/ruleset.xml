@@ -76,6 +76,22 @@
         </properties>
     </rule>
 
+    <rule ref="Generic.Metrics.CyclomaticComplexity">
+        <properties>
+            <property name="complexity" value="15" />
+            <property name="absoluteComplexity" value="30" />
+        </properties>
+        <type>warning</type>
+    </rule>
+
+    <rule ref="Generic.Metrics.NestingLevel">
+        <properties>
+            <property name="nestingLevel" value="8" />
+            <property name="absoluteNestingLevel" value="12" />
+        </properties>
+        <type>warning</type>
+    </rule>
+
     <!-- Forbid PHP 4 constructors -->
     <rule ref="Generic.NamingConventions.ConstructorName"/>
 
@@ -167,14 +183,13 @@
     </rule>
 
     <!-- Disallows long classes -->
-    <!-- @todo: check -->
     <rule ref="SlevomatCodingStandard.Classes.ClassLength">
         <properties>
             <property name="includeComments" value="false"/>
             <property name="includeWhitespace" value="false"/>
             <property name="maxLinesLength" value="250"/>
         </properties>
-        <severity>1</severity>
+        <type>warning</type>
     </rule>
 
     <!-- Require presence of constant visibility -->
@@ -397,10 +412,10 @@
 
     <rule ref="SlevomatCodingStandard.Complexity.Cognitive">
         <properties>
-            <property name="warningThreshold" value="6"/>
-            <property name="errorThreshold" value="12"/>
+            <property name="warningThreshold" value="15"/>
+            <property name="errorThreshold" value="30"/>
         </properties>
-        <severity>1</severity>
+        <type>warning</type>
     </rule>
 
     <!-- Forbid assignments in conditions -->
@@ -431,7 +446,6 @@
     </rule>
 
     <!-- Forbid fancy yoda conditions -->
-    <!-- @todo: check -->
     <!-- <rule ref="SlevomatCodingStandard.ControlStructures.DisallowYodaComparison"/> -->
 
     <!-- Disallows use of continue without integer operand in switch because it emits a warning in PHP 7.3 and higher -->
@@ -489,8 +503,7 @@
     </rule>
 
     <!-- Require usage of yoda comparison -->
-    <!-- @todo: check -->
-    <!-- <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/> -->
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireYodaComparison"/>
 
     <!-- Forbid usage of conditions when a simple return can be used -->
     <rule ref="SlevomatCodingStandard.ControlStructures.UselessIfConditionWithReturn"/>
@@ -541,14 +554,13 @@
     </rule>
 
     <!-- Disallows long functions -->
-    <!-- @todo: check -->
     <rule ref="SlevomatCodingStandard.Functions.FunctionLength">
         <properties>
             <property name="includeComments" value="false"/>
             <property name="includeWhitespace" value="false"/>
             <property name="maxLinesLength" value="20"/>
         </properties>
-        <severity>1</severity>
+        <type>warning</type>
     </rule>
 
     <!-- Requires arrow functions -->
@@ -835,8 +847,8 @@
         <!-- Does not support collections, i.e. `string[]` -->
         <exclude name="Squiz.Commenting.FunctionComment.IncorrectTypeHint"/>
 
-        <!-- Forces incorrect types -->
-        <!-- <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/> -->
+        <!-- Forces incorrect types, Does not work properly with PHP 7 / short-named types -->
+        <exclude name="Squiz.Commenting.FunctionComment.InvalidReturn"/>
 
         <!-- does not work with __clone() -->
         <!-- <exclude name="Squiz.Commenting.FunctionComment.InvalidNoReturn"/> -->
