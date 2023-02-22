@@ -886,7 +886,7 @@
         <exclude name="Squiz.Commenting.FunctionComment.ThrowsNoFullStop"/>
 
         <!-- Doesn't work with self as typehint -->
-        <!-- <exclude name="Squiz.Commenting.FunctionComment.TypeHintMissing"/> -->
+        <exclude name="Squiz.Commenting.FunctionComment.TypeHintMissing"/>
     </rule>
 
     <!-- Forbid global functions -->
