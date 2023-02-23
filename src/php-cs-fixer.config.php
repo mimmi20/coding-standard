@@ -39,7 +39,6 @@ return [
             'break',
             'continue',
             'declare',
-            'default',
             'exit',
             'goto',
             'include',
