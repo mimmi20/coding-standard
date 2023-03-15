@@ -128,61 +128,6 @@ jobs:
       - name: "Check dependencies with composer"
         run: "composer outdated --direct"
 
-  mega-lint:
-    name: "Linting with nvuillam/mega-linter"
-
-    needs: "install"
-
-    runs-on: "${{ matrix.operating-system }}"
-    timeout-minutes: 10
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-          - "ubuntu-22.04"
-
-        php-version:
-          - "8.1"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.24.0"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
-          coverage: "none"
-          tools: "${{ env.TOOLS }}"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
-
-      - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@2.2.0"
-        with:
-          dependency-versions: "highest"
-          composer-options: "${{ env.COMPOSER_OPTIONS }}"
-
-      - name: "Linter"
-        # You can override Mega-Linter flavor used to have faster performances
-        # More info at https://nvuillam.github.io/mega-linter/flavors/
-        uses: "nvuillam/mega-linter/flavors/php@v6.20.1"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   php-lint:
     name: "Linting with overtrue/phplint"
 
@@ -234,9 +179,7 @@ jobs:
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
 
-    needs:
-      - "mega-lint"
-      - "php-lint"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -287,9 +230,7 @@ jobs:
   phpcs:
     name: "Check Coding Standards with PHPCS"
 
-    needs:
-      - "mega-lint"
-      - "php-lint"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -337,6 +278,112 @@ jobs:
       - name: "Run squizlabs/php_codesniffer"
         run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --report=checkstyle --exclude=Generic.Metrics.CyclomaticComplexity,SlevomatCodingStandard.Complexity.Cognitive,SlevomatCodingStandard.Functions.FunctionLength -q src .php-cs-fixer.php | cs2pr"
 
+  phpmd:
+    name: "Check Rules with PHPMD"
+
+    needs: "install"
+
+    runs-on: "${{ matrix.operating-system }}"
+    timeout-minutes: 10
+    continue-on-error: false
+
+    if: inputs.skip-phpmd == false
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        operating-system:
+          - "ubuntu-20.04"
+          - "ubuntu-22.04"
+
+        php-version:
+          - "8.1"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@2.24.0"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          ini-values: "${{ env.PHP_INI_VALUES }}"
+          coverage: "none"
+          tools: "${{ env.TOOLS }}, phpmd"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
+
+      - name: "Update dependencies with composer"
+        uses: "ramsey/composer-install@2.2.0"
+        with:
+          dependency-versions: "highest"
+          composer-options: "${{ inputs.composer-options }}"
+
+      - name: "Run phpmd/phpmd"
+        run: "phpmd src github phpmd.ruleset.xml"
+
+  rector:
+    name: "Checks with Rector"
+
+    needs: "install"
+
+    runs-on: "${{ matrix.operating-system }}"
+    timeout-minutes: 10
+    continue-on-error: false
+
+    if: inputs.skip-rector == false
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        operating-system:
+          - "ubuntu-20.04"
+          - "ubuntu-22.04"
+
+        php-version:
+          - "8.1"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@2.24.0"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          ini-values: "${{ env.PHP_INI_VALUES }}"
+          coverage: "none"
+          tools: "${{ env.TOOLS }}, rector"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
+
+      - name: "Update dependencies with composer"
+        uses: "ramsey/composer-install@2.2.0"
+        with:
+          dependency-versions: "highest"
+          composer-options: "${{ inputs.composer-options }}"
+
+      - name: "Run checks with rector/rector"
+        run: "rector process src --ansi --dry-run --no-diffs"
+
   # This is a meta job to avoid to have to constantly change the protection rules
   # whenever we touch the matrix.
   tests-status:
@@ -348,10 +395,11 @@ jobs:
 
     needs:
       - "validate"
-      - "mega-lint"
       - "php-lint"
       - "php-cs-fixer"
       - "phpcs"
+      - "phpmd"
+      - "rector"
 
     steps:
       - name: Successful run

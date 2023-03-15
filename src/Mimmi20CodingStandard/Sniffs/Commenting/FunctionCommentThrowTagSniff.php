@@ -72,11 +72,6 @@ final class FunctionCommentThrowTagSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (false === isset($tokens[$stackPtr]['scope_closer'])) {
-            // Abstract or incomplete.
-            return;
-        }
-
         $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
 
@@ -84,117 +79,122 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
         if (T_DOC_COMMENT_CLOSE_TAG !== $tokens[$commentEnd]['code']) {
             // Function doesn't have a doc comment or is using the wrong type of comment.
+            $error = 'Missing function comment';
+            $phpcsFile->addError($error, $commentEnd, 'MissingFunctionComment');
+
             return;
         }
-
-        $stackPtrEnd = $tokens[$stackPtr]['scope_closer'];
 
         // Find all the exception type tokens within the current scope.
         $thrownExceptions = [];
         $currPos          = $stackPtr;
         $unknownCount     = 0;
 
-        do {
-            $currPos = $phpcsFile->findNext([T_THROW, T_ANON_CLASS, T_CLOSURE], $currPos + 1, $stackPtrEnd);
+        if (isset($tokens[$stackPtr]['scope_closer'])) {
+            $stackPtrEnd = $tokens[$stackPtr]['scope_closer'];
 
-            if (false === $currPos) {
-                break;
-            }
+            do {
+                $currPos = $phpcsFile->findNext([T_THROW, T_ANON_CLASS, T_CLOSURE], $currPos + 1, $stackPtrEnd);
 
-            if (T_THROW !== $tokens[$currPos]['code']) {
-                $currPos = $tokens[$currPos]['scope_closer'];
-
-                continue;
-            }
-
-            /*
-                If we can't find a NEW, we are probably throwing
-                a variable or calling a method.
-
-                If we're throwing a variable, and it's the same variable as the
-                exception container from the nearest 'catch' block, we take that exception
-                as it is likely to be a re-throw.
-
-                If we can't find a matching catch block, or the variable name
-                is different, it's probably a different variable, so we ignore it,
-                but they still need to provide at least one @throws tag, even through we
-                don't know the exception class.
-             */
-
-            $nextToken = $phpcsFile->findNext(T_WHITESPACE, $currPos + 1, null, true);
-
-            if (
-                T_NEW === $tokens[$nextToken]['code']
-                || T_NS_SEPARATOR === $tokens[$nextToken]['code']
-                || T_STRING === $tokens[$nextToken]['code']
-            ) {
-                if (T_NEW === $tokens[$nextToken]['code']) {
-                    $currException = $phpcsFile->findNext(
-                        [
-                            T_NS_SEPARATOR,
-                            T_STRING,
-                        ],
-                        $currPos,
-                        $stackPtrEnd,
-                        false,
-                        null,
-                        true,
-                    );
-                } else {
-                    $currException = $nextToken;
+                if (false === $currPos) {
+                    break;
                 }
 
-                if (false !== $currException) {
-                    $endException = $phpcsFile->findNext(
-                        [
-                            T_NS_SEPARATOR,
-                            T_STRING,
-                        ],
-                        $currException + 1,
-                        $stackPtrEnd,
-                        true,
-                        null,
-                        true,
-                    );
+                if (T_THROW !== $tokens[$currPos]['code']) {
+                    $currPos = $tokens[$currPos]['scope_closer'];
 
-                    if (false === $endException) {
-                        $thrownExceptions[] = $tokens[$currException]['content'];
+                    continue;
+                }
+
+                /*
+                    If we can't find a NEW, we are probably throwing
+                    a variable or calling a method.
+
+                    If we're throwing a variable, and it's the same variable as the
+                    exception container from the nearest 'catch' block, we take that exception
+                    as it is likely to be a re-throw.
+
+                    If we can't find a matching catch block, or the variable name
+                    is different, it's probably a different variable, so we ignore it,
+                    but they still need to provide at least one @throws tag, even through we
+                    don't know the exception class.
+                 */
+
+                $nextToken = $phpcsFile->findNext(T_WHITESPACE, $currPos + 1, null, true);
+
+                if (
+                    T_NEW === $tokens[$nextToken]['code']
+                    || T_NS_SEPARATOR === $tokens[$nextToken]['code']
+                    || T_STRING === $tokens[$nextToken]['code']
+                ) {
+                    if (T_NEW === $tokens[$nextToken]['code']) {
+                        $currException = $phpcsFile->findNext(
+                            [
+                                T_NS_SEPARATOR,
+                                T_STRING,
+                            ],
+                            $currPos,
+                            $stackPtrEnd,
+                            false,
+                            null,
+                            true,
+                        );
                     } else {
-                        $thrownExceptions[] = $phpcsFile->getTokensAsString($currException, $endException - $currException);
+                        $currException = $nextToken;
                     }
-                }
-            } elseif (T_VARIABLE === $tokens[$nextToken]['code']) {
-                // Find the nearest catch block in this scope and, if the caught var
-                // matches our re-thrown var, use the exception types being caught as
-                // exception types that are being thrown as well.
-                $catch = $phpcsFile->findPrevious(
-                    T_CATCH,
-                    $currPos,
-                    $tokens[$stackPtr]['scope_opener'],
-                    false,
-                    null,
-                    false,
-                );
 
-                if (false !== $catch) {
-                    $thrownVar = $phpcsFile->findPrevious(
-                        T_VARIABLE,
-                        $tokens[$catch]['parenthesis_closer'] - 1,
-                        $tokens[$catch]['parenthesis_opener'],
-                    );
+                    if (false !== $currException) {
+                        $endException = $phpcsFile->findNext(
+                            [
+                                T_NS_SEPARATOR,
+                                T_STRING,
+                            ],
+                            $currException + 1,
+                            $stackPtrEnd,
+                            true,
+                            null,
+                            true,
+                        );
 
-                    if ($tokens[$thrownVar]['content'] === $tokens[$nextToken]['content']) {
-                        $exceptions = explode('|', $phpcsFile->getTokensAsString($tokens[$catch]['parenthesis_opener'] + 1, $thrownVar - $tokens[$catch]['parenthesis_opener'] - 1));
-
-                        foreach ($exceptions as $exception) {
-                            $thrownExceptions[] = trim($exception);
+                        if (false === $endException) {
+                            $thrownExceptions[] = $tokens[$currException]['content'];
+                        } else {
+                            $thrownExceptions[] = $phpcsFile->getTokensAsString($currException, $endException - $currException);
                         }
                     }
+                } elseif (T_VARIABLE === $tokens[$nextToken]['code']) {
+                    // Find the nearest catch block in this scope and, if the caught var
+                    // matches our re-thrown var, use the exception types being caught as
+                    // exception types that are being thrown as well.
+                    $catch = $phpcsFile->findPrevious(
+                        T_CATCH,
+                        $currPos,
+                        $tokens[$stackPtr]['scope_opener'],
+                        false,
+                        null,
+                        false,
+                    );
+
+                    if (false !== $catch) {
+                        $thrownVar = $phpcsFile->findPrevious(
+                            T_VARIABLE,
+                            $tokens[$catch]['parenthesis_closer'] - 1,
+                            $tokens[$catch]['parenthesis_opener'],
+                        );
+
+                        if ($tokens[$thrownVar]['content'] === $tokens[$nextToken]['content']) {
+                            $exceptions = explode('|', (string) $phpcsFile->getTokensAsString($tokens[$catch]['parenthesis_opener'] + 1, $thrownVar - $tokens[$catch]['parenthesis_opener'] - 1));
+
+                            foreach ($exceptions as $exception) {
+                                $thrownExceptions[] = trim($exception);
+                            }
+                        }
+                    }
+                } else {
+                    ++$unknownCount;
                 }
-            } else {
-                ++$unknownCount;
-            }
-        } while ($currPos < $stackPtrEnd && false !== $currPos);
+            } while ($currPos < $stackPtrEnd && false !== $currPos);
+        }
 
         // Only need one @throws tag for each type of exception thrown.
         $thrownExceptions = array_unique($thrownExceptions);
@@ -212,10 +212,10 @@ final class FunctionCommentThrowTagSniff implements Sniff
             }
 
             $exception = $tokens[$tag + 2]['content'];
-            $space     = mb_strpos($exception, ' ');
+            $space     = mb_strpos((string) $exception, ' ');
 
             if (false !== $space) {
-                $exception = mb_substr($exception, 0, $space);
+                $exception = mb_substr((string) $exception, 0, $space);
             }
 
             $throwTags[$exception] = true;
@@ -223,7 +223,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
         if (true === empty($throwTags)) {
             $error = 'Missing @throws tag in function comment';
-            $phpcsFile->addError($error, $commentEnd, 'Missing');
+            $phpcsFile->addError($error, $commentEnd, 'MissingAtThrow');
 
             return;
         }
@@ -245,14 +245,14 @@ final class FunctionCommentThrowTagSniff implements Sniff
             }
 
             foreach (array_keys($throwTags) as $tag) {
-                if (mb_strrpos($tag, $throw) === mb_strlen($tag) - mb_strlen($throw)) {
+                if (mb_strrpos($tag, (string) $throw) === mb_strlen($tag) - mb_strlen((string) $throw)) {
                     continue 2;
                 }
             }
 
             $error = 'Missing @throws tag for "%s" exception';
             $data  = [$throw];
-            $phpcsFile->addError($error, $commentEnd, 'Missing', $data);
+            $phpcsFile->addError($error, $commentEnd, 'MissingThrowForException', $data);
         }
 
         if ($tagCount >= $thrownCount) {
