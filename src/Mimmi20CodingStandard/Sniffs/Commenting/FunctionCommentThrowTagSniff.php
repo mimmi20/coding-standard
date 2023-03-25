@@ -10,12 +10,9 @@
 
 declare(strict_types = 1);
 
-/**
- * Verifies that a @throws tag exists for each exception type a function throws.
- */
-
 namespace Mimmi20CodingStandard\Sniffs\Commenting;
 
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
@@ -24,6 +21,7 @@ use function array_keys;
 use function array_unique;
 use function count;
 use function explode;
+use function is_string;
 use function mb_strlen;
 use function mb_strpos;
 use function mb_strrpos;
@@ -43,6 +41,9 @@ use const T_THROW;
 use const T_VARIABLE;
 use const T_WHITESPACE;
 
+/**
+ * Verifies that a @throws tag exists for each exception type a function throws.
+ */
 final class FunctionCommentThrowTagSniff implements Sniff
 {
     /**
@@ -64,7 +65,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
      * @param int  $stackPtr  the position of the current token
      *                        in the stack passed in $tokens
      *
-     * @throws void
+     * @throws RuntimeException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
@@ -75,7 +76,20 @@ final class FunctionCommentThrowTagSniff implements Sniff
         $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
 
-        $commentEnd = $phpcsFile->findPrevious($find, $stackPtr - 1, null, true);
+        $commentEnd = $phpcsFile->findPrevious(
+            types: $find,
+            start: (int) ($stackPtr - 1),
+            end: null,
+            exclude: true,
+        );
+
+        if (false === $commentEnd) {
+            // Function doesn't have a doc comment or is using the wrong type of comment.
+            $error = 'Missing function comment';
+            $phpcsFile->addError($error, $stackPtr, 'MissingFunctionComment');
+
+            return;
+        }
 
         if (T_DOC_COMMENT_CLOSE_TAG !== $tokens[$commentEnd]['code']) {
             // Function doesn't have a doc comment or is using the wrong type of comment.
@@ -94,7 +108,11 @@ final class FunctionCommentThrowTagSniff implements Sniff
             $stackPtrEnd = $tokens[$stackPtr]['scope_closer'];
 
             do {
-                $currPos = $phpcsFile->findNext([T_THROW, T_ANON_CLASS, T_CLOSURE], $currPos + 1, $stackPtrEnd);
+                $currPos = $phpcsFile->findNext(
+                    types: [T_THROW, T_ANON_CLASS, T_CLOSURE],
+                    start: (int) ($currPos + 1),
+                    end: (int) ($stackPtrEnd),
+                );
 
                 if (false === $currPos) {
                     break;
@@ -120,7 +138,12 @@ final class FunctionCommentThrowTagSniff implements Sniff
                     don't know the exception class.
                  */
 
-                $nextToken = $phpcsFile->findNext(T_WHITESPACE, $currPos + 1, null, true);
+                $nextToken = $phpcsFile->findNext(
+                    types: T_WHITESPACE,
+                    start: (int) ($currPos + 1),
+                    end: null,
+                    exclude: true,
+                );
 
                 if (
                     T_NEW === $tokens[$nextToken]['code']
@@ -129,15 +152,15 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 ) {
                     if (T_NEW === $tokens[$nextToken]['code']) {
                         $currException = $phpcsFile->findNext(
-                            [
+                            types: [
                                 T_NS_SEPARATOR,
                                 T_STRING,
                             ],
-                            $currPos,
-                            $stackPtrEnd,
-                            false,
-                            null,
-                            true,
+                            start: (int) ($currPos),
+                            end: (int) ($stackPtrEnd),
+                            exclude: false,
+                            value: null,
+                            local: true,
                         );
                     } else {
                         $currException = $nextToken;
@@ -145,15 +168,15 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
                     if (false !== $currException) {
                         $endException = $phpcsFile->findNext(
-                            [
+                            types: [
                                 T_NS_SEPARATOR,
                                 T_STRING,
                             ],
-                            $currException + 1,
-                            $stackPtrEnd,
-                            true,
-                            null,
-                            true,
+                            start: (int) ($currException + 1),
+                            end: (int) ($stackPtrEnd),
+                            exclude: true,
+                            value: null,
+                            local: true,
                         );
 
                         if (false === $endException) {
@@ -167,23 +190,29 @@ final class FunctionCommentThrowTagSniff implements Sniff
                     // matches our re-thrown var, use the exception types being caught as
                     // exception types that are being thrown as well.
                     $catch = $phpcsFile->findPrevious(
-                        T_CATCH,
-                        $currPos,
-                        $tokens[$stackPtr]['scope_opener'],
-                        false,
-                        null,
-                        false,
+                        types: T_CATCH,
+                        start: (int) ($currPos),
+                        end: (int) ($tokens[$stackPtr]['scope_opener']),
+                        exclude: false,
+                        value: null,
+                        local: false,
                     );
 
                     if (false !== $catch) {
                         $thrownVar = $phpcsFile->findPrevious(
-                            T_VARIABLE,
-                            $tokens[$catch]['parenthesis_closer'] - 1,
-                            $tokens[$catch]['parenthesis_opener'],
+                            types: T_VARIABLE,
+                            start: (int) ($tokens[$catch]['parenthesis_closer'] - 1),
+                            end: (int) ($tokens[$catch]['parenthesis_opener']),
                         );
 
                         if ($tokens[$thrownVar]['content'] === $tokens[$nextToken]['content']) {
-                            $exceptions = explode('|', (string) $phpcsFile->getTokensAsString($tokens[$catch]['parenthesis_opener'] + 1, $thrownVar - $tokens[$catch]['parenthesis_opener'] - 1));
+                            $exceptions = explode(
+                                '|',
+                                $phpcsFile->getTokensAsString(
+                                    start: (int) ($tokens[$catch]['parenthesis_opener'] + 1),
+                                    length: (int) ($thrownVar - $tokens[$catch]['parenthesis_opener'] - 1),
+                                ),
+                            );
 
                             foreach ($exceptions as $exception) {
                                 $thrownExceptions[] = trim($exception);
@@ -245,6 +274,10 @@ final class FunctionCommentThrowTagSniff implements Sniff
             }
 
             foreach (array_keys($throwTags) as $tag) {
+                if (!is_string($tag)) {
+                    continue;
+                }
+
                 if (mb_strrpos($tag, (string) $throw) === mb_strlen($tag) - mb_strlen((string) $throw)) {
                     continue 2;
                 }

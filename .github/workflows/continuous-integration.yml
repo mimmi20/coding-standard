@@ -278,6 +278,59 @@ jobs:
       - name: "Run squizlabs/php_codesniffer"
         run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --report=checkstyle --exclude=Generic.Metrics.CyclomaticComplexity,SlevomatCodingStandard.Complexity.Cognitive,SlevomatCodingStandard.Functions.FunctionLength -q src .php-cs-fixer.php | cs2pr"
 
+  static-code-analysis:
+    name: "Static Code Analysis with PHPStan"
+
+    needs: "install"
+
+    runs-on: "${{ matrix.operating-system }}"
+    timeout-minutes: 10
+    continue-on-error: false
+
+    if: inputs.skip-phpstan == false
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        operating-system:
+          - "ubuntu-20.04"
+          - "ubuntu-22.04"
+
+        php-version:
+          - "8.1"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@2.24.0"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
+          ini-values: "${{ inputs.ini-values }}"
+          coverage: "none"
+          tools: "composer:v2"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
+
+      - name: "Update dependencies with composer"
+        uses: "ramsey/composer-install@2.2.0"
+        with:
+          dependency-versions: "highest"
+          composer-options: "${{ inputs.composer-options }}"
+
+      - name: "Run phpstan/phpstan"
+        run: "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=768M --no-progress"
+
   phpmd:
     name: "Check Rules with PHPMD"
 
@@ -397,6 +450,7 @@ jobs:
       - "validate"
       - "php-lint"
       - "php-cs-fixer"
+      - "static-code-analysis"
       - "phpcs"
       - "phpmd"
       - "rector"
