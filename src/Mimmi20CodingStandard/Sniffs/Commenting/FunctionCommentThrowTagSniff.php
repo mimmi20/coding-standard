@@ -78,7 +78,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
         $commentEnd = $phpcsFile->findPrevious(
             types: $find,
-            start: (int) ($stackPtr - 1),
+            start: $stackPtr - 1,
             end: null,
             exclude: true,
         );
@@ -208,7 +208,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                         if ($tokens[$thrownVar]['content'] === $tokens[$nextToken]['content']) {
                             $exceptions = explode(
                                 '|',
-                                $phpcsFile->getTokensAsString(
+                                (string) $phpcsFile->getTokensAsString(
                                     start: (int) ($tokens[$catch]['parenthesis_opener'] + 1),
                                     length: (int) ($thrownVar - $tokens[$catch]['parenthesis_opener'] - 1),
                                 ),
