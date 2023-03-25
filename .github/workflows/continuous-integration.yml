@@ -313,10 +313,10 @@ jobs:
         uses: "shivammathur/setup-php@2.24.0"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "none, phar, json, opcache, ${{ inputs.extensions }}"
-          ini-values: "${{ inputs.ini-values }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          ini-values: "${{ env.PHP_INI_VALUES }}"
           coverage: "none"
-          tools: "composer:v2"
+          tools: "${{ env.TOOLS }}"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
