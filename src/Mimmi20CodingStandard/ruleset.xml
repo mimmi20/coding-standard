@@ -187,7 +187,7 @@
         <properties>
             <property name="includeComments" value="false"/>
             <property name="includeWhitespace" value="false"/>
-            <property name="maxLinesLength" value="250"/>
+            <property name="maxLinesLength" value="1000"/>
         </properties>
         <type>warning</type>
     </rule>
@@ -293,7 +293,13 @@
 
     <rule ref="SlevomatCodingStandard.Classes.RequireMultiLineMethodSignature">
         <properties>
-            <property name="minLineLength" value="80"/>
+            <property name="minLineLength" value="120"/>
+        </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.RequireSingleLineMethodSignature">
+        <properties>
+            <property name="maxLineLength" value="119"/>
         </properties>
     </rule>
 
@@ -557,7 +563,7 @@
         <properties>
             <property name="includeComments" value="false"/>
             <property name="includeWhitespace" value="false"/>
-            <property name="maxLinesLength" value="20"/>
+            <property name="maxLinesLength" value="100"/>
         </properties>
         <type>warning</type>
     </rule>
@@ -976,6 +982,5 @@
     </rule>
 
     <!-- Force rules for function phpDoc -->
-    <rule ref="Mimmi20CodingStandard.Commenting.FunctionCommentThrowTag">
-    </rule>
+    <rule ref="Mimmi20CodingStandard.Commenting.FunctionCommentThrowTag"/>
 </ruleset>
