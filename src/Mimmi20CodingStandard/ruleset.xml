@@ -983,4 +983,6 @@
 
     <!-- Force rules for function phpDoc -->
     <rule ref="Mimmi20CodingStandard.Commenting.FunctionCommentThrowTag"/>
+
+    <rule ref="VariableAnalysis"/>
 </ruleset>

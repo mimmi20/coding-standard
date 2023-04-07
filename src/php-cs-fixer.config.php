@@ -238,7 +238,7 @@ return [
     'php_unit_internal_class' => false,
     'php_unit_mock_short_will_return' => true,
     'php_unit_set_up_tear_down_visibility' => true,
-    'php_unit_strict' => true,
+    'php_unit_strict' => ['assertions' => ['assertAttributeEquals', 'assertAttributeNotEquals', 'assertEquals', 'assertNotEquals']],
     'php_unit_test_annotation' => ['style' => 'prefix'],
     'php_unit_test_case_static_method_calls' => ['call_type' => 'static'],
     'php_unit_test_class_requires_covers' => false,
