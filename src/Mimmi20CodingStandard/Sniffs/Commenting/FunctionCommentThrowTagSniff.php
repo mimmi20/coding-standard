@@ -29,6 +29,7 @@ use function mb_substr;
 use function trim;
 
 use const T_ANON_CLASS;
+use const T_ATTRIBUTE_END;
 use const T_CATCH;
 use const T_CLOSURE;
 use const T_DOC_COMMENT_CLOSE_TAG;
@@ -73,13 +74,29 @@ final class FunctionCommentThrowTagSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
+        $find               = Tokens::$methodPrefixes;
+        $find[T_WHITESPACE] = T_WHITESPACE;
+
+        for ($commentEnd = $stackPtr - 1; 0 <= $commentEnd; --$commentEnd) {
+            if (true === isset($find[$tokens[$commentEnd]['code']])) {
+                continue;
+            }
+
+            if (
+                T_ATTRIBUTE_END === $tokens[$commentEnd]['code']
+                && true === isset($tokens[$commentEnd]['attribute_opener'])
+            ) {
+                $commentEnd = $tokens[$commentEnd]['attribute_opener'];
+
+                continue;
+            }
+
+            break;
+        }
 
         $commentEnd = $phpcsFile->findPrevious(
             types: $find,
             start: $stackPtr - 1,
-            end: null,
             exclude: true,
         );
 
