@@ -984,5 +984,10 @@
     <!-- Force rules for function phpDoc -->
     <rule ref="Mimmi20CodingStandard.Commenting.FunctionCommentThrowTag"/>
 
-    <rule ref="VariableAnalysis"/>
+    <rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis">
+        <properties>
+            <!-- checked by SlevomatCodingStandard.Functions.UnusedParameter -->
+            <property name="allowUnusedFunctionParameters" value="true"/>
+        </properties>
+    </rule>
 </ruleset>
