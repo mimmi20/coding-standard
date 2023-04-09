@@ -32,6 +32,7 @@ use const T_ANON_CLASS;
 use const T_ATTRIBUTE_END;
 use const T_CATCH;
 use const T_CLOSURE;
+use const T_COMMENT;
 use const T_DOC_COMMENT_CLOSE_TAG;
 use const T_DOC_COMMENT_STRING;
 use const T_FUNCTION;
@@ -77,6 +78,8 @@ final class FunctionCommentThrowTagSniff implements Sniff
         $find               = Tokens::$methodPrefixes;
         $find[T_WHITESPACE] = T_WHITESPACE;
 
+        $commentEnd = null;
+
         for ($commentEnd = $stackPtr - 1; 0 <= $commentEnd; --$commentEnd) {
             if (true === isset($find[$tokens[$commentEnd]['code']])) {
                 continue;
@@ -94,26 +97,77 @@ final class FunctionCommentThrowTagSniff implements Sniff
             break;
         }
 
-        $commentEnd = $phpcsFile->findPrevious(
-            types: $find,
-            start: $stackPtr - 1,
-            exclude: true,
-        );
-
-        if (false === $commentEnd) {
-            // Function doesn't have a doc comment or is using the wrong type of comment.
-            $error = 'Missing function comment';
-            $phpcsFile->addError($error, $stackPtr, 'MissingFunctionComment');
+        if (null === $commentEnd) {
+            $phpcsFile->addError(
+                error: 'Missing doc comment',
+                stackPtr: $stackPtr,
+                code: 'MissingFunctionComment',
+            );
 
             return;
         }
 
-        if (T_DOC_COMMENT_CLOSE_TAG !== $tokens[$commentEnd]['code']) {
-            // Function doesn't have a doc comment or is using the wrong type of comment.
-            $error = 'Missing function comment';
-            $phpcsFile->addError($error, $commentEnd, 'MissingFunctionComment');
+        if (T_COMMENT === $tokens[$commentEnd]['code']) {
+            // Inline comments might just be closing comments for
+            // control structures or functions instead of function comments
+            // using the wrong comment type. If there is other code on the line,
+            // assume they relate to that code.
+            $prev = $phpcsFile->findPrevious(
+                types: $find,
+                start: (int) ($commentEnd - 1),
+                exclude: true,
+            );
+
+            if (false !== $prev && $tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
+                $commentEnd = $prev;
+            }
+        }
+
+        if (
+            T_DOC_COMMENT_CLOSE_TAG !== $tokens[$commentEnd]['code']
+            && T_COMMENT !== $tokens[$commentEnd]['code']
+        ) {
+            $function = $phpcsFile->getDeclarationName($stackPtr);
+            $phpcsFile->addError(
+                error: 'Missing doc comment for function %s()',
+                stackPtr: $stackPtr,
+                code: 'MissingFunctionComment',
+                data: [$function],
+            );
 
             return;
+        }
+
+        if (T_COMMENT === $tokens[$commentEnd]['code']) {
+            $phpcsFile->addError(
+                error: 'You must use "/**" style comments for a function comment',
+                stackPtr: $stackPtr,
+                code: 'WrongStyle',
+            );
+
+            return;
+        }
+
+        if ($tokens[$commentEnd]['line'] !== $tokens[$stackPtr]['line'] - 1) {
+            for ($i = $commentEnd + 1; $i < $stackPtr; ++$i) {
+                if (1 !== $tokens[$i]['column']) {
+                    continue;
+                }
+
+                if (
+                    T_WHITESPACE === $tokens[$i]['code']
+                    && $tokens[$i]['line'] !== $tokens[$i + 1]['line']
+                ) {
+                    $error = 'There must be no blank lines after the function comment';
+                    $phpcsFile->addError(
+                        error: $error,
+                        stackPtr: $commentEnd,
+                        code: 'SpacingAfter',
+                    );
+
+                    break;
+                }
+            }
         }
 
         // Find all the exception type tokens within the current scope.
@@ -158,7 +212,6 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 $nextToken = $phpcsFile->findNext(
                     types: T_WHITESPACE,
                     start: (int) ($currPos + 1),
-                    end: null,
                     exclude: true,
                 );
 
@@ -175,8 +228,6 @@ final class FunctionCommentThrowTagSniff implements Sniff
                             ],
                             start: (int) ($currPos),
                             end: (int) ($stackPtrEnd),
-                            exclude: false,
-                            value: null,
                             local: true,
                         );
                     } else {
@@ -192,7 +243,6 @@ final class FunctionCommentThrowTagSniff implements Sniff
                             start: (int) ($currException + 1),
                             end: (int) ($stackPtrEnd),
                             exclude: true,
-                            value: null,
                             local: true,
                         );
 
@@ -210,9 +260,6 @@ final class FunctionCommentThrowTagSniff implements Sniff
                         types: T_CATCH,
                         start: (int) ($currPos),
                         end: (int) ($tokens[$stackPtr]['scope_opener']),
-                        exclude: false,
-                        value: null,
-                        local: false,
                     );
 
                     if (false !== $catch) {
@@ -269,7 +316,11 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
         if (true === empty($throwTags)) {
             $error = 'Missing @throws tag in function comment';
-            $phpcsFile->addError($error, $commentEnd, 'MissingAtThrow');
+            $phpcsFile->addError(
+                error: $error,
+                stackPtr: $commentEnd,
+                code: 'MissingAtThrow',
+            );
 
             return;
         }
@@ -302,7 +353,12 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
             $error = 'Missing @throws tag for "%s" exception';
             $data  = [$throw];
-            $phpcsFile->addError($error, $commentEnd, 'MissingThrowForException', $data);
+            $phpcsFile->addError(
+                error: $error,
+                stackPtr: $commentEnd,
+                code: 'MissingThrowForException',
+                data: $data,
+            );
         }
 
         if ($tagCount >= $thrownCount) {
@@ -314,6 +370,11 @@ final class FunctionCommentThrowTagSniff implements Sniff
             $thrownCount,
             $tagCount,
         ];
-        $phpcsFile->addError($error, $commentEnd, 'WrongNumber', $data);
+        $phpcsFile->addError(
+            error: $error,
+            stackPtr: $commentEnd,
+            code: 'WrongNumber',
+            data: $data,
+        );
     }
 }
