@@ -168,6 +168,9 @@
     <!-- Require PHPDoc always before attributes -->
     <rule ref="SlevomatCodingStandard.Attributes.RequireAttributeAfterDocComment"/>
 
+    <!-- Array must have keys specified for either all or none of the values -->
+    <rule ref="SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed"/>
+
     <!-- Require that single line arrays have the correct spacing: no space around brackets and one space after comma -->
     <rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
 
@@ -214,6 +217,9 @@
             <property name="maxLinesCountBeforeWithoutComment" value="1"/>
         </properties>
     </rule>
+
+    <!-- Forbid $object->{'foo'} when the property name is compatible with identifier access -->
+    <rule ref="SlevomatCodingStandard.Classes.DisallowStringExpressionPropertyFetch"/>
 
     <!-- Forbid LSB for constants (static::FOO) -->
     <rule ref="SlevomatCodingStandard.Classes.DisallowLateStaticBindingForConstants"/>
@@ -701,6 +707,27 @@
 
     <!-- Forbid useless semicolon `;` -->
     <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
+
+    <!-- Disallows variable parsing inside strings -->
+    <rule ref="SlevomatCodingStandard.Strings.DisallowVariableParsing">
+        <properties>
+            <!-- disallows usage of ${...} -->
+            <property
+                name="disallowDollarCurlySyntax"
+                value="false"
+            />
+            <!-- disallows usage of {$...} -->
+            <property
+                name="disallowCurlyDollarSyntax"
+                value="true"
+            />
+            <!-- disallows usage of $... -->
+            <property
+                name="disallowSimpleSyntax"
+                value="true"
+            />
+        </properties>
+    </rule>
 
     <!-- Require presence of declare(strict_types = 1) -->
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
