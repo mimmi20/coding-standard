@@ -6,10 +6,15 @@
 >
     <description>The coding standard.</description>
 
+    <arg name="tab-width" value="4"/>
+
     <!-- Import PSR-12 coding standard (base) -->
     <rule ref="PSR12">
         <!-- can not be suppressed -->
         <exclude name="Generic.Files.LineLength.TooLong"/>
+
+        <!-- added later -->
+        <exclude name="Generic.WhiteSpace.ScopeIndent"/>
 
         <!-- checked by SlevomatCodingStandard.Namespaces.UseSpacing -->
         <exclude name="PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse"/>
@@ -147,6 +152,22 @@
 
     <!-- Forbid `php_sapi_name()` function -->
     <rule ref="Generic.PHP.SAPIUsage"/>
+
+    <!-- Require there be no space between increment/decrement operator and its operand -->
+    <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
+
+    <!-- Code MUST use an indent of 4 spaces for each indent level, and MUST NOT use tabs for indenting. -->
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="ignoreIndentationTokens" type="array">
+                <element value="T_COMMENT"/>
+                <element value="T_DOC_COMMENT_OPEN_TAG"/>
+            </property>
+            <property name="indent" value="4" />
+            <property name="exact" value="true" />
+            <property name="tabIndent" value="false" />
+        </properties>
+    </rule>
 
     <!-- Forbid comments starting with # -->
     <rule ref="PEAR.Commenting.InlineComment"/>
@@ -975,9 +996,6 @@
             <property name="spacingAfterLast" value="0"/>
         </properties>
     </rule>
-
-    <!-- Require there be no space between increment/decrement operator and its operand -->
-    <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
 
     <!-- Require space after language constructs -->
     <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
