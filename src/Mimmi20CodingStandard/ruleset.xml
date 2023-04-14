@@ -1015,6 +1015,8 @@
         <properties>
             <!-- checked by SlevomatCodingStandard.Functions.UnusedParameter -->
             <property name="allowUnusedFunctionParameters" value="true"/>
+            <!-- checked by SlevomatCodingStandard.Variables.UnusedVariable -->
+            <property name="allowUnusedVariablesInFileScope" value="true"/>
         </properties>
     </rule>
 </ruleset>
