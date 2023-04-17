@@ -189,9 +189,6 @@
     <!-- Require PHPDoc always before attributes -->
     <rule ref="SlevomatCodingStandard.Attributes.RequireAttributeAfterDocComment"/>
 
-    <!-- Array must have keys specified for either all or none of the values -->
-    <rule ref="SlevomatCodingStandard.Arrays.DisallowPartiallyKeyed"/>
-
     <!-- Require that single line arrays have the correct spacing: no space around brackets and one space after comma -->
     <rule ref="SlevomatCodingStandard.Arrays.SingleLineArrayWhitespace"/>
 
