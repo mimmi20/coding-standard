@@ -404,6 +404,9 @@
 
     <!-- Reports useless late static binding -->
     <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
+    
+    <!-- Forbid invalid annotation names in standard PHPDoc tags -->
+    <rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/>
 
     <!-- Reports @deprecated annotations without description. -->
     <rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>
