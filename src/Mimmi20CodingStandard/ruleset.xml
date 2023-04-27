@@ -742,8 +742,6 @@
     <!-- Forbid fancy group uses -->
     <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
 
-    <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions"/>
-
     <!-- Forbid multiple use statements on same line -->
     <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine"/>
 
