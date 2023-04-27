@@ -404,7 +404,7 @@
 
     <!-- Reports useless late static binding -->
     <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
-    
+
     <!-- Forbid invalid annotation names in standard PHPDoc tags -->
     <rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/>
 
@@ -581,7 +581,7 @@
 
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineCondition">
         <properties>
-            <property name="minLineLength" value="80"/>
+            <property name="minLineLength" value="105"/>
             <property name="booleanOperatorOnPreviousLine" value="false"/>
             <property name="alwaysSplitAllConditionParts" value="false"/>
         </properties>
@@ -589,7 +589,7 @@
 
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator">
         <properties>
-            <property name="lineLengthLimit" value="80"/>
+            <property name="lineLengthLimit" value="105"/>
             <property name="minExpressionsLength" value="null"/>
         </properties>
     </rule>
@@ -615,7 +615,7 @@
 
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireSingleLineCondition">
         <properties>
-            <property name="maxLineLength" value="79"/>
+            <property name="maxLineLength" value="104"/>
             <property name="alwaysForSimpleConditions" value="false"/>
         </properties>
     </rule>
@@ -643,16 +643,6 @@
             <property name="includeComments" value="false"/>
             <property name="includeWhitespace" value="false"/>
             <property name="maxLinesLength" value="1000"/>
-        </properties>
-        <type>warning</type>
-    </rule>
-
-    <!-- Enforces maximum length of a single line of code -->
-    <rule ref="SlevomatCodingStandard.Files.LineLength">
-        <properties>
-            <property name="lineLengthLimit" value="120"/>
-            <property name="ignoreComments" value="false"/>
-            <property name="ignoreImports" value="false"/>
         </properties>
         <type>warning</type>
     </rule>

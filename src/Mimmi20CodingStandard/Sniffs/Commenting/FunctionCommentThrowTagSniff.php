@@ -118,10 +118,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 exclude: true,
             );
 
-            if (
-                $prev !== false
-                && $tokens[$prev]['line'] === $tokens[$commentEnd]['line']
-            ) {
+            if ($prev !== false && $tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
                 $commentEnd = $prev;
             }
         }
