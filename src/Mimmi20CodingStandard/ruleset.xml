@@ -696,13 +696,13 @@
     <!-- Enforces function call to be split to more lines so each parameter is on its own line -->
     <rule ref="SlevomatCodingStandard.Functions.RequireMultiLineCall">
         <properties>
-            <property name="minLineLength" value="80"/>
+            <property name="minLineLength" value="105"/>
         </properties>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Functions.RequireSingleLineCall">
         <properties>
-            <property name="maxLineLength" value="79"/>
+            <property name="maxLineLength" value="104"/>
             <property name="ignoreWithComplexParameter" value="true"/>
         </properties>
     </rule>
