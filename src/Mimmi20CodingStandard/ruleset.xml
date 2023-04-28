@@ -246,6 +246,7 @@
     </rule>
 
     <!-- Checks that class/trait/interface members are in the correct order -->
+    <!--
     <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
         <properties>
             <property name="groups" type="array">
@@ -275,6 +276,7 @@
             </property>
         </properties>
     </rule>
+    -->
 
     <!-- Enforce consistent constant spacing -->
     <rule ref="SlevomatCodingStandard.Classes.ConstantSpacing">
