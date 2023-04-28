@@ -159,11 +159,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                     && $tokens[$i]['line'] !== $tokens[$i + 1]['line']
                 ) {
                     $error = 'There must be no blank lines after the function comment';
-                    $phpcsFile->addError(
-                        error: $error,
-                        stackPtr: $commentEnd,
-                        code: 'SpacingAfter',
-                    );
+                    $phpcsFile->addError(error: $error, stackPtr: $commentEnd, code: 'SpacingAfter');
 
                     break;
                 }
@@ -313,11 +309,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
 
         if (empty($throwTags) === true) {
             $error = 'Missing @throws tag in function comment';
-            $phpcsFile->addError(
-                error: $error,
-                stackPtr: $commentEnd,
-                code: 'MissingAtThrow',
-            );
+            $phpcsFile->addError(error: $error, stackPtr: $commentEnd, code: 'MissingAtThrow');
 
             return;
         }
@@ -344,9 +336,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 }
 
                 if (
-                    mb_strrpos($tag, (string) $throw) === mb_strlen(
-                        $tag,
-                    ) - mb_strlen((string) $throw)
+                    mb_strrpos($tag, (string) $throw) === mb_strlen($tag) - mb_strlen((string) $throw)
                 ) {
                     continue 2;
                 }
@@ -371,11 +361,6 @@ final class FunctionCommentThrowTagSniff implements Sniff
             $thrownCount,
             $tagCount,
         ];
-        $phpcsFile->addError(
-            error: $error,
-            stackPtr: $commentEnd,
-            code: 'WrongNumber',
-            data: $data,
-        );
+        $phpcsFile->addError(error: $error, stackPtr: $commentEnd, code: 'WrongNumber', data: $data);
     }
 }
