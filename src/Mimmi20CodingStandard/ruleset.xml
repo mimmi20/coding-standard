@@ -177,9 +177,6 @@
         <type>error</type>
     </rule>
 
-    <!-- Arrays should be defined with keys in alphabetical order -->
-    <rule ref="SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys"/>
-
     <!-- Disallows implicit array creation -->
     <rule ref="SlevomatCodingStandard.Arrays.DisallowImplicitArrayCreation"/>
 
@@ -244,39 +241,6 @@
             <property name="linesCountBetweenMembers" value="1"/>
         </properties>
     </rule>
-
-    <!-- Checks that class/trait/interface members are in the correct order -->
-    <!--
-    <rule ref="SlevomatCodingStandard.Classes.ClassStructure">
-        <properties>
-            <property name="groups" type="array">
-                <element value="uses"/>
-
-                <element value="enum cases"/>
-
-                <element value="public constants"/>
-                <element value="protected constants"/>
-                <element value="private constants"/>
-
-                <element value="public properties"/>
-                <element value="protected properties"/>
-                <element value="private properties"/>
-
-                <element value="public static properties"/>
-                <element value="protected static properties"/>
-                <element value="private static properties"/>
-
-                <element value="constructor"/>
-                <element value="static constructors"/>
-                <element value="destructor"/>
-                <element value="magic methods"/>
-                <element value="all public methods"/>
-                <element value="all protected methods"/>
-                <element value="all private methods"/>
-            </property>
-        </properties>
-    </rule>
-    -->
 
     <!-- Enforce consistent constant spacing -->
     <rule ref="SlevomatCodingStandard.Classes.ConstantSpacing">
@@ -638,16 +602,6 @@
 
     <!-- Require non-capturing catch when the variable with exception is not used. -->
     <rule ref="SlevomatCodingStandard.Exceptions.RequireNonCapturingCatch"/>
-
-    <!-- Disallows long files -->
-    <rule ref="SlevomatCodingStandard.Files.FileLength">
-        <properties>
-            <property name="includeComments" value="false"/>
-            <property name="includeWhitespace" value="false"/>
-            <property name="maxLinesLength" value="1000"/>
-        </properties>
-        <type>warning</type>
-    </rule>
 
     <!-- Ensure Arrow Functions declaration format -->
     <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
