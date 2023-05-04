@@ -276,7 +276,7 @@ jobs:
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
 
       - name: "Run squizlabs/php_codesniffer"
-        run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --exclude=Generic.Metrics.CyclomaticComplexity,SlevomatCodingStandard.Complexity.Cognitive,SlevomatCodingStandard.Functions.FunctionLength -q --report=checkstyle src .php-cs-fixer.php rector.php | cs2pr"
+        run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --exclude=Generic.Metrics.CyclomaticComplexity,SlevomatCodingStandard.Complexity.Cognitive,SlevomatCodingStandard.Functions.FunctionLength --extensions=php,stub -q --report=checkstyle src stubs .php-cs-fixer.php rector.php | cs2pr"
 
   static-code-analysis:
     name: "Static Code Analysis with PHPStan"
