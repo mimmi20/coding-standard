@@ -809,26 +809,8 @@
     <!-- Forbid useless semicolon `;` -->
     <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
 
-    <!-- Disallows variable parsing inside strings -->
-    <rule ref="SlevomatCodingStandard.Strings.DisallowVariableParsing">
-        <properties>
-            <!-- disallows usage of ${...} -->
-            <property
-                name="disallowDollarCurlySyntax"
-                value="false"
-            />
-            <!-- disallows usage of {$...} -->
-            <property
-                name="disallowCurlyDollarSyntax"
-                value="false"
-            />
-            <!-- disallows usage of $... -->
-            <property
-                name="disallowSimpleSyntax"
-                value="false"
-            />
-        </properties>
-    </rule>
+    <!-- Allow variable parsing inside strings -->
+    <!-- <rule ref="SlevomatCodingStandard.Strings.DisallowVariableParsing"/> -->
 
     <!-- Require presence of declare(strict_types = 1) -->
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
