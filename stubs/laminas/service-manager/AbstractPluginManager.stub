@@ -22,7 +22,7 @@ use Psr\Container\ContainerInterface;
  * The implementation extends `ServiceManager`, thus providing the same set
  * of capabilities as found in that implementation.
  *
- * @template InstanceType
+ * @template InstanceType of object
  * @implements PluginManagerInterface<InstanceType>
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
  * @psalm-suppress PropertyNotSetInConstructor
