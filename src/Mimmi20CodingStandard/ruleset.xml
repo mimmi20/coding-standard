@@ -820,12 +820,12 @@
             <!-- disallows usage of {$...} -->
             <property
                 name="disallowCurlyDollarSyntax"
-                value="true"
+                value="false"
             />
             <!-- disallows usage of $... -->
             <property
                 name="disallowSimpleSyntax"
-                value="true"
+                value="false"
             />
         </properties>
     </rule>
