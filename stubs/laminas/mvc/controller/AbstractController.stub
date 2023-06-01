@@ -1,0 +1,194 @@
+<?php
+
+namespace Laminas\Mvc\Controller;
+
+use Laminas\View\Model\ModelInterface;
+use Laminas\Http\Header\Accept\FieldValuePart\AbstractFieldValuePart;
+use Laminas\Mvc\Controller\Plugin\Forward;
+use Laminas\Mvc\Controller\Plugin\Layout;
+use Laminas\Mvc\Controller\Plugin\Params;
+use Laminas\Mvc\Controller\Plugin\Redirect;
+use Laminas\Mvc\Controller\Plugin\Url;
+use Laminas\View\Model\ViewModel;
+use Laminas\EventManager\EventInterface as Event;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Http\PhpEnvironment\Response as HttpResponse;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Mvc\InjectApplicationEventInterface;
+use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stdlib\DispatchableInterface as Dispatchable;
+use Laminas\Stdlib\RequestInterface as Request;
+use Laminas\Stdlib\ResponseInterface as Response;
+
+/**
+ * Abstract controller
+ *
+ * Convenience methods for pre-built plugins (@see __call):
+ * @codingStandardsIgnoreStart
+ * @method ModelInterface acceptableViewModelSelector(array $matchAgainst = null, bool $returnDefault = true, AbstractFieldValuePart $resultReference = null)
+ * @codingStandardsIgnoreEnd
+ * @method Forward forward()
+ * @method Layout|ModelInterface layout(string $template = null)
+ * @method Params|mixed params(string $param = null, mixed $default = null)
+ * @method Redirect redirect()
+ * @method Url url()
+ * @method ViewModel createHttpNotFoundModel(Response $response)
+ */
+abstract class AbstractController implements
+    Dispatchable,
+    EventManagerAwareInterface,
+    InjectApplicationEventInterface
+{
+    /**
+     * @var PluginManager
+     */
+    protected $plugins;
+
+    /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var Response
+     */
+    protected $response;
+
+    /**
+     * @var Event
+     */
+    protected $event;
+
+    /**
+     * @var EventManagerInterface
+     */
+    protected $events;
+
+    /**
+     * @var null|string|string[]
+     */
+    protected $eventIdentifier;
+
+    /**
+     * Execute the request
+     *
+     * @param  MvcEvent $e
+     * @return mixed
+     */
+    abstract public function onDispatch(MvcEvent $e);
+
+    /**
+     * Dispatch a request
+     *
+     * @events dispatch.pre, dispatch.post
+     * @param  Request $request
+     * @param  null|Response $response
+     * @return Response|mixed
+     */
+    public function dispatch(Request $request, Response $response = null);
+
+    /**
+     * Get request object
+     *
+     * @return Request
+     */
+    public function getRequest();
+
+    /**
+     * Get response object
+     *
+     * @return Response
+     */
+    public function getResponse();
+
+    /**
+     * Set the event manager instance used by this context
+     *
+     * @param  EventManagerInterface $events
+     * @return self
+     */
+    public function setEventManager(EventManagerInterface $events);
+
+    /**
+     * Retrieve the event manager
+     *
+     * Lazy-loads an EventManager instance if none registered.
+     *
+     * @return EventManagerInterface
+     */
+    public function getEventManager();
+
+    /**
+     * Set an event to use during dispatch
+     *
+     * By default, will re-cast to MvcEvent if another event type is provided.
+     *
+     * @param  Event $e
+     * @return void
+     */
+    public function setEvent(Event $e);
+
+    /**
+     * Get the attached event
+     *
+     * Will create a new MvcEvent if none provided.
+     *
+     * @return MvcEvent
+     */
+    public function getEvent();
+
+    /**
+     * Get plugin manager
+     *
+     * @return PluginManager<ServiceManager>
+     */
+    public function getPluginManager();
+
+    /**
+     * Set plugin manager
+     *
+     * @param PluginManager<ServiceManager> $plugins
+     *
+     * @return self
+     */
+    public function setPluginManager(PluginManager $plugins);
+
+    /**
+     * Get plugin instance
+     *
+     * @param  string     $name    Name of plugin to return
+     * @param  null|array $options Options to pass to plugin constructor (if not already instantiated)
+     * @return mixed
+     */
+    public function plugin($name, array $options = null);
+
+    /**
+     * Method overloading: return/call plugins
+     *
+     * If the plugin is a functor, call it, passing the parameters provided.
+     * Otherwise, return the plugin instance.
+     *
+     * @param  string $method
+     * @param  array  $params
+     * @return mixed
+     */
+    public function __call($method, $params);
+
+    /**
+     * Register the default events for this controller
+     *
+     * @return void
+     */
+    protected function attachDefaultListeners();
+
+    /**
+     * Transform an "action" token into a method name
+     *
+     * @param  string $action
+     * @return string
+     */
+    public static function getMethodFromAction($action);
+}
