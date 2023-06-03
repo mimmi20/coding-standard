@@ -25,6 +25,8 @@ interface AbstractFactoryInterface extends FactoryInterface
      *
      * @return bool
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

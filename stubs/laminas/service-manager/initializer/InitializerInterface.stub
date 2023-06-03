@@ -21,6 +21,8 @@ interface InitializerInterface
      *
      * @return void
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */

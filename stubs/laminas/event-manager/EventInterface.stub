@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Laminas\EventManager;
 
 use ArrayAccess;
+use Laminas\EventManager\Exception\InvalidArgumentException;
 
 /**
  * Representation of an event
@@ -19,6 +20,8 @@ interface EventInterface
      *
      * @return string|null
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getName();
@@ -29,6 +32,8 @@ interface EventInterface
      * @return object|string|null
      * @psalm-return TTarget
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getTarget();
@@ -38,6 +43,8 @@ interface EventInterface
      *
      * @return array<mixed>|ArrayAccess|object
      * @psalm-return TParams
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -51,6 +58,8 @@ interface EventInterface
      *
      * @return mixed
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
@@ -62,6 +71,8 @@ interface EventInterface
      * @param string $name
      *
      * @return void
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -75,6 +86,8 @@ interface EventInterface
      * @psalm-param NewTTarget $target
      *
      * @return void
+     *
+     * @throws void
      *
      * @template NewTTarget of object|string|null
      * @psalm-this-out static&self<NewTTarget, TParams>
@@ -91,6 +104,8 @@ interface EventInterface
      *
      * @return void
      *
+     * @throws InvalidArgumentException
+     *
      * @template NewTParams of array|ArrayAccess|object
      * @psalm-this-out static&self<TTarget, NewTParams>
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
@@ -106,6 +121,8 @@ interface EventInterface
      *
      * @return void
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
@@ -118,6 +135,8 @@ interface EventInterface
      *
      * @return void
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
@@ -127,6 +146,8 @@ interface EventInterface
      * Has this event indicated event propagation should stop?
      *
      * @return bool
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Laminas\ServiceManager;
 
 use ArrayAccess;
+use Laminas\ServiceManager\Exception\ContainerModificationsNotAllowedException;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -68,6 +69,8 @@ interface ConfigInterface
      *
      * @return ServiceManager<InstanceType>
      *
+     * @throws ContainerModificationsNotAllowedException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function configureServiceManager(ServiceManager $serviceManager);
@@ -92,6 +95,8 @@ interface ConfigInterface
      * a service manager or plugin manager, or pass to its `withConfig()` method.
      *
      * @return array<string, array<int|string, mixed>>
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

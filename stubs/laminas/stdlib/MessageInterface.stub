@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Laminas\Stdlib;
 
+use Laminas\Stdlib\Exception\InvalidArgumentException;
+
 interface MessageInterface
 {
     /**
@@ -13,6 +15,8 @@ interface MessageInterface
      * @param mixed                                  $value
      *
      * @return self
+     *
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
@@ -26,6 +30,8 @@ interface MessageInterface
      *
      * @return mixed
      *
+     * @throws InvalidArgumentException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -38,6 +44,8 @@ interface MessageInterface
      *
      * @return mixed
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -47,6 +55,8 @@ interface MessageInterface
      * Get content
      *
      * @return mixed
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

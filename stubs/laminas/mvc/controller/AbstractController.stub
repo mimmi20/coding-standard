@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Laminas\Mvc\Controller;
 
+use DomainException;
+use InvalidArgumentException;
 use Laminas\EventManager\EventInterface as Event;
 use Laminas\EventManager\EventManagerAwareInterface;
 use Laminas\EventManager\EventManagerInterface;
@@ -15,12 +17,15 @@ use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\Mvc\InjectApplicationEventInterface;
 use Laminas\Mvc\MvcEvent;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\DispatchableInterface as Dispatchable;
 use Laminas\Stdlib\RequestInterface as Request;
 use Laminas\Stdlib\ResponseInterface as Response;
 use Laminas\View\Model\ModelInterface;
 use Laminas\View\Model\ViewModel;
+use RuntimeException;
 
 /**
  * Abstract controller
@@ -82,6 +87,8 @@ abstract class AbstractController implements
      *
      * @return mixed
      *
+     * @throws DomainException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     abstract public function onDispatch(MvcEvent $e);
@@ -90,6 +97,8 @@ abstract class AbstractController implements
      * Dispatch a request
      *
      * @return Response|mixed
+     *
+     * @throws RuntimeException
      *
      * @events dispatch.pre, dispatch.post
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
@@ -101,6 +110,8 @@ abstract class AbstractController implements
      *
      * @return Request
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getRequest();
@@ -110,6 +121,8 @@ abstract class AbstractController implements
      *
      * @return Response
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getResponse();
@@ -118,6 +131,8 @@ abstract class AbstractController implements
      * Set the event manager instance used by this context
      *
      * @return self
+     *
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -130,6 +145,8 @@ abstract class AbstractController implements
      *
      * @return EventManagerInterface
      *
+     * @throws InvalidArgumentException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getEventManager();
@@ -140,6 +157,8 @@ abstract class AbstractController implements
      * By default, will re-cast to MvcEvent if another event type is provided.
      *
      * @return void
+     *
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -152,6 +171,8 @@ abstract class AbstractController implements
      *
      * @return MvcEvent
      *
+     * @throws InvalidArgumentException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getEvent();
@@ -160,6 +181,8 @@ abstract class AbstractController implements
      * Get plugin manager
      *
      * @return PluginManager<ServiceManager>
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -172,6 +195,8 @@ abstract class AbstractController implements
      *
      * @return self
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setPluginManager(PluginManager $plugins);
@@ -183,6 +208,9 @@ abstract class AbstractController implements
      * @param array<mixed>|null $options Options to pass to plugin constructor (if not already instantiated)
      *
      * @return mixed
+     *
+     * @throws ServiceNotFoundException If the manager does not have a service definition for the instance, and the service is not auto-invokable.
+     * @throws InvalidServiceException If the plugin created is invalid for the plugin context.
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -200,6 +228,9 @@ abstract class AbstractController implements
      *
      * @return mixed
      *
+     * @throws ServiceNotFoundException If the manager does not have a service definition for the instance, and the service is not auto-invokable.
+     * @throws InvalidServiceException If the plugin created is invalid for the plugin context.
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
@@ -209,6 +240,8 @@ abstract class AbstractController implements
      * Register the default events for this controller
      *
      * @return void
+     *
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -220,6 +253,8 @@ abstract class AbstractController implements
      * @param string $action
      *
      * @return string
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint

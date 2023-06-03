@@ -13,6 +13,8 @@ interface PluginInterface
      *
      * @return void
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setController(Dispatchable $controller);
@@ -21,6 +23,8 @@ interface PluginInterface
      * Get the current controller instance
      *
      * @return Dispatchable|null
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

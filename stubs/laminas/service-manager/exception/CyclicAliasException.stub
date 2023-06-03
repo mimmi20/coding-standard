@@ -10,9 +10,15 @@ class CyclicAliasException extends InvalidArgumentException
     /**
      * @param string        $alias   conflicting alias key
      * @param array<string> $aliases map of referenced services, indexed by alias name (string)
+     *
+     * @throws void
      */
     public static function fromCyclicAlias(string $alias, array $aliases): self;
 
-    /** @param array<string> $aliases map of referenced services, indexed by alias name (string) */
+    /**
+     * @param array<string> $aliases map of referenced services, indexed by alias name (string)
+     *
+     * @throws void
+     */
     public static function fromAliasesMap(array $aliases): self;
 }

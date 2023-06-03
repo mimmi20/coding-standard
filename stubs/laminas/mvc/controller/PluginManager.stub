@@ -15,6 +15,7 @@ use Laminas\Mvc\Controller\Plugin\Service\ForwardFactory;
 use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\Stdlib\DispatchableInterface;
 
@@ -126,6 +127,9 @@ class PluginManager extends AbstractPluginManager
      * @psalm-return ($name is class-string<InstanceType> ? InstanceType : mixed)
      * @phpstan-return ($name is class-string<InstanceType> ? InstanceType : mixed)
      *
+     * @throws ServiceNotFoundException If the manager does not have a service definition for the instance, and the service is not auto-invokable.
+     * @throws InvalidServiceException If the plugin created is invalid for the plugin context.
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function get($name, array | null $options = null);
@@ -135,6 +139,8 @@ class PluginManager extends AbstractPluginManager
      *
      * @return self
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setController(DispatchableInterface $controller);
@@ -143,6 +149,8 @@ class PluginManager extends AbstractPluginManager
      * Retrieve controller instance
      *
      * @return DispatchableInterface|null
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -154,6 +162,8 @@ class PluginManager extends AbstractPluginManager
      * @param object $plugin
      *
      * @return void
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint

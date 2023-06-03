@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Laminas\Db\ResultSet;
 
 use Countable;
+use Laminas\Db\ResultSet\Exception\InvalidArgumentException;
 use Traversable;
 
 /**
@@ -21,6 +22,8 @@ interface ResultSetInterface extends Traversable, Countable
      *
      * @return mixed
      *
+     * @throws InvalidArgumentException
+     *
      * @abstract
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -33,6 +36,8 @@ interface ResultSetInterface extends Traversable, Countable
      * operation or intersection of some data
      *
      * @return mixed
+     *
+     * @throws void
      *
      * @abstract
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint

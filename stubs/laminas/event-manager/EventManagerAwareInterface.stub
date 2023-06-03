@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Laminas\EventManager;
 
+use Laminas\EventManager\Exception\InvalidArgumentException;
+
 /**
  * Interface to automate setter injection for an EventManager instance
  */
@@ -13,6 +15,8 @@ interface EventManagerAwareInterface extends EventsCapableInterface
      * Inject an EventManager instance
      *
      * @return void
+     *
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

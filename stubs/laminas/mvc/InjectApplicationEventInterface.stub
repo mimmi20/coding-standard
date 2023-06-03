@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Laminas\Mvc;
 
+use InvalidArgumentException;
 use Laminas\EventManager\EventInterface as Event;
 
 interface InjectApplicationEventInterface
@@ -13,6 +14,8 @@ interface InjectApplicationEventInterface
      *
      * @return void
      *
+     * @throws InvalidArgumentException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setEvent(Event $event);
@@ -21,6 +24,8 @@ interface InjectApplicationEventInterface
      * Retrieve the composed event
      *
      * @return Event
+     *
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

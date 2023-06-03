@@ -5,7 +5,12 @@ declare(strict_types = 1);
 namespace Laminas\ServiceManager;
 
 use Laminas\ServiceManager\Exception\ContainerModificationsNotAllowedException;
+use Laminas\ServiceManager\Exception\InvalidArgumentException;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Service Manager.
@@ -121,6 +126,7 @@ class ServiceManager implements ServiceLocatorInterface
     /**
      * @var array<Initializer\InitializerInterface|callable>
      * @psalm-var InitializersConfiguration
+     * @phpstan-var array<array-key, (class-string<Initializer\InitializerInterface>|Initializer\InitializerInterface)|callable(ContainerInterface, object):void>
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $initializers = [];
@@ -128,6 +134,7 @@ class ServiceManager implements ServiceLocatorInterface
     /**
      * @var array<mixed>
      * @psalm-var LazyServicesConfiguration
+     * @phpstan-var array{class_map?:array<string, class-string>, proxies_namespace?: non-empty-string, proxies_target_dir?: non-empty-string, write_proxy_files?: bool}
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $lazyServices = [];
@@ -183,6 +190,8 @@ class ServiceManager implements ServiceLocatorInterface
      * on what $config accepts.
      *
      * @phpstan-param array{abstract_factories?: AbstractFactoriesConfiguration, aliases?: array<string,string|class-string<InstanceType>>, delegators?: DelegatorsConfiguration, factories?: FactoriesConfiguration, initializers?: InitializersConfiguration, invokables?: array<string,string>, lazy_services?: LazyServicesConfiguration, services?: array<string|class-string<InstanceType>,InstanceType>, shared?:array<string|class-string<InstanceType>,bool>, shared_by_default?:bool} $config
+     *
+     * @throws ContainerModificationsNotAllowedException
      */
     public function __construct(array $config = []);
 
@@ -196,6 +205,8 @@ class ServiceManager implements ServiceLocatorInterface
      *
      * @return ContainerInterface
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getServiceLocator();
@@ -208,6 +219,9 @@ class ServiceManager implements ServiceLocatorInterface
      * @return mixed Entry.
      * @psalm-return ($id is class-string<T> ? T : mixed)
      * @phpstan-return ($id is class-string<T> ? T : mixed)
+     *
+     * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
+     * @throws ContainerExceptionInterface Error while retrieving the entry.
      *
      * @template T of object
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -225,6 +239,10 @@ class ServiceManager implements ServiceLocatorInterface
      * @psalm-return ($id is class-string<T> ? T : mixed)
      * @phpstan-return ($id is class-string<T> ? T : mixed)
      *
+     * @throws ServiceNotFoundException If unable to resolve the service.
+     * @throws ServiceNotCreatedException If an exception is raised when creating a service.
+     * @throws ContainerExceptionInterface If any other error occurs.
+     *
      * @template T of object
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
@@ -238,6 +256,8 @@ class ServiceManager implements ServiceLocatorInterface
      *
      * @return bool
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -250,6 +270,8 @@ class ServiceManager implements ServiceLocatorInterface
      *
      * @return void
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -259,6 +281,8 @@ class ServiceManager implements ServiceLocatorInterface
      * Retrieve the flag indicating immutability status.
      *
      * @return bool
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -333,6 +357,8 @@ class ServiceManager implements ServiceLocatorInterface
      *
      * @return void
      *
+     * @throws ContainerModificationsNotAllowedException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -345,6 +371,8 @@ class ServiceManager implements ServiceLocatorInterface
      * @psalm-param class-string<Factory\AbstractFactoryInterface>|Factory\AbstractFactoryInterface $factory
      *
      * @return void
+     *
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
@@ -360,6 +388,8 @@ class ServiceManager implements ServiceLocatorInterface
      *
      * @return void
      *
+     * @throws ContainerModificationsNotAllowedException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -374,6 +404,8 @@ class ServiceManager implements ServiceLocatorInterface
      *     |Initializer\InitializerInterface $initializer
      *
      * @return void
+     *
+     * @throws ContainerModificationsNotAllowedException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint

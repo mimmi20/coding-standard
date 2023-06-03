@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Laminas\EventManager;
 
+use InvalidArgumentException;
+
 /**
  * Interface indicating that an object composes an EventManagerInterface instance.
  */
@@ -15,6 +17,8 @@ interface EventsCapableInterface
      * Lazy-loads an EventManager instance if none registered.
      *
      * @return EventManagerInterface
+     *
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

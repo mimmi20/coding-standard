@@ -4,12 +4,16 @@ declare(strict_types = 1);
 
 namespace Laminas\Stdlib;
 
+use RuntimeException;
+
 interface DispatchableInterface
 {
     /**
      * Dispatch a request
      *
      * @return Response|mixed
+     *
+     * @throws RuntimeException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

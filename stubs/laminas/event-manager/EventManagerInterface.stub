@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Laminas\EventManager;
 
+use Laminas\EventManager\Exception\InvalidArgumentException;
+use Laminas\EventManager\Exception\RuntimeException;
+
 /**
  * Interface for messengers
  */
@@ -27,6 +30,9 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      * @param array<mixed>|object $argv
      *
      * @return ResponseCollection
+     *
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -55,6 +61,9 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      *
      * @return ResponseCollection
      *
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
@@ -67,6 +76,9 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      * based on the event name, raising an exception if the event name is missing.
      *
      * @return ResponseCollection
+     *
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -82,6 +94,9 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      * a boolean true value, the manager must short-circuit listener execution.
      *
      * @return ResponseCollection
+     *
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -106,6 +121,8 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      *
      * @return callable
      *
+     * @throws InvalidArgumentException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
@@ -121,6 +138,8 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      *
      * @return void
      *
+     * @throws InvalidArgumentException
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
@@ -132,6 +151,8 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      * @param string $eventName
      *
      * @return void
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
@@ -146,6 +167,8 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      *
      * @return void
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setEventPrototype(EventInterface $prototype);
@@ -154,6 +177,8 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      * Get the identifier(s) for this EventManager
      *
      * @return array<string>
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
@@ -166,6 +191,8 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      *
      * @return void
      *
+     * @throws void
+     *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setIdentifiers(array $identifiers);
@@ -176,6 +203,8 @@ interface EventManagerInterface extends SharedEventsCapableInterface
      * @param array<string> $identifiers
      *
      * @return void
+     *
+     * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
