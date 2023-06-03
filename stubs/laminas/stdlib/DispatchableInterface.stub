@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\Stdlib;
 
@@ -10,6 +10,8 @@ interface DispatchableInterface
      * Dispatch a request
      *
      * @return Response|mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function dispatch(RequestInterface $request, ?ResponseInterface $response = null);
+    public function dispatch(RequestInterface $request, ResponseInterface | null $response = null);
 }

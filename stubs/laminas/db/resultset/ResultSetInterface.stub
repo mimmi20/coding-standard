@@ -17,9 +17,13 @@ interface ResultSetInterface extends Traversable, Countable
     /**
      * Can be anything traversable|array
      *
-     * @abstract
      * @param iterable<int|string, mixed> $dataSource
+     *
      * @return mixed
+     *
+     * @abstract
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function initialize($dataSource);
 
@@ -28,8 +32,10 @@ interface ResultSetInterface extends Traversable, Countable
      * from the database might be a column, and/or the result of an
      * operation or intersection of some data
      *
-     * @abstract
      * @return mixed
+     *
+     * @abstract
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getFieldCount();
 }

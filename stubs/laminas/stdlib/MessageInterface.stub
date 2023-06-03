@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\Stdlib;
-
-use Traversable;
 
 interface MessageInterface
 {
@@ -12,24 +10,36 @@ interface MessageInterface
      * Set metadata
      *
      * @param string|int|iterable<int|string, mixed> $spec
-     * @param  mixed $value
+     * @param mixed                                  $value
+     *
      * @return self
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setMetadata($spec, $value = null);
 
     /**
      * Get metadata
      *
-     * @param  null|string|int $key
+     * @param string|int|null $key
+     *
      * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getMetadata($key = null);
 
     /**
      * Set content
      *
-     * @param  mixed $content
+     * @param mixed $content
+     *
      * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setContent($content);
 
@@ -37,6 +47,8 @@ interface MessageInterface
      * Get content
      *
      * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getContent();
 }

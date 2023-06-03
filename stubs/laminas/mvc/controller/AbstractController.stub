@@ -1,27 +1,26 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Laminas\Mvc\Controller;
 
-use Laminas\View\Model\ModelInterface;
+use Laminas\EventManager\EventInterface as Event;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManagerInterface;
 use Laminas\Http\Header\Accept\FieldValuePart\AbstractFieldValuePart;
 use Laminas\Mvc\Controller\Plugin\Forward;
 use Laminas\Mvc\Controller\Plugin\Layout;
 use Laminas\Mvc\Controller\Plugin\Params;
 use Laminas\Mvc\Controller\Plugin\Redirect;
 use Laminas\Mvc\Controller\Plugin\Url;
-use Laminas\View\Model\ViewModel;
-use Laminas\EventManager\EventInterface as Event;
-use Laminas\EventManager\EventManager;
-use Laminas\EventManager\EventManagerAwareInterface;
-use Laminas\EventManager\EventManagerInterface;
-use Laminas\Http\PhpEnvironment\Response as HttpResponse;
-use Laminas\Http\Request as HttpRequest;
 use Laminas\Mvc\InjectApplicationEventInterface;
 use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\DispatchableInterface as Dispatchable;
 use Laminas\Stdlib\RequestInterface as Request;
 use Laminas\Stdlib\ResponseInterface as Response;
+use Laminas\View\Model\ModelInterface;
+use Laminas\View\Model\ViewModel;
 
 /**
  * Abstract controller
@@ -44,56 +43,65 @@ abstract class AbstractController implements
 {
     /**
      * @var PluginManager
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $plugins;
 
     /**
      * @var Request
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $request;
 
     /**
      * @var Response
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $response;
 
     /**
      * @var Event
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $event;
 
     /**
      * @var EventManagerInterface
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $events;
 
     /**
-     * @var null|string|string[]
+     * @var string|array<string>|null
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $eventIdentifier;
 
     /**
      * Execute the request
      *
-     * @param  MvcEvent $e
      * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     abstract public function onDispatch(MvcEvent $e);
 
     /**
      * Dispatch a request
      *
-     * @events dispatch.pre, dispatch.post
-     * @param  Request $request
-     * @param  null|Response $response
      * @return Response|mixed
+     *
+     * @events dispatch.pre, dispatch.post
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function dispatch(Request $request, Response $response = null);
+    public function dispatch(Request $request, Response | null $response = null);
 
     /**
      * Get request object
      *
      * @return Request
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getRequest();
 
@@ -101,14 +109,17 @@ abstract class AbstractController implements
      * Get response object
      *
      * @return Response
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getResponse();
 
     /**
      * Set the event manager instance used by this context
      *
-     * @param  EventManagerInterface $events
      * @return self
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setEventManager(EventManagerInterface $events);
 
@@ -118,6 +129,8 @@ abstract class AbstractController implements
      * Lazy-loads an EventManager instance if none registered.
      *
      * @return EventManagerInterface
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getEventManager();
 
@@ -126,8 +139,9 @@ abstract class AbstractController implements
      *
      * By default, will re-cast to MvcEvent if another event type is provided.
      *
-     * @param  Event $e
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setEvent(Event $e);
 
@@ -137,6 +151,8 @@ abstract class AbstractController implements
      * Will create a new MvcEvent if none provided.
      *
      * @return MvcEvent
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getEvent();
 
@@ -144,6 +160,8 @@ abstract class AbstractController implements
      * Get plugin manager
      *
      * @return PluginManager<ServiceManager>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getPluginManager();
 
@@ -153,17 +171,23 @@ abstract class AbstractController implements
      * @param PluginManager<ServiceManager> $plugins
      *
      * @return self
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setPluginManager(PluginManager $plugins);
 
     /**
      * Get plugin instance
      *
-     * @param  string     $name    Name of plugin to return
-     * @param  null|array $options Options to pass to plugin constructor (if not already instantiated)
+     * @param string            $name    Name of plugin to return
+     * @param array<mixed>|null $options Options to pass to plugin constructor (if not already instantiated)
+     *
      * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
-    public function plugin($name, array $options = null);
+    public function plugin($name, array | null $options = null);
 
     /**
      * Method overloading: return/call plugins
@@ -171,9 +195,13 @@ abstract class AbstractController implements
      * If the plugin is a functor, call it, passing the parameters provided.
      * Otherwise, return the plugin instance.
      *
-     * @param  string $method
-     * @param  array  $params
+     * @param string       $method
+     * @param array<mixed> $params
+     *
      * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function __call($method, $params);
 
@@ -181,14 +209,20 @@ abstract class AbstractController implements
      * Register the default events for this controller
      *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     protected function attachDefaultListeners();
 
     /**
      * Transform an "action" token into a method name
      *
-     * @param  string $action
+     * @param string $action
+     *
      * @return string
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public static function getMethodFromAction($action);
 }

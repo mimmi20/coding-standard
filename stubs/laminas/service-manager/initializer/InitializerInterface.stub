@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\ServiceManager\Initializer;
 
@@ -17,8 +17,12 @@ interface InitializerInterface
     /**
      * Initialize the given instance
      *
-     * @param  object             $instance
+     * @param object $instance
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function __invoke(ContainerInterface $container, $instance);
 }

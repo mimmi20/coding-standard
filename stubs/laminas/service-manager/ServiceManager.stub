@@ -1,40 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\ServiceManager;
 
-use Exception;
 use Laminas\ServiceManager\Exception\ContainerModificationsNotAllowedException;
-use Laminas\ServiceManager\Exception\CyclicAliasException;
-use Laminas\ServiceManager\Exception\InvalidArgumentException;
-use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
-use Laminas\ServiceManager\Exception\ServiceNotFoundException;
-use Laminas\ServiceManager\Proxy\LazyServiceFactory;
-use Laminas\Stdlib\ArrayUtils;
-use ProxyManager\Configuration as ProxyConfiguration;
-use ProxyManager\Factory\LazyLoadingValueHolderFactory;
-use ProxyManager\FileLocator\FileLocator;
-use ProxyManager\GeneratorStrategy\EvaluatingGeneratorStrategy;
-use ProxyManager\GeneratorStrategy\FileWriterGeneratorStrategy;
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
-
-use function array_intersect;
-use function array_key_exists;
-use function array_keys;
-use function class_exists;
-use function gettype;
-use function in_array;
-use function is_callable;
-use function is_object;
-use function is_string;
-use function spl_autoload_register;
-use function spl_object_hash;
-use function sprintf;
-use function trigger_error;
-
-use const E_USER_DEPRECATED;
 
 /**
  * Service Manager.
@@ -96,10 +67,15 @@ use const E_USER_DEPRECATED;
  *
  * @template InstanceType of object
  * @implements ServiceLocatorInterface<InstanceType>
+ *
+ * @phpcs:disable SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
  */
 class ServiceManager implements ServiceLocatorInterface
 {
-    /** @var Factory\AbstractFactoryInterface[] */
+    /**
+     * @var array<Factory\AbstractFactoryInterface>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
     protected $abstractFactories = [];
 
     /**
@@ -108,6 +84,7 @@ class ServiceManager implements ServiceLocatorInterface
      * Should map one alias to a service name, or another alias (aliases are recursively resolved)
      *
      * @var array<string|class-string<InstanceType>, class-string<InstanceType>>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $aliases = [];
 
@@ -115,35 +92,43 @@ class ServiceManager implements ServiceLocatorInterface
      * Whether or not changes may be made to this instance.
      *
      * @var bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $allowOverride = false;
 
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     */
     protected $creationContext;
 
     /**
-     * @var string[][]|Factory\DelegatorFactoryInterface[][]
+     * @var array<array<string|Factory\DelegatorFactoryInterface>>
      * @psalm-var DelegatorsConfiguration
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $delegators = [];
 
     /**
      * A list of factories (either as string name or callable)
      *
-     * @var string[]|callable[]
+     * @var array<string|callable>
      * @psalm-var FactoriesConfiguration
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $factories = [];
 
     /**
-     * @var Initializer\InitializerInterface[]|callable[]
+     * @var array<Initializer\InitializerInterface|callable>
      * @psalm-var InitializersConfiguration
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $initializers = [];
 
     /**
-     * @var array
+     * @var array<mixed>
      * @psalm-var LazyServicesConfiguration
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $lazyServices = [];
 
@@ -151,6 +136,7 @@ class ServiceManager implements ServiceLocatorInterface
      * A list of already loaded services (this act as a local cache)
      *
      * @var array<string|class-string<InstanceType>,InstanceType>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $services = [];
 
@@ -164,7 +150,8 @@ class ServiceManager implements ServiceLocatorInterface
      *     MyOtherService::class => false // won't be shared, even if "sharedByDefault" is true
      * ]
      *
-     * @var array<string,bool>
+     * @var array<string, bool>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $shared = [];
 
@@ -172,6 +159,7 @@ class ServiceManager implements ServiceLocatorInterface
      * Should the services be shared by default?
      *
      * @var bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $sharedByDefault = true;
 
@@ -179,11 +167,13 @@ class ServiceManager implements ServiceLocatorInterface
      * Service manager was already configured?
      *
      * @var bool
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $configured = false;
 
     /**
      * Cached abstract factories from string.
+     *
      * @var array<string, Factory\AbstractFactoryInterface>
      */
     private array $cachedAbstractFactories = [];
@@ -205,12 +195,12 @@ class ServiceManager implements ServiceLocatorInterface
      *     instance passed to the factory instead.
      *
      * @return ContainerInterface
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getServiceLocator();
 
     /**
-     * @template T of object
-     *
      * @param string $name Identifier of the entry to look for.
      * @psalm-param string|class-string<T> $name
      * @phpstan-param string|class-string<T> $name
@@ -218,29 +208,38 @@ class ServiceManager implements ServiceLocatorInterface
      * @return mixed Entry.
      * @psalm-return ($id is class-string<T> ? T : mixed)
      * @phpstan-return ($id is class-string<T> ? T : mixed)
+     *
+     * @template T of object
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function get($name);
 
     /**
-     * @template T of object
-     *
-     * @param string $name Identifier of the entry to build.
+     * @param string                    $name    Identifier of the entry to build.
+     * @param array<string, mixed>|null $options
      * @psalm-param string|class-string<T> $name
      * @phpstan-param string|class-string<T> $name
-     *
-     * @param array<string, mixed>|null $options
      *
      * @return mixed Entry.
      * @psalm-return ($id is class-string<T> ? T : mixed)
      * @phpstan-return ($id is class-string<T> ? T : mixed)
+     *
+     * @template T of object
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function build($name, ?array $options = null);
+    public function build($name, array | null $options = null);
 
     /**
      * {@inheritDoc}
      *
      * @param string|class-string<object> $name
+     *
      * @return bool
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function has($name);
 
@@ -248,7 +247,11 @@ class ServiceManager implements ServiceLocatorInterface
      * Indicate whether or not the instance is immutable.
      *
      * @param bool $flag
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setAllowOverride($flag);
 
@@ -256,15 +259,21 @@ class ServiceManager implements ServiceLocatorInterface
      * Retrieve the flag indicating immutability status.
      *
      * @return bool
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getAllowOverride();
 
     /**
      * @phpstan-param array{abstract_factories?: AbstractFactoriesConfiguration, aliases?: array<string,string|class-string<InstanceType>>, delegators?: DelegatorsConfiguration, factories?: FactoriesConfiguration, initializers?: InitializersConfiguration, invokables?: array<string,string>, lazy_services?: LazyServicesConfiguration, services?: array<string|class-string<InstanceType>,InstanceType>, shared?:array<string|class-string<InstanceType>,bool>, shared_by_default?:bool} $config
+     *
      * @return self<InstanceType>
+     *
      * @throws ContainerModificationsNotAllowedException If the allow
      *     override flag has been toggled off, and a service instance
      *     exists for a given service.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function configure(array $config);
 
@@ -273,40 +282,59 @@ class ServiceManager implements ServiceLocatorInterface
      *
      * @param string $alias
      * @param string $target
-     * @throws ContainerModificationsNotAllowedException If $alias already exists as a service and overrides are disallowed.
+     *
      * @return void
+     *
+     * @throws ContainerModificationsNotAllowedException If $alias already exists as a service and overrides are disallowed.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setAlias($alias, $target);
 
     /**
      * Add an invokable class mapping.
      *
-     * @param string $name Service name
-     * @param null|string $class Class to which to map; if omitted, $name is assumed.
-     * @throws ContainerModificationsNotAllowedException If $name already exists as a service and overrides are disallowed.
+     * @param string      $name  Service name
+     * @param string|null $class Class to which to map; if omitted, $name is assumed.
+     *
      * @return void
+     *
+     * @throws ContainerModificationsNotAllowedException If $name already exists as a service and overrides are disallowed.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setInvokableClass($name, $class = null);
 
     /**
      * Specify a factory for a given service name.
      *
-     * @param string $name Service name
-     * @param string|callable|Factory\FactoryInterface $factory  Factory to which to map.
-     * phpcs:disable Generic.Files.LineLength.TooLong
+     * @param string                                   $name    Service name
+     * @param string|callable|Factory\FactoryInterface $factory Factory to which to map.
      * @psalm-param class-string<Factory\FactoryInterface>|callable(ContainerInterface,string,array<mixed>|null):object|Factory\FactoryInterface $factory
-     * phpcs:enable Generic.Files.LineLength.TooLong
+     *
      * @return void
+     *
      * @throws ContainerModificationsNotAllowedException If $name already exists as a service and overrides are disallowed.
+     *
+     * phpcs:disable Generic.Files.LineLength.TooLong
+     * phpcs:enable Generic.Files.LineLength.TooLong
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setFactory($name, $factory);
 
     /**
      * Create a lazy service mapping to a class.
      *
-     * @param string $name Service name to map
-     * @param null|string $class Class to which to map; if not provided, $name will be used for the mapping.
+     * @param string      $name  Service name to map
+     * @param string|null $class Class to which to map; if not provided, $name will be used for the mapping.
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function mapLazyService($name, $class = null);
 
@@ -315,17 +343,25 @@ class ServiceManager implements ServiceLocatorInterface
      *
      * @param string|Factory\AbstractFactoryInterface $factory Abstract factory instance or class name.
      * @psalm-param class-string<Factory\AbstractFactoryInterface>|Factory\AbstractFactoryInterface $factory
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function addAbstractFactory($factory);
 
     /**
      * Add a delegator for a given service.
      *
-     * @param string $name Service name
+     * @param string                                            $name    Service name
      * @param string|callable|Factory\DelegatorFactoryInterface $factory Delegator factory to assign.
      * @psalm-param class-string<Factory\DelegatorFactoryInterface>|callable(ContainerInterface,string,callable,array<mixed>|null) $factory
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function addDelegator($name, $factory);
 
@@ -336,17 +372,25 @@ class ServiceManager implements ServiceLocatorInterface
      * @psalm-param class-string<Initializer\InitializerInterface>
      *     |callable(ContainerInterface,mixed):void
      *     |Initializer\InitializerInterface $initializer
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function addInitializer($initializer);
 
     /**
      * Map a service.
      *
-     * @param string|class-string<InstanceType> $name Service name
-     * @param InstanceType $service
-     * @throws ContainerModificationsNotAllowedException If $name already exists as a service and overrides are disallowed.
+     * @param string|class-string<InstanceType> $name    Service name
+     * @param InstanceType                      $service
+     *
      * @return void
+     *
+     * @throws ContainerModificationsNotAllowedException If $name already exists as a service and overrides are disallowed.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setService($name, $service);
 
@@ -354,9 +398,14 @@ class ServiceManager implements ServiceLocatorInterface
      * Add a service sharing rule.
      *
      * @param string $name Service name
-     * @param bool $flag Whether or not the service should be shared.
-     * @throws ContainerModificationsNotAllowedException If $name already exists as a service and overrides are disallowed.
+     * @param bool   $flag Whether or not the service should be shared.
+     *
      * @return void
+     *
+     * @throws ContainerModificationsNotAllowedException If $name already exists as a service and overrides are disallowed.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setShared($name, $flag);
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\ServiceManager\Exception;
 
@@ -10,9 +10,11 @@ use Psr\Container\NotFoundExceptionInterface;
 /**
  * This exception is thrown when the service locator do not manage to find a
  * valid factory to create a service
+ * @phpcs:disable SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
  */
 class ServiceNotFoundException extends SplInvalidArgumentException implements
     ExceptionInterface,
     NotFoundExceptionInterface
 {
+    // nothing to do
 }

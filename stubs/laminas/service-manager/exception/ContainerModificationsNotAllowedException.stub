@@ -1,17 +1,14 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\ServiceManager\Exception;
 
 use DomainException;
 
-use function sprintf;
-
+/* phpcs:disable SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal */
 class ContainerModificationsNotAllowedException extends DomainException implements ExceptionInterface
 {
-    /**
-     * @param string $service Name of service that already exists.
-     */
+    /** @param string $service Name of service that already exists. */
     public static function fromExistingService(string $service): self;
 }

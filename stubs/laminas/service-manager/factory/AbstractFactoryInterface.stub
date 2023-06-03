@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\ServiceManager\Factory;
 
@@ -21,8 +21,12 @@ interface AbstractFactoryInterface extends FactoryInterface
     /**
      * Can the factory create an instance for the service?
      *
-     * @param  string $requestedName
+     * @param string $requestedName
+     *
      * @return bool
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function canCreate(ContainerInterface $container, $requestedName);
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\ServiceManager\Factory;
 
@@ -20,14 +20,17 @@ use Psr\Container\ContainerInterface;
 interface FactoryInterface
 {
     /**
-     * Create an object
+     * @param string            $requestedName
+     * @param array<mixed>|null $options
      *
-     * @param  string             $requestedName
-     * @param  null|array<mixed>  $options
      * @return object
+     *
      * @throws ServiceNotFoundException If unable to resolve the service.
      * @throws ServiceNotCreatedException If an exception is raised when creating a service.
      * @throws ContainerExceptionInterface If any other error occurs.
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
-    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null);
+    public function __invoke(ContainerInterface $container, $requestedName, array | null $options = null);
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Laminas\Mvc;
 
 use Laminas\EventManager\EventInterface as Event;
@@ -10,6 +12,8 @@ interface InjectApplicationEventInterface
      * Compose an Event
      *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setEvent(Event $event);
 
@@ -17,6 +21,8 @@ interface InjectApplicationEventInterface
      * Retrieve the composed event
      *
      * @return Event
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getEvent();
 }

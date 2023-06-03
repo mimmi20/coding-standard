@@ -25,7 +25,6 @@ use Psr\Container\ContainerInterface;
  * @template InstanceType of object
  * @implements PluginManagerInterface<InstanceType>
  * @extends ServiceManager<InstanceType>
- *
  * @psalm-type AbstractFactoriesConfiguration = array<
  *      array-key,
  *      (class-string<Factory\AbstractFactoryInterface>|Factory\AbstractFactoryInterface)
@@ -65,9 +64,10 @@ abstract class AbstractPluginManager extends ServiceManager implements PluginMan
     /**
      * An object type that the created instance must be instanced of
      *
-     * @var null|string
+     * @var string|null
      * @psalm-var class-string<InstanceType>|null
      * @phpstan-var class-string<InstanceType>|null
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $instanceOf = null;
 
@@ -77,7 +77,7 @@ abstract class AbstractPluginManager extends ServiceManager implements PluginMan
      * for details on its accepted structure.
      *
      * @param ConfigInterface<InstanceType>|ContainerInterface|null $configInstanceOrParentLocator
-     * @param array $config
+     * @param array                                                 $config
      * @phpstan-param array{abstract_factories?: AbstractFactoriesConfiguration, aliases?: array<string,string|class-string<InstanceType>>, delegators?: DelegatorsConfiguration, factories?: FactoriesConfiguration, initializers?: InitializersConfiguration, invokables?: array<string,string>, lazy_services?: LazyServicesConfiguration, services?: array<string|class-string<InstanceType>,InstanceType>, shared?:array<string|class-string<InstanceType>,bool>, shared_by_default?:bool} $config
      *
      * @throws InvalidServiceException
@@ -90,7 +90,7 @@ abstract class AbstractPluginManager extends ServiceManager implements PluginMan
     /**
      * Override configure() to validate service instances.
      *
-     * @param  array $config
+     * @param array $config
      * @phpstan-param array{abstract_factories?: AbstractFactoriesConfiguration, aliases?: array<string,string|class-string<InstanceType>>, delegators?: DelegatorsConfiguration, factories?: FactoriesConfiguration, initializers?: InitializersConfiguration, invokables?: array<string,string>, lazy_services?: LazyServicesConfiguration, services?: array<string|class-string<InstanceType>,InstanceType>, shared?:array<string|class-string<InstanceType>,bool>, shared_by_default?:bool} $config
      *
      * @return self<InstanceType>

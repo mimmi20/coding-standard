@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\ServiceManager;
 
@@ -65,7 +65,10 @@ interface ConfigInterface
      * returning a new instance.
      *
      * @param ServiceManager<InstanceType> $serviceManager
+     *
      * @return ServiceManager<InstanceType>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function configureServiceManager(ServiceManager $serviceManager);
 
@@ -89,6 +92,8 @@ interface ConfigInterface
      * a service manager or plugin manager, or pass to its `withConfig()` method.
      *
      * @return array<string, array<int|string, mixed>>
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function toArray();
 }

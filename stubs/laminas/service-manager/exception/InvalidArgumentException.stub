@@ -1,20 +1,12 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Laminas\ServiceManager\Exception;
 
 use InvalidArgumentException as SplInvalidArgumentException;
-use Laminas\ServiceManager\AbstractFactoryInterface;
-use Laminas\ServiceManager\Initializer\InitializerInterface;
 
-use function gettype;
-use function is_object;
-use function sprintf;
-
-/**
- * @inheritDoc
- */
+/* phpcs:disable SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal */
 class InvalidArgumentException extends SplInvalidArgumentException implements ExceptionInterface
 {
     public static function fromInvalidInitializer(mixed $initializer): self;

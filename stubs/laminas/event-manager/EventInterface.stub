@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Laminas\EventManager;
 
 use ArrayAccess;
@@ -16,6 +18,8 @@ interface EventInterface
      * Get event name
      *
      * @return string|null
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getName();
 
@@ -24,31 +28,43 @@ interface EventInterface
      *
      * @return object|string|null
      * @psalm-return TTarget
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getTarget();
 
     /**
      * Get parameters passed to the event
      *
-     * @return array|ArrayAccess|object
+     * @return array<mixed>|ArrayAccess|object
      * @psalm-return TParams
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getParams();
 
     /**
      * Get a single parameter by name
      *
-     * @param  string|int $name
-     * @param  mixed $default Default value to return if parameter does not exist
+     * @param string|int $name
+     * @param mixed      $default Default value to return if parameter does not exist
+     *
      * @return mixed
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function getParam($name, $default = null);
 
     /**
      * Set the event name
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function setName($name);
 
@@ -56,10 +72,14 @@ interface EventInterface
      * Set the event target/context
      *
      * @param object|string|null $target
-     * @template NewTTarget of object|string|null
      * @psalm-param NewTTarget $target
-     * @psalm-this-out static&self<NewTTarget, TParams>
+     *
      * @return void
+     *
+     * @template NewTTarget of object|string|null
+     * @psalm-this-out static&self<NewTTarget, TParams>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function setTarget($target);
 
@@ -67,27 +87,39 @@ interface EventInterface
      * Set event parameters. Overwrites parameters.
      *
      * @param array|ArrayAccess|object $params
-     * @template NewTParams of array|ArrayAccess|object
      * @psalm-param NewTParams $params
-     * @psalm-this-out static&self<TTarget, NewTParams>
+     *
      * @return void
+     *
+     * @template NewTParams of array|ArrayAccess|object
+     * @psalm-this-out static&self<TTarget, NewTParams>
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function setParams($params);
 
     /**
      * Set a single parameter by key
      *
-     * @param  string|int $name
-     * @param  mixed $value
+     * @param string|int $name
+     * @param mixed      $value
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function setParam($name, $value);
 
     /**
      * Indicate whether or not the parent EventManagerInterface should stop propagating events
      *
-     * @param  bool $flag
+     * @param bool $flag
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function stopPropagation($flag = true);
 
@@ -95,6 +127,8 @@ interface EventInterface
      * Has this event indicated event propagation should stop?
      *
      * @return bool
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function propagationIsStopped();
 }

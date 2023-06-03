@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Laminas\Mvc\Controller;
 
-use Laminas\Mvc\Controller\Plugin\PluginInterface;
 use Laminas\Mvc\Controller\Plugin\AcceptableViewModelSelector;
+use Laminas\Mvc\Controller\Plugin\CreateHttpNotFoundModel;
 use Laminas\Mvc\Controller\Plugin\Forward;
 use Laminas\Mvc\Controller\Plugin\Layout;
 use Laminas\Mvc\Controller\Plugin\Params;
+use Laminas\Mvc\Controller\Plugin\PluginInterface;
 use Laminas\Mvc\Controller\Plugin\Redirect;
-use Laminas\Mvc\Controller\Plugin\Url;
-use Laminas\Mvc\Controller\Plugin\CreateHttpNotFoundModel;
 use Laminas\Mvc\Controller\Plugin\Service\ForwardFactory;
+use Laminas\Mvc\Controller\Plugin\Url;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
@@ -24,6 +26,7 @@ use Laminas\Stdlib\DispatchableInterface;
  *
  * @template InstanceType of PluginInterface
  * @extends AbstractPluginManager<InstanceType>
+ * @phpcs:disable SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
  */
 class PluginManager extends AbstractPluginManager
 {
@@ -31,11 +34,13 @@ class PluginManager extends AbstractPluginManager
      * Plugins must be of this type.
      *
      * @var string
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $instanceOf = PluginInterface::class;
 
     /**
-     * @var string[] Default aliases
+     * @var array<string> Default aliases
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $aliases = [
         'AcceptableViewModelSelector' => AcceptableViewModelSelector::class,
@@ -75,7 +80,8 @@ class PluginManager extends AbstractPluginManager
     ];
 
     /**
-     * @var string[]|callable[] Default factories
+     * @var array<string|callable> Default factories
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $factories = [
         Forward::class                     => ForwardFactory::class,
@@ -99,6 +105,7 @@ class PluginManager extends AbstractPluginManager
 
     /**
      * @var DispatchableInterface
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $controller;
 
@@ -115,44 +122,56 @@ class PluginManager extends AbstractPluginManager
      * @param class-string<InstanceType>|string $name    Service name of plugin to retrieve.
      * @param array<mixed>|null                 $options Options to use when creating the instance.
      *
-     * @return mixed
+     * @return PluginInterface
      * @psalm-return ($name is class-string<InstanceType> ? InstanceType : mixed)
      * @phpstan-return ($name is class-string<InstanceType> ? InstanceType : mixed)
-     * @return DispatchableInterface
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
-    public function get($name, array $options = null);
+    public function get($name, array | null $options = null);
 
     /**
      * Set controller
      *
      * @return self
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setController(DispatchableInterface $controller);
 
     /**
      * Retrieve controller instance
      *
-     * @return null|DispatchableInterface
+     * @return DispatchableInterface|null
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getController();
 
     /**
      * Inject a helper instance with the registered controller
      *
-     * @param  object $plugin
+     * @param object $plugin
+     *
      * @return void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function injectController($plugin);
 
     /**
      * Validate a plugin
      *
-     * @param  object $plugin
+     * @param object $plugin
      *
      * @return void
+     *
      * @throws InvalidServiceException If created instance does not respect the constraint on type imposed by the plugin manager.
      *
      * @psalm-assert InstanceType $plugin
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function validate($plugin);
 }
