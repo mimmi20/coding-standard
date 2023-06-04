@@ -11,25 +11,26 @@ use Psr\Container\ContainerInterface;
 
 /**
  * Interface for service locator
+ *
+ * @template InstanceType of object
  */
 interface ServiceLocatorInterface extends ContainerInterface
 {
     /**
      * Build a service by its name, using optional options (such services are NEVER cached).
      *
-     * @param string            $name
-     * @param array<mixed>|null $options
-     * @psalm-param  string|class-string<T> $name
-     * @phpstan-param  string|class-string<T> $name
+     * @param string                    $name
+     * @param array<string, mixed>|null $options
+     * @psalm-param  string|class-string<InstanceType> $name
+     * @phpstan-param  string|class-string<InstanceType> $name
      *
-     * @psalm-return ($name is class-string<T> ? T : mixed)
-     * @phpstan-return ($name is class-string<T> ? T : mixed)
+     * @psalm-return ($name is class-string<InstanceType> ? InstanceType : mixed)
+     * @phpstan-return ($name is class-string<InstanceType> ? InstanceType : mixed)
      *
      * @throws ServiceNotFoundException If no factory/abstract factory could be found to create the instance.
      * @throws ServiceNotCreatedException If factory/delegator fails to create the instance.
      * @throws ContainerExceptionInterface If any other error occurs.
      *
-     * @template T of object
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */

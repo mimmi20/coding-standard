@@ -1,0 +1,17 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace Laminas\ServiceManager\Exception;
+
+use InvalidArgumentException as SplInvalidArgumentException;
+
+/* phpcs:disable SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal */
+class InvalidArgumentException extends SplInvalidArgumentException implements ExceptionInterface
+{
+    /** @throws void */
+    public static function fromInvalidInitializer(mixed $initializer): self;
+
+    /** @throws void */
+    public static function fromInvalidAbstractFactory(mixed $abstractFactory): self;
+}

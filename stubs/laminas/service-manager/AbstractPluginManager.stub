@@ -24,8 +24,35 @@ use Psr\Container\ContainerInterface;
  *
  * @template InstanceType of object
  * @implements PluginManagerInterface<InstanceType>
- * @psalm-import-type ServiceManagerConfiguration from ServiceManager
- * @psalm-suppress PropertyNotSetInConstructor
+ * @extends ServiceManager<InstanceType>
+ * @psalm-type AbstractFactoriesConfiguration = array<
+ *      array-key,
+ *      (class-string<Factory\AbstractFactoryInterface>|Factory\AbstractFactoryInterface)
+ * >
+ * @psalm-type DelegatorsConfiguration = array<
+ *      string,
+ *      array<
+ *          array-key,
+ *          (class-string<Factory\DelegatorFactoryInterface>|Factory\DelegatorFactoryInterface)
+ *          |callable(ContainerInterface,string,callable():object,array<mixed>|null):object
+ *      >
+ * >
+ * @psalm-type FactoriesConfiguration = array<
+ *      string,
+ *      (class-string<Factory\FactoryInterface>|Factory\FactoryInterface)
+ *      |callable(ContainerInterface,?string,?array<mixed>|null):object
+ * >
+ * @psalm-type InitializersConfiguration = array<
+ *      array-key,
+ *      (class-string<Initializer\InitializerInterface>|Initializer\InitializerInterface)
+ *      |callable(ContainerInterface,object):void
+ * >
+ * @psalm-type LazyServicesConfiguration = array{
+ *      class_map?:array<string,class-string>,
+ *      proxies_namespace?:non-empty-string,
+ *      proxies_target_dir?:non-empty-string,
+ *      write_proxy_files?:bool
+ * }
  */
 abstract class AbstractPluginManager extends ServiceManager implements PluginManagerInterface
 {
@@ -37,18 +64,21 @@ abstract class AbstractPluginManager extends ServiceManager implements PluginMan
     /**
      * An object type that the created instance must be instanced of
      *
+     * @var string|null
      * @psalm-var class-string<InstanceType>|null
      * @phpstan-var class-string<InstanceType>|null
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
-    protected string | null $instanceOf = null;
+    protected $instanceOf = null;
 
     /**
      * Sets the provided $parentLocator as the creation context for all
      * factories; for $config, {@see \Laminas\ServiceManager\ServiceManager::configure()}
      * for details on its accepted structure.
      *
-     * @param array $config
-     * @psalm-param ServiceManagerConfiguration $config
+     * @param ConfigInterface<InstanceType>|ContainerInterface|null $configInstanceOrParentLocator
+     * @param array                                                 $config
+     * @phpstan-param array{abstract_factories?: AbstractFactoriesConfiguration, aliases?: array<string,string|class-string<InstanceType>>, delegators?: DelegatorsConfiguration, factories?: FactoriesConfiguration, initializers?: InitializersConfiguration, invokables?: array<string,string>, lazy_services?: LazyServicesConfiguration, services?: array<string|class-string<InstanceType>,InstanceType>, shared?:array<string|class-string<InstanceType>,bool>, shared_by_default?:bool} $config
      *
      * @throws InvalidServiceException
      */
@@ -60,10 +90,10 @@ abstract class AbstractPluginManager extends ServiceManager implements PluginMan
     /**
      * Override configure() to validate service instances.
      *
-     * @param  array $config
-     * @psalm-param ServiceManagerConfiguration $config
+     * @param array $config
+     * @phpstan-param array{abstract_factories?: AbstractFactoriesConfiguration, aliases?: array<string,string|class-string<InstanceType>>, delegators?: DelegatorsConfiguration, factories?: FactoriesConfiguration, initializers?: InitializersConfiguration, invokables?: array<string,string>, lazy_services?: LazyServicesConfiguration, services?: array<string|class-string<InstanceType>,InstanceType>, shared?:array<string|class-string<InstanceType>,bool>, shared_by_default?:bool} $config
      *
-     * @return self
+     * @return self<InstanceType>
      *
      * @throws InvalidServiceException If an instance passed in the `services` configuration is invalid for the plugin manager.
      * @throws ContainerModificationsNotAllowedException If the allow override flag has been toggled off, and a service instanceexists for a given service.

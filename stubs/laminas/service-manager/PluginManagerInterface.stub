@@ -13,6 +13,7 @@ use Psr\Container\ContainerExceptionInterface;
  * A plugin manager is a specialized service locator used to create homogeneous objects
  *
  * @template InstanceType of object
+ * @extends ServiceLocatorInterface<InstanceType>
  */
 interface PluginManagerInterface extends ServiceLocatorInterface
 {

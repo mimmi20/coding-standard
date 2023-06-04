@@ -35,15 +35,12 @@ interface ContainerInterface
      * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
      * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
      *
-     * @param string $id Identifier of the entry to look for.
-     * @psalm-param string|class-string<T> $id
-     * @phpstan-param string|class-string<T> $id
+     * @param string|class-string<object> $id Identifier of the entry to look for.
      *
      * @return bool
      *
      * @throws void
      *
-     * @template T of object
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function has(string $id);
