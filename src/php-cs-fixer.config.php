@@ -24,6 +24,11 @@ return [
         'default' => 'single_space',
         'operators' => ['=' => null, '-=' => null, '.=' => null, '+=' => null],
     ],
+    'blank_line_after_namespace' => true,
+    'blank_lines_before_namespace' => [
+        'min_line_breaks' => 2,
+        'max_line_breaks' => 2,
+    ],
     'blank_line_before_statement' => [
         'statements' => [
             'break',
@@ -246,7 +251,6 @@ return [
     'semicolon_after_instruction' => true,
     'set_type_to_cast' => true,
     'simple_to_complex_string_variable' => true,
-    'single_blank_line_before_namespace' => true,
     'single_class_element_per_statement' => ['elements' => ['const', 'property']],
     'single_import_per_statement' => ['group_to_single_imports' => true],
     'single_line_comment_spacing' => true,
