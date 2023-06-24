@@ -342,8 +342,6 @@ class ServiceManager implements ServiceLocatorInterface
      *
      * @throws ContainerModificationsNotAllowedException If $name already exists as a service and overrides are disallowed.
      *
-     * phpcs:disable Generic.Files.LineLength.TooLong
-     * phpcs:enable Generic.Files.LineLength.TooLong
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
