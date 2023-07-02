@@ -40,7 +40,7 @@
     "mimmi20"
   ],
   "rollbackPrs": true,
-  "schedule": ["at 4:00 am"],
+  "schedule": ["before 3am"],
   "semanticCommits": "disabled",
   "separateMajorMinor": true,
   "separateMinorPatch": false,
