@@ -2,7 +2,7 @@
 
 version: 2
 
-updates:
+updates: []
 # update master
 #  - package-ecosystem: "composer"
 #    directory: "/"
@@ -28,19 +28,19 @@ updates:
 #      - dependency-name: phpunit/phpunit
 #        versions:
 #          - ">= 0"
-
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 10
-    reviewers:
-      - "mimmi20"
-    assignees:
-      - "mimmi20"
-    labels:
-      - "dependencies"
-      - "patch"
-    target-branch: "master"
-    commit-message:
-      prefix: "github-actions"
+#
+#  - package-ecosystem: "github-actions"
+#    directory: "/"
+#    schedule:
+#      interval: "daily"
+#    open-pull-requests-limit: 10
+#    reviewers:
+#      - "mimmi20"
+#    assignees:
+#      - "mimmi20"
+#    labels:
+#      - "dependencies"
+#      - "patch"
+#    target-branch: "master"
+#    commit-message:
+#      prefix: "github-actions"
