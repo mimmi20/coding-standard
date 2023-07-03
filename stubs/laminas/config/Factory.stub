@@ -59,9 +59,9 @@ class Factory
     /**
      * Read a config from a file.
      *
-     * @param  string $filename
-     * @param  bool   $returnConfigObject
-     * @param  bool   $useIncludePath
+     * @param string $filename
+     * @param bool   $returnConfigObject
+     * @param bool   $useIncludePath
      *
      * @return array<mixed>|Config<mixed>
      * @psalm-return ($returnConfigObject is true ? Config<mixed> : array<mixed>)
@@ -78,9 +78,9 @@ class Factory
     /**
      * Read configuration from multiple files and merge them.
      *
-     * @param  array<string> $files
-     * @param  bool          $returnConfigObject
-     * @param  bool          $useIncludePath
+     * @param array<string> $files
+     * @param bool          $returnConfigObject
+     * @param bool          $useIncludePath
      *
      * @return array<mixed>|Config<mixed>
      * @psalm-return ($returnConfigObject is true ? Config<mixed> : array<mixed>)
@@ -163,8 +163,8 @@ class Factory
     /**
      * Set config reader for file extension
      *
-     * @param  string                 $extension
-     * @param  string|ReaderInterface $reader
+     * @param string                 $extension
+     * @param string|ReaderInterface $reader
      *
      * @return void
      *

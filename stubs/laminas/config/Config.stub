@@ -54,8 +54,8 @@ class Config implements Countable, Iterator, ArrayAccess
      * Data is read-only unless $allowModifications is set to true
      * on construction.
      *
-     * @param  array<mixed> $array
-     * @param  bool         $allowModifications
+     * @param array<mixed> $array
+     * @param bool         $allowModifications
      *
      * @throws void
      *
@@ -66,8 +66,8 @@ class Config implements Countable, Iterator, ArrayAccess
     /**
      * Retrieve a value and return $default if there is no element set.
      *
-     * @param  string $name
-     * @param  mixed  $default
+     * @param string $name
+     * @param mixed  $default
      *
      * @return mixed
      *
@@ -81,7 +81,7 @@ class Config implements Countable, Iterator, ArrayAccess
     /**
      * Magic function so that $obj->value will work.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return mixed
      *
@@ -98,8 +98,8 @@ class Config implements Countable, Iterator, ArrayAccess
      * Only allow setting of a property if $allowModifications  was set to true
      * on construction. Otherwise, throw an exception.
      *
-     * @param  string $name
-     * @param  mixed  $value
+     * @param string $name
+     * @param mixed  $value
      *
      * @return void
      *
@@ -134,7 +134,7 @@ class Config implements Countable, Iterator, ArrayAccess
     /**
      * isset() overloading
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return bool
      *
@@ -148,7 +148,7 @@ class Config implements Countable, Iterator, ArrayAccess
     /**
      * unset() overloading
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return void
      *
@@ -248,7 +248,7 @@ class Config implements Countable, Iterator, ArrayAccess
      *
      * @see    ArrayAccess::offsetExists()
      *
-     * @param  mixed $offset
+     * @param mixed $offset
      *
      * @return bool
      *
@@ -265,7 +265,7 @@ class Config implements Countable, Iterator, ArrayAccess
      *
      * @see    ArrayAccess::offsetGet()
      *
-     * @param  mixed $offset
+     * @param mixed $offset
      *
      * @return mixed
      *
@@ -282,8 +282,8 @@ class Config implements Countable, Iterator, ArrayAccess
      *
      * @see    ArrayAccess::offsetSet()
      *
-     * @param  mixed $offset
-     * @param  mixed $value
+     * @param mixed $offset
+     * @param mixed $value
      *
      * @return void
      *
@@ -300,7 +300,7 @@ class Config implements Countable, Iterator, ArrayAccess
      *
      * @see    ArrayAccess::offsetUnset()
      *
-     * @param  mixed $offset
+     * @param mixed $offset
      *
      * @return void
      *
