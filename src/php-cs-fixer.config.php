@@ -155,7 +155,7 @@ return [
     'no_mixed_echo_print' => ['use' => 'echo'],
     'no_multiline_whitespace_around_double_arrow' => true,
     'no_multiple_statements_per_line' => true,
-    'no_null_property_initialization' => true,
+    'no_null_property_initialization' => false,
     'no_php4_constructor' => true,
     'no_short_bool_cast' => true,
     'no_singleline_whitespace_before_semicolons' => true,
