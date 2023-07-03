@@ -45,6 +45,10 @@ use const T_WHITESPACE;
 
 /**
  * Verifies that a @throws tag exists for each exception type a function throws.
+ *
+ * @phpcs:disable Generic.Metrics.CyclomaticComplexity.MaxExceeded
+ * @phpcs:disable SlevomatCodingStandard.Complexity.Cognitive.ComplexityTooHigh
+ * @phpcs:disable SlevomatCodingStandard.Functions.FunctionLength.FunctionLength
  */
 final class FunctionCommentThrowTagSniff implements Sniff
 {

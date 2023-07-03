@@ -1,0 +1,189 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace Laminas\Config;
+
+use Laminas\Config\Exception\InvalidArgumentException;
+use Laminas\Config\Exception\RuntimeException;
+use Laminas\Config\Reader\ReaderInterface;
+use Laminas\Config\Writer\AbstractWriter;
+use Psr\Container\ContainerInterface;
+
+/** @phpcs:disable SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty */
+final class Factory
+{
+    /**
+     * Plugin manager for loading readers
+     */
+    public static ContainerInterface | null $readers = null;
+
+    /**
+     * Plugin manager for loading writers
+     */
+    public static ContainerInterface | null $writers = null;
+
+    /**
+     * Registered config file extensions.
+     * key is extension, value is reader instance or plugin name
+     *
+     * @var array<string, string>
+     */
+    protected static array $extensions = [
+        'ini'        => 'ini',
+        'json'       => 'json',
+        'xml'        => 'xml',
+        'yaml'       => 'yaml',
+        'yml'        => 'yaml',
+        'properties' => 'javaproperties',
+    ];
+
+    /**
+     * Register config file extensions for writing
+     * key is extension, value is writer instance or plugin name
+     *
+     * @var array<string, string>
+     */
+    protected static array $writerExtensions = [
+        'php'  => 'php',
+        'ini'  => 'ini',
+        'json' => 'json',
+        'xml'  => 'xml',
+        'yaml' => 'yaml',
+        'yml'  => 'yaml',
+    ];
+
+    /**
+     * Read a config from a file.
+     *
+     * @param  string $filename
+     * @param  bool   $returnConfigObject
+     * @param  bool   $useIncludePath
+     *
+     * @return array<mixed>|Config<mixed>
+     * @psalm-return ($returnConfigObject is true ? Config<mixed> : array<mixed>)
+     * @phpstan-return ($returnConfigObject is true ? Config<mixed> : array<mixed>)
+     *
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public static function fromFile($filename, $returnConfigObject = false, $useIncludePath = false);
+
+    /**
+     * Read configuration from multiple files and merge them.
+     *
+     * @param  array<string> $files
+     * @param  bool          $returnConfigObject
+     * @param  bool          $useIncludePath
+     *
+     * @return array<mixed>|Config<mixed>
+     * @psalm-return ($returnConfigObject is true ? Config<mixed> : array<mixed>)
+     * @phpstan-return ($returnConfigObject is true ? Config<mixed> : array<mixed>)
+     *
+     * @throws InvalidArgumentException
+     * @throws RuntimeException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public static function fromFiles(array $files, $returnConfigObject = false, $useIncludePath = false);
+
+    /**
+     * Writes a config to a file
+     *
+     * @param string              $filename
+     * @param array<mixed>|Config $config
+     *
+     * @return bool TRUE on success | FALSE on failure
+     *
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public static function toFile($filename, $config);
+
+    /**
+     * Set reader plugin manager
+     *
+     * @return void
+     *
+     * @throws void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     */
+    public static function setReaderPluginManager(ContainerInterface $readers);
+
+    /**
+     * Get the reader plugin manager.
+     *
+     * If none is available, registers and returns a
+     * StandaloneReaderPluginManager instance by default.
+     *
+     * @return ContainerInterface
+     *
+     * @throws void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     */
+    public static function getReaderPluginManager();
+
+    /**
+     * Set writer plugin manager
+     *
+     * @return void
+     *
+     * @throws void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     */
+    public static function setWriterPluginManager(ContainerInterface $writers);
+
+    /**
+     * Get the writer plugin manager.
+     *
+     * If none is available, registers and returns a
+     * StandaloneWriterPluginManager instance by default.
+     *
+     * @return ContainerInterface
+     *
+     * @throws void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     */
+    public static function getWriterPluginManager();
+
+    /**
+     * Set config reader for file extension
+     *
+     * @param  string                 $extension
+     * @param  string|ReaderInterface $reader
+     *
+     * @return void
+     *
+     * @throws InvalidArgumentException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public static function registerReader($extension, $reader);
+
+    /**
+     * Set config writer for file extension
+     *
+     * @param string                $extension
+     * @param string|AbstractWriter $writer
+     *
+     * @return void
+     *
+     * @throws InvalidArgumentException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public static function registerWriter($extension, $writer);
+}
