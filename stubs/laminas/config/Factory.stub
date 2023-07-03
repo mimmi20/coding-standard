@@ -10,8 +10,11 @@ use Laminas\Config\Reader\ReaderInterface;
 use Laminas\Config\Writer\AbstractWriter;
 use Psr\Container\ContainerInterface;
 
-/** @phpcs:disable SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty */
-final class Factory
+/**
+ * @phpcs:disable SlevomatCodingStandard.Classes.ForbiddenPublicProperty.ForbiddenPublicProperty
+ * @phpcs:disable SlevomatCodingStandard.Classes.RequireAbstractOrFinal.ClassNeitherAbstractNorFinal
+ */
+class Factory
 {
     /**
      * Plugin manager for loading readers
