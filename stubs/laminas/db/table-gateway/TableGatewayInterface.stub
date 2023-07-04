@@ -1,0 +1,70 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace Laminas\Db\TableGateway;
+
+use Closure;
+use Laminas\Db\ResultSet\ResultSetInterface;
+use Laminas\Db\Sql\Where;
+
+interface TableGatewayInterface
+{
+    /**
+     * @return string
+     *
+     * @throws void
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     */
+    public function getTable();
+
+    /**
+     * @param Where|Closure|string|array<mixed> $where
+     *
+     * @return ResultSetInterface
+     *
+     * @throws Exception\RuntimeException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public function select($where = null);
+
+    /**
+     * @param array<string, mixed> $set
+     *
+     * @return int
+     *
+     * @throws Exception\RuntimeException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public function insert($set);
+
+    /**
+     * @param array<string, mixed>              $set
+     * @param Where|Closure|string|array<mixed> $where
+     *
+     * @return int
+     *
+     * @throws Exception\RuntimeException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public function update($set, $where = null);
+
+    /**
+     * @param Where|Closure|string|array<mixed> $where
+     *
+     * @return int
+     *
+     * @throws Exception\RuntimeException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     */
+    public function delete($where);
+}
