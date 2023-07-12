@@ -20,10 +20,10 @@ env:
   TOOLS: "composer:v2"
 
 jobs:
-  validate:
+  validate-composer:
     name: "Validate composer"
 
-    runs-on: "ubuntu-20.04"
+    runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
     continue-on-error: false
 
@@ -31,6 +31,9 @@ jobs:
       fail-fast: false
 
       matrix:
+        operating-system:
+          - "ubuntu-20.04"
+
         php-version:
           - "8.1"
 
@@ -59,10 +62,160 @@ jobs:
       - name: "Validate composer.json"
         run: "composer validate --strict"
 
+  validate-yaml:
+    name: "Validate yaml"
+
+    runs-on: "${{ matrix.operating-system }}"
+    timeout-minutes: 10
+    continue-on-error: false
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        operating-system:
+          - "ubuntu-20.04"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: "Run yamllint"
+        uses: "actionshub/yamllint@main"
+
+  lint-php:
+    name: "Lint PHP"
+
+    runs-on: "${{ matrix.operating-system }}"
+    timeout-minutes: 10
+    continue-on-error: ${{ '8.3' == matrix.php-version }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        operating-system:
+          - "ubuntu-20.04"
+          - "ubuntu-22.04"
+
+        php-version:
+          - "8.1"
+          - "8.2"
+          - "8.3"
+
+        dependencies:
+          - "highest"
+          - "lowest"
+
+        ts:
+          - "ts"
+          - "nts"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@2.25.4"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          ini-values: "${{ env.PHP_INI_VALUES }}"
+          coverage: "none"
+          tools: "${{ env.TOOLS }}"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "${{ matrix.ts }}"
+
+      - name: "Lint PHP files"
+        run: "find src/ -type f -name '*.php' -print0 | xargs -0 -L1 -P4 -- php -l -f"
+
+  php-lint-overtrue:
+    name: "Linting with overtrue/phplint"
+
+    runs-on: "${{ matrix.operating-system }}"
+    timeout-minutes: 10
+    continue-on-error: false
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        operating-system:
+          - "ubuntu-20.04"
+          - "ubuntu-22.04"
+
+        php-version:
+          # Should use the lowest supported version
+          - "8.1"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@2.25.4"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "${{ env.PHP_EXTENSIONS }}"
+          ini-values: "${{ env.PHP_INI_VALUES }}"
+          coverage: "none"
+          tools: "${{ env.TOOLS }}"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "ts"
+
+      - name: "Lint PHP"
+        run: |
+          curl -Ls https://github.com/overtrue/phplint/releases/download/9.0.4/phplint.phar -o /usr/local/bin/phplint
+          chmod +x /usr/local/bin/phplint
+          /usr/local/bin/phplint -v --no-cache
+
+  # This is a meta job to avoid to have to constantly change the protection rules
+  # whenever we touch the matrix.
+  lint-status:
+    name: "Lint & Validate Status"
+
+    runs-on: "ubuntu-22.04"
+
+    if: always()
+
+    needs:
+      - "validate-composer"
+      - "validate-yaml"
+      - "lint-php"
+      - "php-lint-overtrue"
+
+    steps:
+      - name: Failing run
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
+
+      - name: Successful run
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
+
   install:
     name: "Install dependencies"
 
-    needs: "validate"
+    needs: "lint-status"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -128,58 +281,30 @@ jobs:
       - name: "Check dependencies with composer"
         run: "composer outdated --direct"
 
-  php-lint:
-    name: "Linting with overtrue/phplint"
+  # This is a meta job to avoid to have to constantly change the protection rules
+  # whenever we touch the matrix.
+  install-status:
+    name: "Install Status"
+
+    runs-on: "ubuntu-22.04"
+
+    if: always()
 
     needs: "install"
 
-    runs-on: "${{ matrix.operating-system }}"
-    timeout-minutes: 10
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-          - "ubuntu-22.04"
-
-        php-version:
-          - "8.1"
-
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
+      - name: Failing run
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1
 
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
-          coverage: "none"
-          tools: "${{ env.TOOLS }}"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
-
-      - name: "Lint PHP"
-        run: |
-          curl -Ls https://github.com/overtrue/phplint/releases/download/9.0.3/phplint.phar -o /usr/local/bin/phplint
-          chmod +x /usr/local/bin/phplint
-          /usr/local/bin/phplint -v --no-cache
+      - name: Successful run
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0
 
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
 
-    needs: "install"
+    needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -194,6 +319,9 @@ jobs:
           - "ubuntu-22.04"
 
         php-version:
+          # Should use the lowest supported version to ensure the CS-Fixer does
+          # not get confused and apply a rule that would break on lower supported
+          # versions.
           - "8.1"
 
     steps:
@@ -225,12 +353,16 @@ jobs:
           composer-options: "${{ env.COMPOSER_OPTIONS }}"
 
       - name: "Run friendsofphp/php-cs-fixer"
+        run: "vendor/bin/php-cs-fixer fix --dry-run -vv --diff"
+        continue-on-error: true
+
+      - name: "Run friendsofphp/php-cs-fixer"
         run: "vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr"
 
   phpcs:
     name: "Check Coding Standards with PHPCS"
 
-    needs: "install"
+    needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
@@ -245,6 +377,9 @@ jobs:
           - "ubuntu-22.04"
 
         php-version:
+          # Should use the lowest supported version to ensure the PHHPCS does
+          # not get confused and apply a rule that would break on lower supported
+          # versions.
           - "8.1"
 
     steps:
@@ -281,13 +416,11 @@ jobs:
   static-code-analysis:
     name: "Static Code Analysis with PHPStan"
 
-    needs: "install"
+    needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
     continue-on-error: false
-
-    if: inputs.skip-phpstan == false
 
     strategy:
       fail-fast: false
@@ -334,13 +467,11 @@ jobs:
   phpmd:
     name: "Check Rules with PHPMD"
 
-    needs: "install"
+    needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
     continue-on-error: false
-
-    if: inputs.skip-phpmd == false
 
     strategy:
       fail-fast: false
@@ -387,13 +518,11 @@ jobs:
   rector:
     name: "Checks with Rector"
 
-    needs: "install"
+    needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
     continue-on-error: false
-
-    if: inputs.skip-rector == false
 
     strategy:
       fail-fast: false
@@ -447,19 +576,17 @@ jobs:
     if: always()
 
     needs:
-      - "validate"
-      - "php-lint"
       - "php-cs-fixer"
-      - "static-code-analysis"
       - "phpcs"
+      - "static-code-analysis"
       - "phpmd"
       - "rector"
 
     steps:
-      - name: Successful run
-        if: ${{ !(contains(needs.*.result, 'failure')) }}
-        run: exit 0
-
       - name: Failing run
         if: ${{ contains(needs.*.result, 'failure') }}
         run: exit 1
+
+      - name: Successful run
+        if: ${{ !(contains(needs.*.result, 'failure')) }}
+        run: exit 0

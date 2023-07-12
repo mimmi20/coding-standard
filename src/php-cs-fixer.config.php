@@ -89,7 +89,7 @@ return [
     'fopen_flag_order' => true,
     'fully_qualified_strict_types' => true,
     'function_to_constant' => true,
-    'function_typehint_space' => true,
+    'type_declaration_spaces' => ['elements' => ['function', 'property']],
     'general_phpdoc_annotation_remove' => [
         'annotations' => [
             'expectedExceptionMessageRegExp',
