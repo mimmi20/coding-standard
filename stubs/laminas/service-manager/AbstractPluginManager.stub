@@ -113,6 +113,8 @@ abstract class AbstractPluginManager extends ServiceManager implements PluginMan
      * @return void
      *
      * @throws InvalidServiceException
+     *
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function setService($name, $service);
 
