@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
@@ -126,7 +126,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
@@ -170,7 +170,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
@@ -252,7 +252,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
@@ -334,7 +334,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
@@ -392,7 +392,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
@@ -443,7 +443,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
@@ -494,7 +494,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
@@ -545,7 +545,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.4"
+        uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "${{ env.PHP_EXTENSIONS }}"
