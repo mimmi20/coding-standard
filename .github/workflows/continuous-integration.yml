@@ -13,12 +13,6 @@ concurrency:
   group: "${{ github.event_name }}-${{ github.workflow }}-${{ github.head_ref || github.run_id }}-${{ github.ref }}"
   cancel-in-progress: true
 
-env:
-  PHP_EXTENSIONS: "json, opcache"
-  PHP_INI_VALUES: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-  COMPOSER_OPTIONS: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-  TOOLS: "composer:v2"
-
 jobs:
   validate-composer:
     name: "Validate composer"
@@ -35,6 +29,7 @@ jobs:
           - "ubuntu-20.04"
 
         php-version:
+          # Should use the lowest supported version
           - "8.1"
 
     steps:
@@ -50,14 +45,14 @@ jobs:
         uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
+          phpts: "nts"
 
       - name: "Validate composer.json"
         run: "composer validate --strict"
@@ -93,59 +88,6 @@ jobs:
 
     runs-on: "${{ matrix.operating-system }}"
     timeout-minutes: 10
-    continue-on-error: ${{ '8.3' == matrix.php-version }}
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-          - "ubuntu-22.04"
-
-        php-version:
-          - "8.1"
-          - "8.2"
-          - "8.3"
-
-        dependencies:
-          - "highest"
-          - "lowest"
-
-        ts:
-          - "ts"
-          - "nts"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.25.5"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
-          coverage: "none"
-          tools: "${{ env.TOOLS }}"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "${{ matrix.ts }}"
-
-      - name: "Lint PHP files"
-        run: "find src/ -type f -name '*.php' -print0 | xargs -0 -L1 -P4 -- php -l -f"
-
-  php-lint-overtrue:
-    name: "Linting with overtrue/phplint"
-
-    runs-on: "${{ matrix.operating-system }}"
-    timeout-minutes: 10
     continue-on-error: false
 
     strategy:
@@ -154,7 +96,6 @@ jobs:
       matrix:
         operating-system:
           - "ubuntu-20.04"
-          - "ubuntu-22.04"
 
         php-version:
           # Should use the lowest supported version
@@ -173,14 +114,57 @@ jobs:
         uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
+          phpts: "nts"
+
+      - name: "Lint PHP files"
+        run: "find src/ -type f -name '*.php' -print0 | xargs -0 -L1 -P4 -- php -l -f"
+
+  php-lint-overtrue:
+    name: "Linting with overtrue/phplint"
+
+    runs-on: "${{ matrix.operating-system }}"
+    timeout-minutes: 10
+    continue-on-error: false
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        operating-system:
+          - "ubuntu-20.04"
+
+        php-version:
+          # Should use the lowest supported version
+          - "8.1"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@2.25.5"
+        with:
+          php-version: "${{ matrix.php-version }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
+          coverage: "none"
+          tools: "composer:v2"
+        env:
+          fail-fast: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          phpts: "nts"
 
       - name: "Lint PHP"
         run: |
@@ -238,10 +222,6 @@ jobs:
           - "highest"
           - "lowest"
 
-        ts:
-          - "ts"
-          - "nts"
-
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v3"
@@ -255,28 +235,28 @@ jobs:
         uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "${{ matrix.ts }}"
+          phpts: "nts"
 
       - name: "Update dependencies with composer"
         if: ${{ '8.3' != matrix.php-version }}
         uses: "ramsey/composer-install@2.2.0"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "${{ env.COMPOSER_OPTIONS }}"
+          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Update dependencies with composer"
         if: ${{ '8.3' == matrix.php-version }}
         uses: "ramsey/composer-install@2.2.0"
         with:
           dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "${{ env.COMPOSER_OPTIONS }} --ignore-platform-reqs"
+          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v --ignore-platform-reqs"
 
       - name: "Check dependencies with composer"
         run: "composer outdated --direct"
@@ -316,12 +296,9 @@ jobs:
       matrix:
         operating-system:
           - "ubuntu-20.04"
-          - "ubuntu-22.04"
 
         php-version:
-          # Should use the lowest supported version to ensure the CS-Fixer does
-          # not get confused and apply a rule that would break on lower supported
-          # versions.
+          # Should use the lowest supported version
           - "8.1"
 
     steps:
@@ -337,20 +314,20 @@ jobs:
         uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
-          tools: "${{ env.TOOLS }}, cs2pr"
+          tools: "composer:v2, cs2pr"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
+          phpts: "nts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
         with:
-          dependency-versions: "highest"
-          composer-options: "${{ env.COMPOSER_OPTIONS }}"
+          dependency-versions: "lowest"
+          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Run friendsofphp/php-cs-fixer"
         run: "vendor/bin/php-cs-fixer fix --dry-run -vv --diff"
@@ -374,12 +351,9 @@ jobs:
       matrix:
         operating-system:
           - "ubuntu-20.04"
-          - "ubuntu-22.04"
 
         php-version:
-          # Should use the lowest supported version to ensure the PHHPCS does
-          # not get confused and apply a rule that would break on lower supported
-          # versions.
+          # Should use the lowest supported version
           - "8.1"
 
     steps:
@@ -395,20 +369,20 @@ jobs:
         uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
-          tools: "${{ env.TOOLS }}, cs2pr"
+          tools: "composer:v2, cs2pr"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
+          phpts: "nts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
         with:
-          dependency-versions: "highest"
-          composer-options: "${{ env.COMPOSER_OPTIONS }}"
+          dependency-versions: "lowest"
+          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Run squizlabs/php_codesniffer"
         run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --extensions=php,stub -q --report=checkstyle src stubs .php-cs-fixer.php rector.php | cs2pr"
@@ -428,9 +402,9 @@ jobs:
       matrix:
         operating-system:
           - "ubuntu-20.04"
-          - "ubuntu-22.04"
 
         php-version:
+          # Should use the lowest supported version
           - "8.1"
 
     steps:
@@ -446,19 +420,19 @@ jobs:
         uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
-          tools: "${{ env.TOOLS }}"
+          tools: "composer:v2"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
+          phpts: "nts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
         with:
-          dependency-versions: "highest"
+          dependency-versions: "lowest"
           composer-options: "${{ inputs.composer-options }}"
 
       - name: "Run phpstan/phpstan"
@@ -479,9 +453,9 @@ jobs:
       matrix:
         operating-system:
           - "ubuntu-20.04"
-          - "ubuntu-22.04"
 
         php-version:
+          # Should use the lowest supported version
           - "8.1"
 
     steps:
@@ -497,19 +471,19 @@ jobs:
         uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
-          tools: "${{ env.TOOLS }}, phpmd"
+          tools: "composer:v2, phpmd"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
+          phpts: "nts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
         with:
-          dependency-versions: "highest"
+          dependency-versions: "lowest"
           composer-options: "${{ inputs.composer-options }}"
 
       - name: "Run phpmd/phpmd"
@@ -530,9 +504,9 @@ jobs:
       matrix:
         operating-system:
           - "ubuntu-20.04"
-          - "ubuntu-22.04"
 
         php-version:
+          # Should use the lowest supported version
           - "8.1"
 
     steps:
@@ -548,23 +522,27 @@ jobs:
         uses: "shivammathur/setup-php@2.25.5"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "${{ env.PHP_EXTENSIONS }}"
-          ini-values: "${{ env.PHP_INI_VALUES }}"
+          extensions: "json, opcache"
+          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
-          tools: "${{ env.TOOLS }}, rector"
+          tools: "composer:v2, rector"
         env:
           fail-fast: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "ts"
+          phpts: "nts"
 
       - name: "Update dependencies with composer"
         uses: "ramsey/composer-install@2.2.0"
         with:
-          dependency-versions: "highest"
+          dependency-versions: "lowest"
           composer-options: "${{ inputs.composer-options }}"
 
       - name: "Run checks with rector/rector"
-        run: "rector process src --ansi --dry-run --no-diffs"
+        run: "rector process --ansi --dry-run"
+        continue-on-error: true
+
+      - name: "Run checks with rector/rector"
+        run: "rector process --ansi --dry-run --no-diffs"
 
   # This is a meta job to avoid to have to constantly change the protection rules
   # whenever we touch the matrix.
