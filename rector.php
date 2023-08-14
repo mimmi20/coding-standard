@@ -11,7 +11,6 @@
 declare(strict_types = 1);
 
 use Rector\Config\RectorConfig;
-use Rector\Php80\Rector\FunctionLike\UnionTypesRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -36,7 +35,6 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->skip(
         [
-            UnionTypesRector::class,
             NullToStrictStringFuncCallArgRector::class,
         ],
     );
