@@ -18,7 +18,9 @@ jobs:
     name: "Validate composer"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:
@@ -61,7 +63,9 @@ jobs:
     name: "Validate yaml"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:
@@ -87,7 +91,9 @@ jobs:
     name: "Lint PHP"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:
@@ -130,7 +136,9 @@ jobs:
     name: "Linting with overtrue/phplint"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:
@@ -202,7 +210,9 @@ jobs:
     needs: "lint-status"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: ${{ '8.3' == matrix.php-version }}
 
     strategy:
@@ -287,7 +297,9 @@ jobs:
     needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:
@@ -342,7 +354,9 @@ jobs:
     needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:
@@ -393,7 +407,9 @@ jobs:
     needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:
@@ -444,7 +460,9 @@ jobs:
     needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:
@@ -495,7 +513,9 @@ jobs:
     needs: "install-status"
 
     runs-on: "${{ matrix.operating-system }}"
+
     timeout-minutes: 10
+
     continue-on-error: false
 
     strategy:

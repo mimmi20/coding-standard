@@ -6,8 +6,8 @@
 
 ## Code Status
 
-[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/mimmi20/coding-standard.svg)](http://isitmaintained.com/project/mimmi20/coding-standard "Average time to resolve an issue")
-[![Percentage of issues still open](http://isitmaintained.com/badge/open/mimmi20/coding-standard.svg)](http://isitmaintained.com/project/mimmi20/coding-standard "Percentage of issues still open")
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/mimmi20/coding-standard.svg)](https://isitmaintained.com/project/mimmi20/coding-standard "Average time to resolve an issue")
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/mimmi20/coding-standard.svg)](https://isitmaintained.com/project/mimmi20/coding-standard "Percentage of issues still open")
 
 ## Requirements
 
