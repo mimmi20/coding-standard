@@ -1,5 +1,7 @@
 # https://docs.github.com/en/github/administering-a-repository/configuration-options-for-dependency-updates
 
+# file-version: 1.0
+
 version: 2
 
 updates:
@@ -18,8 +20,11 @@ updates:
         # dependency name)
         patterns:
           - "*"
-#        exclude-patterns:
-#          - "gc_ruboconfig"
+        update-types:
+          - "minor"
+          - "patch"
+        # exclude-patterns:
+        #   - "gc_ruboconfig"
 
     open-pull-requests-limit: 10
 
@@ -41,13 +46,13 @@ updates:
       include: "scope"
       prefix: "composer"
 
-#    ignore:
-#      - dependency-name: slevomat/coding-standard
-#        versions:
-#          - ">= 0"
-#      - dependency-name: phpunit/phpunit
-#        versions:
-#          - ">= 0"
+    # ignore:
+    #   - dependency-name: slevomat/coding-standard
+    #     versions:
+    #       - ">= 0"
+    #   - dependency-name: phpunit/phpunit
+    #     versions:
+    #       - ">= 0"
 
   - package-ecosystem: "github-actions"
 
@@ -64,8 +69,11 @@ updates:
         # dependency name)
         patterns:
           - "*"
-      #        exclude-patterns:
-      #          - "gc_ruboconfig"
+        update-types:
+          - "minor"
+          - "patch"
+        # exclude-patterns:
+        #   - "gc_ruboconfig"
 
     open-pull-requests-limit: 10
 
