@@ -2,7 +2,7 @@
 
 # file-version: 1.0
 
-name: 'Reaction Comments'
+name: "Reaction Comments"
 
 on:
   issue_comment:
