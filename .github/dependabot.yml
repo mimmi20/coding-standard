@@ -23,8 +23,11 @@ updates:
         # update-types:
         #   - "minor"
         #   - "patch"
-        # exclude-patterns:
-        #   - "gc_ruboconfig"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
 
     open-pull-requests-limit: 10
 
