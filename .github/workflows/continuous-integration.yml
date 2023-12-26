@@ -16,287 +16,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate-composer:
-    name: "Validate composer"
 
-    runs-on: "${{ matrix.operating-system }}"
+  validate:
+    name: "Validate Project"
 
-    timeout-minutes: 10
-
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-
-        php-version:
-          # Should use the lowest supported version
-          - "8.1"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.28.0"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache"
-          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-          coverage: "none"
-          tools: "composer:v2"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "nts"
-
-      - name: "Validate composer.json"
-        run: "composer validate --strict"
-
-  validate-yaml:
-    name: "Validate yaml"
-
-    runs-on: "${{ matrix.operating-system }}"
-
-    timeout-minutes: 10
-
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Run yamllint"
-        uses: "actionshub/yamllint@main"
-
-  lint-php:
-    name: "Lint PHP"
-
-    runs-on: "${{ matrix.operating-system }}"
-
-    timeout-minutes: 10
-
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-
-        php-version:
-          # Should use the lowest supported version
-          - "8.1"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.28.0"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache"
-          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-          coverage: "none"
-          tools: "composer:v2"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "nts"
-
-      - name: "Lint PHP files"
-        run: "find src/ -type f -name '*.php' -print0 | xargs -0 -L1 -P4 -- php -l -f"
-
-  php-lint-overtrue:
-    name: "Linting with overtrue/phplint"
-
-    runs-on: "${{ matrix.operating-system }}"
-
-    timeout-minutes: 10
-
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-
-        php-version:
-          # Should use the lowest supported version
-          - "8.1"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.28.0"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache"
-          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-          coverage: "none"
-          tools: "composer:v2"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "nts"
-
-      - name: "Lint PHP"
-        run: |
-          curl -Ls https://github.com/overtrue/phplint/releases/download/9.0.4/phplint.phar -o /usr/local/bin/phplint
-          chmod +x /usr/local/bin/phplint
-          /usr/local/bin/phplint -v --no-cache
-
-  # This is a meta job to avoid to have to constantly change the protection rules
-  # whenever we touch the matrix.
-  lint-status:
-    name: "Lint & Validate Status"
-
-    runs-on: "ubuntu-22.04"
-
-    if: always()
-
-    needs:
-      - "validate-composer"
-      - "validate-yaml"
-      - "lint-php"
-      - "php-lint-overtrue"
-
-    steps:
-      - name: Failing run
-        if: ${{ contains(needs.*.result, 'failure') }}
-        run: exit 1
-
-      - name: Successful run
-        if: ${{ !(contains(needs.*.result, 'failure')) }}
-        run: exit 0
+    uses: "mimmi20/ci/.github/workflows/validate.yml@master"
+    with:
+      extensions: "curl, iconv, mbstring, ctype, dom, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
+      ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
+      composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
+      skip-phplint: false
 
   install:
-    name: "Install dependencies"
+    name: "Install Project"
 
-    needs: "lint-status"
+    needs: "validate"
 
-    runs-on: "${{ matrix.operating-system }}"
-
-    timeout-minutes: 10
-
-    continue-on-error: ${{ '8.3' == matrix.php-version }}
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-20.04"
-          - "ubuntu-22.04"
-
-        php-version:
-          - "8.1"
-          - "8.2"
-          - "8.3"
-
-        dependencies:
-          - "highest"
-          - "lowest"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.28.0"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache"
-          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-          coverage: "none"
-          tools: "composer:v2"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "nts"
-
-      - name: "Update dependencies with composer"
-        if: ${{ '8.3' != matrix.php-version }}
-        uses: "ramsey/composer-install@2.2.0"
-        with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-
-      - name: "Update dependencies with composer"
-        if: ${{ '8.3' == matrix.php-version }}
-        uses: "ramsey/composer-install@2.2.0"
-        with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v --ignore-platform-reqs"
-
-      - name: "Check dependencies with composer"
-        run: "composer outdated --direct"
-
-  # This is a meta job to avoid to have to constantly change the protection rules
-  # whenever we touch the matrix.
-  install-status:
-    name: "Install Status"
-
-    runs-on: "ubuntu-22.04"
-
-    if: always()
-
-    needs: "install"
-
-    steps:
-      - name: Failing run
-        if: ${{ contains(needs.*.result, 'failure') }}
-        run: exit 1
-
-      - name: Successful run
-        if: ${{ !(contains(needs.*.result, 'failure')) }}
-        run: exit 0
+    uses: "mimmi20/ci/.github/workflows/install.yml@master"
+    with:
+      extensions: "curl, iconv, mbstring, ctype, dom, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
+      ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
+      composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
+      composer-outdated-option: ""
 
   php-cs-fixer:
     name: "Check Coding Standards with PHP-CS-Fixer"
 
-    needs: "install-status"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
 
@@ -353,7 +99,7 @@ jobs:
   phpcs:
     name: "Check Coding Standards with PHPCS"
 
-    needs: "install-status"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
 
@@ -406,7 +152,7 @@ jobs:
   static-code-analysis:
     name: "Static Code Analysis with PHPStan"
 
-    needs: "install-status"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
 
@@ -459,7 +205,7 @@ jobs:
   phpmd:
     name: "Check Rules with PHPMD"
 
-    needs: "install-status"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
 
@@ -512,7 +258,7 @@ jobs:
   rector:
     name: "Checks with Rector"
 
-    needs: "install-status"
+    needs: "install"
 
     runs-on: "${{ matrix.operating-system }}"
 
