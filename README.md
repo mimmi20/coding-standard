@@ -8,6 +8,7 @@
 
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/mimmi20/coding-standard.svg)](https://isitmaintained.com/project/mimmi20/coding-standard "Average time to resolve an issue")
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/mimmi20/coding-standard.svg)](https://isitmaintained.com/project/mimmi20/coding-standard "Percentage of issues still open")
+[![Maintainability](https://api.codeclimate.com/v1/badges/5a04c7f0571329d4f461/maintainability)](https://codeclimate.com/github/mimmi20/coding-standard/maintainability)
 
 ## Requirements
 
