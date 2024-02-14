@@ -79,7 +79,7 @@ return [
     'empty_loop_condition' => ['style' => 'while'],
     'ereg_to_preg' => true,
     'error_suppression' => ['mute_deprecation_error' => true, 'noise_remaining_usages' => false],
-    'string_implicit_backslashes' => ['single_quoted' => false, 'double_quoted' => true, 'heredoc' => true],
+    'string_implicit_backslashes' => ['single_quoted' => 'unescape', 'double_quoted' => 'escape', 'heredoc' => 'escape'],
     'explicit_indirect_variable' => true,
     'explicit_string_variable' => true,
     'final_class' => true,
