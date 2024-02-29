@@ -85,7 +85,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@2.2.0"
+        uses: "ramsey/composer-install@2.3.0"
         with:
           dependency-versions: "lowest"
           composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
@@ -142,7 +142,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@2.2.0"
+        uses: "ramsey/composer-install@2.3.0"
         with:
           dependency-versions: "lowest"
           composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
@@ -195,7 +195,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@2.2.0"
+        uses: "ramsey/composer-install@2.3.0"
         with:
           dependency-versions: "lowest"
           composer-options: "${{ inputs.composer-options }}"
@@ -248,7 +248,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@2.2.0"
+        uses: "ramsey/composer-install@2.3.0"
         with:
           dependency-versions: "lowest"
           composer-options: "${{ inputs.composer-options }}"
@@ -301,7 +301,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@2.2.0"
+        uses: "ramsey/composer-install@2.3.0"
         with:
           dependency-versions: "lowest"
           composer-options: "${{ inputs.composer-options }}"
