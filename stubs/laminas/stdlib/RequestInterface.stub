@@ -6,5 +6,5 @@ namespace Laminas\Stdlib;
 
 interface RequestInterface extends MessageInterface
 {
-  // nothing to do
+    // nothing to do
 }
