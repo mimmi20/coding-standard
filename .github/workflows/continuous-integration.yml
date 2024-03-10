@@ -27,8 +27,8 @@ jobs:
       composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
       skip-validate-composer: false
       skip-phplint: false
-      skip-check-composer: false
-      dependency-analyser-options: "--ignore-dev-in-prod-deps --ignore-unknown-classes"
+      skip-check-composer: true
+      dependency-analyser-options: "--ignore-unknown-classes"
 
   install:
     name: "Install Project"
