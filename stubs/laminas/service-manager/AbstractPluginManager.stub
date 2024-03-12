@@ -77,7 +77,6 @@ abstract class AbstractPluginManager extends ServiceManager implements PluginMan
      * for details on its accepted structure.
      *
      * @param ConfigInterface<InstanceType>|ContainerInterface|null $configInstanceOrParentLocator
-     * @param array                                                 $config
      * @phpstan-param array{abstract_factories?: AbstractFactoriesConfiguration, aliases?: array<string,string|class-string<InstanceType>>, delegators?: DelegatorsConfiguration, factories?: FactoriesConfiguration, initializers?: InitializersConfiguration, invokables?: array<string,string>, lazy_services?: LazyServicesConfiguration, services?: array<string|class-string<InstanceType>,InstanceType>, shared?:array<string|class-string<InstanceType>,bool>, shared_by_default?:bool} $config
      *
      * @throws InvalidServiceException
@@ -90,7 +89,6 @@ abstract class AbstractPluginManager extends ServiceManager implements PluginMan
     /**
      * Override configure() to validate service instances.
      *
-     * @param array $config
      * @phpstan-param array{abstract_factories?: AbstractFactoriesConfiguration, aliases?: array<string,string|class-string<InstanceType>>, delegators?: DelegatorsConfiguration, factories?: FactoriesConfiguration, initializers?: InitializersConfiguration, invokables?: array<string,string>, lazy_services?: LazyServicesConfiguration, services?: array<string|class-string<InstanceType>,InstanceType>, shared?:array<string|class-string<InstanceType>,bool>, shared_by_default?:bool} $config
      *
      * @return self<InstanceType>
