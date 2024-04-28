@@ -101,6 +101,23 @@ parameters:
       missingCheckedExceptionInThrows: true
       tooWideThrowType: true
 
+  cognitive_complexity:
+    class: 74
+    function: 74
+
+  type_coverage:
+    return: 100
+    param: 50
+    property: 100
+    # also, how many files has declare strict types
+    declare: 100
+
+  unused_public:
+    methods: true
+    properties: true
+    constants: true
+    local_methods: true
+
 #  ignoreErrors:
 #    - '~PHP_CodeSniffer\\Files\\File~'
 #    - '~PHP_CodeSniffer\\Sniffs\\Sniff~'
