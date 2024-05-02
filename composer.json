@@ -45,7 +45,7 @@
     "symplify/phpstan-rules": "^12.4.9",
     "tomasvotruba/cognitive-complexity": "^0.2.3",
     "tomasvotruba/type-coverage": "^0.2.8",
-    "tomasvotruba/unused-public": "^0.3.8"
+    "tomasvotruba/unused-public": "^0.3.9"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
