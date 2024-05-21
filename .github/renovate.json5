@@ -9,12 +9,15 @@
     "mimmi20"
   ],
   "automerge": false,
+  "branchConcurrentLimit": 0,
   "commitBody": "Signed-off-by: {{{gitAuthor}}}",
   "commitBodyTable": true,
   "configMigration": true,
-  "dependencyDashboard": true,
-  "dependencyDashboardApproval": true,
-  "enabledManagers": ["composer", "github-actions", "npm"],
+  "configWarningReuseIssue": false,
+  "dependencyDashboard": false,
+  "dependencyDashboardApproval": false,
+  "dependencyDashboardOSVVulnerabilitySummary": "all",
+  //"enabledManagers": ["composer", "github-actions", "npm"],
   "ignoreTests": false,
   "ignoreUnstable": true,
   "internalChecksFilter": "strict",
@@ -24,6 +27,7 @@
   "lockFileMaintenance": {
     "enabled": false
   },
+  "osvVulnerabilityAlerts": true,
   "platformAutomerge": false,
   "prBodyColumns": [
     "Package",
@@ -37,6 +41,7 @@
     "Update": "{{{updateType}}}",
     "Change": "[{{#if displayFrom}}`{{{displayFrom}}}` -> {{else}}{{#if currentValue}}`{{{currentValue}}}` -> {{/if}}{{/if}}{{#if displayTo}}`{{{displayTo}}}`{{else}}`{{{newValue}}}`{{/if}}]({{#if depName}}https://renovatebot.com/diffs/npm/{{replace '/' '%2f' depName}}/{{{currentVersion}}}/{{{newVersion}}}{{/if}})"
   },
+  "prConcurrentLimit": 0,
   "prCreation": "immediate",
   "prHourlyLimit": 0,
   "rangeStrategy": "bump",
@@ -54,25 +59,39 @@
   "updateNotScheduled": false,
   "packageRules": [
     {
+      "groupName": "PHP",
+      "matchDepNames": ["php"],
+      "allowedVersions": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+      "ignoreUnstable": false,
+      "rangeStrategy": "widen"
+    },
+    {
+      "groupName": "Node",
+      "matchDepNames": ["node"],
+      "allowedVersions": "~19.5.0 || ~20.0.0 || ~21.0.0 || ~22.0.0",
+      "ignoreUnstable": false,
+      "rangeStrategy": "widen"
+    },
+    {
+      "groupName": "devDependencies",
+      "matchDepTypes": ["devDependencies", "peerDependencies"],
+      "rangeStrategy": "widen"
+    },
+    {
+      "matchPackageNames": ["nikic/php-parser", "infection/infection"],
+      "rangeStrategy": "widen"
+    },
+    {
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch-dependencies",
-      "matchPackagePatterns": [
-        "*"
-      ],
       "matchUpdateTypes": [
         "minor",
         "patch"
       ]
-    },
-    {
-      "groupName": "PHP",
-      "matchPackageNames": ["php"],
-      "allowedVersions": "^8.1",
-      "ignoreUnstable": false,
-      "rangeStrategy": "widen"
     }
   ],
   "vulnerabilityAlerts": {
-    "enabled": true
+    "enabled": true,
+    "labels": ["security"]
   }
 }
