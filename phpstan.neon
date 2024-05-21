@@ -141,7 +141,6 @@ rules:
 
   # paths
   - Symplify\PHPStanRules\Rules\NoMissingDirPathRule
-  - Symplify\PHPStanRules\Rules\NoAbstractMethodRule
   - Symplify\PHPStanRules\Rules\NoReferenceRule # References are required
   - Symplify\PHPStanRules\Rules\NoArrayAccessOnObjectRule
 
