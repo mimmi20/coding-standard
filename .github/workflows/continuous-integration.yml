@@ -75,7 +75,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.30.4"
+        uses: "shivammathur/setup-php@2.30.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache"
@@ -132,7 +132,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.30.4"
+        uses: "shivammathur/setup-php@2.30.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache"
@@ -185,7 +185,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.30.4"
+        uses: "shivammathur/setup-php@2.30.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache"
@@ -238,7 +238,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.30.4"
+        uses: "shivammathur/setup-php@2.30.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache"
@@ -291,7 +291,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.30.4"
+        uses: "shivammathur/setup-php@2.30.5"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache"
