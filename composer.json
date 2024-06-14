@@ -42,9 +42,9 @@
     "phpstan/extension-installer": "^1.4.1",
     "phpstan/phpstan": "^1.11.4",
     "phpstan/phpstan-deprecation-rules": "^1.2.0",
-    "symplify/phpstan-rules": "^12.7.0",
+    "symplify/phpstan-rules": "^13.0.0",
     "tomasvotruba/cognitive-complexity": "^0.2.3",
-    "tomasvotruba/type-coverage": "^0.3.0",
+    "tomasvotruba/type-coverage": "^0.3.1",
     "tomasvotruba/unused-public": "^0.3.9"
   },
   "minimum-stability": "stable",
