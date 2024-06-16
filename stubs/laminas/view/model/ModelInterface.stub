@@ -5,111 +5,25 @@ declare(strict_types = 1);
 namespace Laminas\View\Model;
 
 use ArrayAccess;
+use Countable;
+use IteratorAggregate;
 use Laminas\View\Exception\InvalidArgumentException;
-use ReturnTypeWillChange;
-// phpcs:ignore
 use Traversable;
 
-final class ViewModel implements ModelInterface, ClearableModelInterface, RetrievableChildrenInterface
+/**
+ * Interface describing a view model.
+ *
+ * Extends "Countable"; count() should return the number of children attached
+ * to the model.
+ *
+ * Extends "IteratorAggregate"; should allow iterating over children.
+ *
+ * @extends IteratorAggregate<int, ModelInterface>
+ */
+interface ModelInterface extends Countable, IteratorAggregate
 {
     /**
-     * What variable a parent model should capture this model to
-     */
-    protected string $captureTo = 'content';
-
-    /**
-     * Child models
-     *
-     * @var list<ModelInterface>
-     */
-    protected array $children = [];
-
-    /**
-     * Renderer options
-     *
-     * @var array<string, mixed>
-     */
-    protected array $options = [];
-
-    /**
-     * Template to use when rendering this model
-     */
-    protected string $template = '';
-
-    /**
-     * Is this a standalone, or terminal, model?
-     */
-    protected bool $terminate = false;
-
-    /**
-     * View variables
-     *
-     * @var array<string, mixed>|ArrayAccess|Traversable<string, mixed>
-     * @psalm-var array<string, mixed>|ArrayAccess&Traversable<string, mixed>
-     * @phpstan-var array<string, mixed>|ArrayAccess&Traversable<string, mixed>
-     */
-    protected array | ArrayAccess | Traversable $variables = [];
-
-    /**
-     * Is this append to child  with the same capture?
-     */
-    protected bool $append = false;
-
-    /**
-     * Constructor
-     *
-     * @param array<string, mixed>|Traversable<string, mixed>|ArrayAccess<string, mixed>|null $variables
-     * @param array<string, mixed>|Traversable<string, mixed>|null                            $options
-     *
-     * @throws InvalidArgumentException
-     */
-    public function __construct(
-        array | Traversable | ArrayAccess | null $variables = null,
-        array | Traversable | null $options = null,
-    );
-
-    /**
-     * Property overloading: set variable value
-     *
-     * @throws void
-     */
-    public function __set(string $name, mixed $value): void;
-
-    /**
-     * Property overloading: get variable value
-     *
-     * @throws void
-     */
-    public function __get(string $name): mixed;
-
-    /**
-     * Property overloading: do we have the requested variable value?
-     *
-     * @throws void
-     */
-    public function __isset(string $name): bool;
-
-    /**
-     * Property overloading: unset the requested variable
-     *
-     * @throws void
-     */
-    public function __unset(string $name): void;
-
-    /**
-     * Called after this view model is cloned.
-     *
-     * Clones $variables property so changes done to variables in the new
-     * instance don't change the current one.
-     *
-     * @return void
-     *
-     * @throws void
-     */
-    public function __clone();
-
-    /**
-     * Set a single option
+     * Set renderer option/hint
      *
      * @param string $name
      * @param mixed  $value
@@ -119,16 +33,6 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function setOption($name, $value): self;
-
-    /**
-     * Get a single option
-     *
-     * @param string     $name    The option to get.
-     * @param mixed|null $default (optional) A default value if the option is not yet set.
-     *
-     * @throws void
-     */
-    public function getOption(string $name, mixed $default = null): mixed;
 
     /**
      * Set renderer options/hints en masse
@@ -144,20 +48,13 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
     /**
      * Get renderer options/hints
      *
-     * @return @return array<string, mixed>|Traversable<string, mixed>
+     * @return array<string, mixed>|Traversable<string, mixed>
      *
      * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getOptions();
-
-    /**
-     * Clear any existing renderer options/hints
-     *
-     * @throws void
-     */
-    public function clearOptions(): self;
 
     /**
      * Get a single view variable
@@ -186,10 +83,7 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
     /**
      * Set view variables en masse
      *
-     * Can be an array or a Traversable + ArrayAccess object.
-     *
      * @param array<string, mixed>|ArrayAccess<string, mixed> $variables
-     * @param bool                                            $overwrite Whether or not to overwrite the internal container with $variables
      * @psalm-param array<string, mixed>|ArrayAccess&Traversable<string, mixed> $variables
      * @phpstan-param array<string, mixed>|ArrayAccess&Traversable<string, mixed> $variables
      *
@@ -197,7 +91,7 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
-    public function setVariables($variables, bool $overwrite = false): self;
+    public function setVariables($variables): self;
 
     /**
      * Get view variables
@@ -211,15 +105,6 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function getVariables();
-
-    /**
-     * Clear all variables
-     *
-     * Resets the internal variable container to an empty container.
-     *
-     * @throws void
-     */
-    public function clearVariables(): self;
 
     /**
      * Set the template to be used by this model
@@ -252,8 +137,9 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
      * @throws void
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @phpcs:disable SlevomatCodingStandard.Classes.RequireSelfReference.RequiredSelfReference
      */
-    public function addChild(ModelInterface $child, $captureTo = null, $append = null): self;
+    public function addChild(ModelInterface $child, $captureTo = null, $append = false): self;
 
     /**
      * Return all children.
@@ -272,24 +158,6 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
      * @throws void
      */
     public function hasChildren(): bool;
-
-    /**
-     * Clears out all child models
-     *
-     * @throws void
-     */
-    public function clearChildren(): self;
-
-    /**
-     * Returns an array of Viewmodels with captureTo value $capture
-     *
-     * @param bool $recursive search recursive through children, default true
-     *
-     * @return list<ModelInterface>
-     *
-     * @throws void
-     */
-    public function getChildrenByCaptureTo(string $capture, bool $recursive = true): array;
 
     /**
      * Set the name of the variable to capture this model to, if it is a child model
@@ -344,22 +212,4 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
      * @throws void
      */
     public function isAppend(): bool;
-
-    /**
-     * Return count of children
-     *
-     * @throws void
-     */
-    #[ReturnTypeWillChange]
-    public function count(): int;
-
-    /**
-     * Get iterator of children
-     *
-     * @return Traversable<int, ModelInterface>
-     *
-     * @throws void
-     */
-    #[ReturnTypeWillChange]
-    public function getIterator(): Traversable;
 }
