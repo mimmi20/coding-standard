@@ -84,8 +84,8 @@ interface ModelInterface extends Countable, IteratorAggregate
      * Set view variables en masse
      *
      * @param array<string, mixed>|ArrayAccess<string, mixed> $variables
-     * @psalm-param array<string, mixed>|ArrayAccess&Traversable<string, mixed> $variables
-     * @phpstan-param array<string, mixed>|ArrayAccess&Traversable<string, mixed> $variables
+     * @psalm-param array<string, mixed>|(ArrayAccess&Traversable)<string, mixed> $variables
+     * @phpstan-param array<string, mixed>|(ArrayAccess&Traversable)<string, mixed> $variables
      *
      * @throws InvalidArgumentException
      *
@@ -97,8 +97,8 @@ interface ModelInterface extends Countable, IteratorAggregate
      * Get view variables
      *
      * @return array<string, mixed>|ArrayAccess<string, mixed>
-     * @psalm-return array<string, mixed>|ArrayAccess&Traversable<string, mixed>
-     * @phpstan-return array<string, mixed>|ArrayAccess&Traversable<string, mixed>
+     * @psalm-return array<string, mixed>|(ArrayAccess&Traversable)<string, mixed>
+     * @phpstan-return array<string, mixed>|(ArrayAccess&Traversable)<string, mixed>
      *
      * @throws void
      *

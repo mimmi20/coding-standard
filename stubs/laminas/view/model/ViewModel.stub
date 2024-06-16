@@ -44,9 +44,9 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
     /**
      * View variables
      *
-     * @var array<string, mixed>|ArrayAccess|Traversable<string, mixed>
-     * @psalm-var array<string, mixed>|ArrayAccess&Traversable<string, mixed>
-     * @phpstan-var array<string, mixed>|ArrayAccess&Traversable<string, mixed>
+     * @var array<string, mixed>|ArrayAccess<string, mixed>
+     * @psalm-var array<string, mixed>|(ArrayAccess&Traversable)<string, mixed>
+     * @phpstan-var array<string, mixed>|(ArrayAccess&Traversable)<string, mixed>
      */
     protected array | ArrayAccess | Traversable $variables = [];
 
@@ -190,8 +190,8 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
      *
      * @param array<string, mixed>|ArrayAccess<string, mixed> $variables
      * @param bool                                            $overwrite Whether or not to overwrite the internal container with $variables
-     * @psalm-param array<string, mixed>|ArrayAccess&Traversable<string, mixed> $variables
-     * @phpstan-param array<string, mixed>|ArrayAccess&Traversable<string, mixed> $variables
+     * @psalm-param array<string, mixed>|(ArrayAccess&Traversable)<string, mixed> $variables
+     * @phpstan-param array<string, mixed>|(ArrayAccess&Traversable)<string, mixed> $variables
      *
      * @throws InvalidArgumentException
      *
@@ -203,8 +203,8 @@ final class ViewModel implements ModelInterface, ClearableModelInterface, Retrie
      * Get view variables
      *
      * @return array<string, mixed>|ArrayAccess<string, mixed>
-     * @psalm-return array<string, mixed>|ArrayAccess&Traversable<string, mixed>
-     * @phpstan-return array<string, mixed>|ArrayAccess&Traversable<string, mixed>
+     * @psalm-return array<string, mixed>|(ArrayAccess&Traversable)<string, mixed>
+     * @phpstan-return array<string, mixed>|(ArrayAccess&Traversable)<string, mixed>
      *
      * @throws void
      *
