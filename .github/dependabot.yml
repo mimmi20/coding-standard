@@ -15,12 +15,21 @@ updates:
     groups:
       # Specify a name for the group, which will be used in pull request titles
       # and branch names
-      minor-patch-dependencies:
+      security-updates:
+        applies-to: "security-updates"
+        update-types:
+          - "minor"
+          - "patch"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+      version-updates:
         applies-to: "version-updates"
-        # Define patterns to include dependencies in the group (based on
-        # dependency name)
-        patterns:
-          - "*"
+        update-types:
+          - "minor"
+          - "patch"
         exclude-patterns:
           - "friendsofphp/php-cs-fixer"
           - "sirbrillig/phpcs-variable-analysis"
@@ -87,12 +96,16 @@ updates:
     groups:
       # Specify a name for the group, which will be used in pull request titles
       # and branch names
-      minor-patch-dependencies:
+      security-updates:
+        applies-to: "security-updates"
+        update-types:
+          - "minor"
+          - "patch"
+      version-updates:
         applies-to: "version-updates"
-        # Define patterns to include dependencies in the group (based on
-        # dependency name)
-        patterns:
-          - "*"
+        update-types:
+          - "minor"
+          - "patch"
 
     open-pull-requests-limit: 10
 
@@ -145,8 +158,14 @@ updates:
     groups:
       # Specify a name for the group, which will be used in pull request titles
       # and branch names
-      minor-patch-dependencies:
+      version-updates:
         applies-to: "version-updates"
+        # Define patterns to include dependencies in the group (based on
+        # dependency name)
+        patterns:
+          - "*"
+      security-updates:
+        applies-to: "security-updates"
         # Define patterns to include dependencies in the group (based on
         # dependency name)
         patterns:
