@@ -1,0 +1,16 @@
+name: "Auto merge"
+
+permissions:
+  pull-requests: write
+  contents: write
+
+on:
+  - pull_request_target
+
+jobs:
+  automerge:
+    name: "enable auto merge for PR"
+
+    uses: "mimmi20/ci/.github/workflows/auto-merge.yml@8.1"
+    with:
+      pullRequestUrl: "${{ github.event.pull_request.html_url }}"
