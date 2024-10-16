@@ -61,7 +61,6 @@ jobs:
 
       matrix:
         operating-system:
-          - "ubuntu-22.04"
           - "ubuntu-24.04"
 
         php-version:
@@ -119,7 +118,6 @@ jobs:
 
       matrix:
         operating-system:
-          - "ubuntu-22.04"
           - "ubuntu-24.04"
 
         php-version:
@@ -173,7 +171,6 @@ jobs:
 
       matrix:
         operating-system:
-          - "ubuntu-22.04"
           - "ubuntu-24.04"
 
         php-version:
@@ -227,7 +224,6 @@ jobs:
 
       matrix:
         operating-system:
-          - "ubuntu-22.04"
           - "ubuntu-24.04"
 
         php-version:
@@ -281,7 +277,6 @@ jobs:
 
       matrix:
         operating-system:
-          - "ubuntu-22.04"
           - "ubuntu-24.04"
 
         php-version:
