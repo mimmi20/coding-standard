@@ -81,65 +81,7 @@ updates:
       - dependency-name: "symfony/yaml"
 
     # Disable rebasing for all pull requests
-    rebase-strategy: "disabled"
-
-  - package-ecosystem: "npm"
-
-    directory: "/"
-
-    schedule:
-      interval: "daily"
-
-    groups:
-      security-updates:
-        applies-to: "security-updates"
-        patterns:
-          - "*"
-      version-updates:
-        applies-to: "version-updates"
-        patterns:
-          - "*"
-
-    open-pull-requests-limit: 10
-
-    reviewers:
-      - "mimmi20"
-
-    assignees:
-      - "mimmi20"
-
-    labels:
-      - "dependencies"
-
-    versioning-strategy: "increase"
-
-    target-branch: "master"
-
-    commit-message:
-      include: "scope"
-      prefix: "npm"
-
-    ignore:
-      - dependency-name: "@localnerve/imagemin-gifsicle"
-      - dependency-name: "@localnerve/imagemin-pngquant"
-      - dependency-name: "@node-minify/core"
-      - dependency-name: "@node-minify/no-compress"
-      - dependency-name: "@node-minify/terser"
-      - dependency-name: "@typescript-eslint/eslint-plugin"
-      - dependency-name: "@typescript-eslint/parser"
-      - dependency-name: "@typescript-eslint/typescript-estree"
-      - dependency-name: "@vheemstra/vite-plugin-imagemin"
-      - dependency-name: "@vitest/coverage-istanbul"
-      - dependency-name: "@vitest/ui"
-      - dependency-name: "cssnano"
-      - dependency-name: "cssnano-preset-default"
-      - dependency-name: "imagemin"
-      - dependency-name: "postcss-load-config"
-      - dependency-name: "supports-color"
-      - dependency-name: "vitest"
-
-    # Disable rebasing for all pull requests
-    rebase-strategy: "disabled"
+    rebase-strategy: "auto"
 
   - package-ecosystem: "github-actions"
 
@@ -147,18 +89,6 @@ updates:
 
     schedule:
       interval: "daily"
-
-    groups:
-      # Specify a name for the group, which will be used in pull request titles
-      # and branch names
-      security-updates:
-        applies-to: "security-updates"
-        patterns:
-          - "*"
-      version-updates:
-        applies-to: "version-updates"
-        patterns:
-          - "*"
 
     open-pull-requests-limit: 10
 
@@ -177,4 +107,4 @@ updates:
       prefix: "github-actions"
 
     # Disable rebasing for all pull requests
-    rebase-strategy: "disabled"
+    rebase-strategy: "auto"

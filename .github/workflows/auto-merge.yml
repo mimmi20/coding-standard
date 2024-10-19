@@ -1,16 +1,21 @@
 name: "Auto merge"
 
-permissions:
-  pull-requests: write
-  contents: write
-
 on:
   - pull_request_target
 
 jobs:
   automerge:
-    name: "enable auto merge for PR"
+    runs-on: "ubuntu-24.04"
 
-    uses: "mimmi20/ci/.github/workflows/auto-merge.yml@8.1"
-    with:
-      pullRequestUrl: "${{ github.event.pull_request.html_url }}"
+    if: ${{ github.actor == 'dependabot[bot]' }}
+
+    permissions:
+      pull-requests: write
+      contents: write
+
+    steps:
+      - uses: "fastify/github-action-merge-dependabot@v3"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          use-github-auto-merge: true
+          merge-method: "merge"

@@ -1,16 +1,19 @@
 name: "Auto approve"
 
-permissions:
-  pull-requests: write
-  contents: write
-
 on:
   - pull_request_target
 
 jobs:
   auto-approve:
-    name: "auto approve PR"
+    runs-on: "ubuntu-24.04"
 
-    uses: "mimmi20/ci/.github/workflows/auto-approve.yml@8.1"
-    with:
-      pullRequestUrl: "${{ github.event.pull_request.html_url }}"
+    if: ${{ github.actor == 'dependabot[bot]' }}
+
+    permissions:
+      pull-requests: write
+
+    steps:
+      - uses: "fastify/github-action-merge-dependabot@v3"
+        with:
+          approve-only: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
