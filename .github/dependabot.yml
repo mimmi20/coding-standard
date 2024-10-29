@@ -11,26 +11,8 @@ updates:
 
     schedule:
       interval: "daily"
-
-    groups:
-      security-updates:
-        applies-to: "security-updates"
-        patterns:
-          - "*"
-        exclude-patterns:
-          - "friendsofphp/php-cs-fixer"
-          - "sirbrillig/phpcs-variable-analysis"
-          - "slevomat/coding-standard"
-          - "squizlabs/php_codesniffer"
-      version-updates:
-        applies-to: "version-updates"
-        patterns:
-          - "*"
-        exclude-patterns:
-          - "friendsofphp/php-cs-fixer"
-          - "sirbrillig/phpcs-variable-analysis"
-          - "slevomat/coding-standard"
-          - "squizlabs/php_codesniffer"
+      time: "04:00"
+      timezone: "Europe/Berlin"
 
     open-pull-requests-limit: 10
 
@@ -50,9 +32,6 @@ updates:
     commit-message:
       include: "scope"
       prefix: "composer"
-
-    #allow:
-    #  - '*'
 
     ignore:
       - dependency-name: "browscap/browscap"
@@ -80,7 +59,6 @@ updates:
       - dependency-name: "symfony/http-foundation"
       - dependency-name: "symfony/yaml"
 
-    # Disable rebasing for all pull requests
     rebase-strategy: "auto"
 
   - package-ecosystem: "github-actions"
@@ -89,6 +67,8 @@ updates:
 
     schedule:
       interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Berlin"
 
     open-pull-requests-limit: 10
 
@@ -106,5 +86,7 @@ updates:
     commit-message:
       prefix: "github-actions"
 
-    # Disable rebasing for all pull requests
+    ignore:
+      - dependency-name: "mimmi20/ci"
+
     rebase-strategy: "auto"
