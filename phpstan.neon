@@ -1,6 +1,8 @@
 parameters:
   level: max
 
+  phpVersion: 80100 # PHP 8.1
+
   parallel:
     maximumNumberOfProcesses: 1
     processTimeout: 200.0
