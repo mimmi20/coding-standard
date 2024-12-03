@@ -283,7 +283,6 @@ jobs:
       - "php-cs-fixer"
       - "phpcs"
       - "static-code-analysis"
-      - "phpmd"
       - "rector"
 
     steps:
