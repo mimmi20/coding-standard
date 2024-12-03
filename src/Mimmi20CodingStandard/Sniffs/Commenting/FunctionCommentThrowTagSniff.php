@@ -13,6 +13,7 @@ declare(strict_types = 1);
 
 namespace Mimmi20CodingStandard\Sniffs\Commenting;
 
+use Override;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
@@ -60,6 +61,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
      *
      * @throws void
      */
+    #[Override]
     public function register(): array
     {
         return [T_FUNCTION];
@@ -76,6 +78,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
+    #[Override]
     public function process(File $phpcsFile, $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();

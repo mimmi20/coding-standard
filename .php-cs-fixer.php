@@ -26,7 +26,6 @@ $finder = PhpCsFixer\Finder::create()
     ->files()
     ->name('*.php')
     ->in(__DIR__ . '/src')
-    ->in(__DIR__ . '/stubs')
     ->append([__DIR__ . '/rector.php'])
     ->append([__FILE__]);
 
