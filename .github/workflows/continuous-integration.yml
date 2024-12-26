@@ -80,7 +80,7 @@ jobs:
         uses: "shivammathur/setup-php@2.31.1"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache"
+          extensions: "json, opcache, tokenizer, mbstring"
           ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
           tools: "composer:v2, cs2pr"
@@ -137,7 +137,7 @@ jobs:
         uses: "shivammathur/setup-php@2.31.1"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache"
+          extensions: "json, opcache, tokenizer, mbstring"
           ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
           tools: "composer:v2, cs2pr"
@@ -154,7 +154,7 @@ jobs:
 
       - name: "Run squizlabs/php_codesniffer"
         id: "phpcs"
-        run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --extensions=php --report-full --report-performance --report-checkstyle=./phpcs-report.xml -v  src .php-cs-fixer.php rector.php"
+        run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --extensions=php --report-full --report-performance --report-checkstyle=./phpcs-report.xml -v  src .php-cs-fixer.php rector.php composer-dependency-analyser.php"
 
       - name: "Show PHPCS results in PR"
         if: ${{ always() && steps.phpcs.outcome == 'failure' }}
@@ -195,7 +195,7 @@ jobs:
         uses: "shivammathur/setup-php@2.31.1"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache"
+          extensions: "json, opcache, tokenizer, mbstring"
           ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
           tools: "composer:v2"
@@ -248,7 +248,7 @@ jobs:
         uses: "shivammathur/setup-php@2.31.1"
         with:
           php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache"
+          extensions: "json, opcache, tokenizer, mbstring"
           ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
           coverage: "none"
           tools: "composer:v2"
