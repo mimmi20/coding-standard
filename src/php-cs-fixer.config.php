@@ -267,6 +267,7 @@ return [
     'psr_autoloading' => true,
     'random_api_migration' => ['replacements' => ['mt_rand' => 'random_int', 'rand' => 'random_int']],
     'return_assignment' => true,
+    'return_type_declaration' => false,
     'self_accessor' => true,
     'self_static_accessor' => true,
     'semicolon_after_instruction' => true,
