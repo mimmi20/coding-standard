@@ -214,7 +214,7 @@
     <!-- Require no space before : and 1 space before Enum type -->
     <rule ref="SlevomatCodingStandard.Classes.BackedEnumTypeSpacing">
         <properties>
-            <property name="spacesCountBeforeColon" value="1"/>
+            <property name="spacesCountBeforeColon" value="0"/>
             <property name="spacesCountBeforeType" value="1"/>
         </properties>
     </rule>
