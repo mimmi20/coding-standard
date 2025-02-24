@@ -555,7 +555,7 @@
     <rule ref="SlevomatCodingStandard.ControlStructures.RequireMultiLineTernaryOperator">
         <properties>
             <property name="lineLengthLimit" value="105"/>
-            <property name="minExpressionsLength" value="null"/>
+            <property name="minExpressionsLength" value=""/>
         </properties>
     </rule>
 
@@ -832,6 +832,16 @@
     <!-- Disallows usage of array type hint syntax (eg. int[], bool[][]) in phpDocs in favour of generic type hint syntax (eg. array<int>, array<array<bool>>). -->
     <rule ref="SlevomatCodingStandard.TypeHints.DisallowArrayTypeHintSyntax"/>
 
+    <rule ref="SlevomatCodingStandard.TypeHints.DNFTypeHintFormat">
+        <properties>
+            <property name="enable" value="true"/>
+            <property name="withSpacesAroundOperators" value="yes"/>
+            <property name="withSpacesInsideParentheses" value="yes"/>
+            <property name="shortNullable" value="no"/>
+            <property name="nullPosition" value="last"/>
+        </properties>
+    </rule>
+
     <!-- Require use of short versions of scalar types (i.e. int instead of integer) -->
     <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
 
@@ -901,15 +911,6 @@
     <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing">
         <properties>
             <property name="spacesCountBeforeColon" value="0"/>
-        </properties>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.TypeHints.UnionTypeHintFormat">
-        <properties>
-            <property name="enable" value="true"/>
-            <property name="withSpaces" value="yes"/>
-            <property name="shortNullable" value="no"/>
-            <property name="nullPosition" value="last"/>
         </properties>
     </rule>
 
