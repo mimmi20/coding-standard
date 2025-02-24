@@ -1117,13 +1117,4 @@
 
     <!-- Force rules for function phpDoc -->
     <rule ref="Mimmi20CodingStandard.Commenting.FunctionCommentThrowTag"/>
-
-    <rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis">
-        <properties>
-            <!-- checked by SlevomatCodingStandard.Functions.UnusedParameter -->
-            <property name="allowUnusedFunctionParameters" value="true"/>
-            <!-- checked by SlevomatCodingStandard.Variables.UnusedVariable -->
-            <property name="allowUnusedVariablesInFileScope" value="true"/>
-        </properties>
-    </rule>
 </ruleset>

@@ -30,3 +30,4 @@ package-lock.json
 .reports
 *.bak
 *.txt
+phpcs-report.xml
