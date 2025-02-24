@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the coding-standard package.
  *
@@ -48,5 +49,5 @@ return $config
             ],
         ),
     )
-    ->setUsingCache(true)
+    ->setUsingCache(false)
     ->setFinder($finder);
