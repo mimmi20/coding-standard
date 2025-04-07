@@ -23,7 +23,7 @@ return [
     'backtick_to_shell_exec' => true,
     'binary_operator_spaces' => [
         'default' => 'single_space',
-        'operators' => ['=' => null, '-=' => null, '.=' => null, '+=' => null, '*=' => null],
+        'operators' => ['=' => null, '-=' => null, '.=' => null, '+=' => null, '*=' => null, '??=' => null],
     ],
     'blank_line_after_namespace' => true,
     'blank_lines_before_namespace' => [
