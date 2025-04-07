@@ -37,7 +37,7 @@
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "friendsofphp/php-cs-fixer": "^3.75.0",
     "slevomat/coding-standard": "~8.16.2",
-    "squizlabs/php_codesniffer": "^3.12.0"
+    "squizlabs/php_codesniffer": "^3.12.1"
   },
   "require-dev": {
     "nikic/php-parser": "^5.4.0",
