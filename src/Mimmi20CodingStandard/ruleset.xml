@@ -322,6 +322,7 @@
             <property name="checkPromoted" value="true"/>
             <property name="enableMultipleSpacesBetweenModifiersCheck" value="true"/>
         </properties>
+        <exclude name="SlevomatCodingStandard.Classes.PropertyDeclaration.MultipleSpacesBetweenTypeHintAndProperty"/>
     </rule>
 
     <!-- Ensure that there are consistent blank lines between properties. -->
