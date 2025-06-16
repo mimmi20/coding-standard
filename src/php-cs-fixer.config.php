@@ -285,7 +285,7 @@ return [
     'space_after_semicolon' => ['remove_in_empty_for_expressions' => true],
     'standardize_increment' => true,
     'standardize_not_equals' => true,
-    'statement_indentation' => false,
+    'statement_indentation' => ['stick_comment_to_next_continuous_control_statement' => true],
     'static_lambda' => true,
     'strict_comparison' => true,
     'strict_param' => true,
