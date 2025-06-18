@@ -35,7 +35,7 @@
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
     "friendsofphp/php-cs-fixer": "^3.75.0",
     "slevomat/coding-standard": "~8.19.1",
-    "squizlabs/php_codesniffer": "^3.13.1"
+    "squizlabs/php_codesniffer": "^3.13.2"
   },
   "require-dev": {
     "phpstan/extension-installer": "^1.4.3",
