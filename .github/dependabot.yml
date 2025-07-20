@@ -14,6 +14,22 @@ updates:
       time: "04:00"
       timezone: "Europe/Berlin"
 
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+
     open-pull-requests-limit: 10
 
     assignees:
@@ -40,6 +56,22 @@ updates:
       interval: "daily"
       time: "04:00"
       timezone: "Europe/Berlin"
+
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
 
     open-pull-requests-limit: 10
 
@@ -69,6 +101,22 @@ updates:
       time: "04:00"
       timezone: "Europe/Berlin"
 
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+
     open-pull-requests-limit: 10
 
     assignees:
@@ -95,6 +143,22 @@ updates:
       interval: "daily"
       time: "04:00"
       timezone: "Europe/Berlin"
+
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
 
     open-pull-requests-limit: 10
 
