@@ -153,6 +153,10 @@ jobs:
           composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Run squizlabs/php_codesniffer"
+        run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --extensions=php,stub -v src stubs .php-cs-fixer.php rector.php"
+        continue-on-error: true
+
+      - name: "Run squizlabs/php_codesniffer"
         run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --extensions=php,stub -q --report=checkstyle src stubs .php-cs-fixer.php rector.php | cs2pr"
 
   static-code-analysis:
