@@ -153,6 +153,7 @@ jobs:
           composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Run squizlabs/php_codesniffer"
+        id: "phpcs"
         run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --extensions=php --report-full --report-performance --report-checkstyle=./phpcs-report.xml -v src .php-cs-fixer.php rector.php"
 
       - name: "Show PHPCS results in PR"
