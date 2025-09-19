@@ -28,7 +28,7 @@ use function mb_strlen;
 use function mb_strpos;
 use function mb_strrpos;
 use function mb_substr;
-use function trim;
+use function mb_trim;
 
 use const T_ANON_CLASS;
 use const T_ATTRIBUTE_END;
@@ -77,11 +77,11 @@ final class FunctionCommentThrowTagSniff implements Sniff
      * @throws RuntimeException
      */
     #[Override]
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
-        $find               = Tokens::$methodPrefixes;
+        $find               = Tokens::METHOD_MODIFIERS;
         $find[T_WHITESPACE] = T_WHITESPACE;
 
         $commentEnd = null;
@@ -278,7 +278,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                             );
 
                             foreach ($exceptions as $exception) {
-                                $thrownExceptions[] = trim($exception);
+                                $thrownExceptions[] = mb_trim($exception);
                             }
                         }
                     }
