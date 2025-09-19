@@ -73,8 +73,6 @@ final class FunctionCommentThrowTagSniff implements Sniff
      *                        in the stack passed in $tokens
      *
      * @throws RuntimeException
-     *
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
     public function process(File $phpcsFile, int $stackPtr): void
     {
