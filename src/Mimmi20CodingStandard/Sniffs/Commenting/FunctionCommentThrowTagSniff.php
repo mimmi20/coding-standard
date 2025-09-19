@@ -76,11 +76,11 @@ final class FunctionCommentThrowTagSniff implements Sniff
      *
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 
-        $find               = Tokens::$methodPrefixes;
+        $find               = Tokens::METHOD_MODIFIERS;
         $find[T_WHITESPACE] = T_WHITESPACE;
 
         $commentEnd = null;
