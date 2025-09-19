@@ -69,9 +69,7 @@
 
     <!-- Align corresponding assignment statement tokens -->
     <rule ref="Generic.Formatting.MultipleStatementAlignment">
-        <properties>
-            <property name="error" value="true"/>
-        </properties>
+        <type>error</type>
     </rule>
 
     <!-- Force whitespace after a type cast -->
