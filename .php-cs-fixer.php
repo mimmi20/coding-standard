@@ -29,6 +29,7 @@ $finder = Finder::create()
     ->files()
     ->name('*.php')
     ->in(__DIR__ . '/src')
+    ->in(__DIR__ . '/test')
     ->append([__DIR__ . '/rector.php'])
     ->append([__DIR__ . '/composer-dependency-analyser.php'])
     ->append([__FILE__]);
