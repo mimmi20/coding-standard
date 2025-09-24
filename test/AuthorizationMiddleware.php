@@ -27,7 +27,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function sprintf;
 
-final readonly class AuthorizationMiddleware implements MiddlewareInterface
+final class AuthorizationMiddleware implements MiddlewareInterface
 {
     /** @throws void */
     public function __construct(
