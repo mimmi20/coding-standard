@@ -27,7 +27,7 @@ use function mb_strlen;
 use function mb_strpos;
 use function mb_strrpos;
 use function mb_substr;
-use function trim;
+use function mb_trim;
 
 use const T_ANON_CLASS;
 use const T_ATTRIBUTE_END;
@@ -37,6 +37,7 @@ use const T_COMMENT;
 use const T_DOC_COMMENT_CLOSE_TAG;
 use const T_DOC_COMMENT_STRING;
 use const T_FUNCTION;
+use const T_NAME_QUALIFIED;
 use const T_NEW;
 use const T_NS_SEPARATOR;
 use const T_STRING;
@@ -221,6 +222,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 ) {
                     $currException = $tokens[$nextToken]['code'] === T_NEW ? $phpcsFile->findNext(
                         types: [
+                            T_NAME_QUALIFIED,
                             T_NS_SEPARATOR,
                             T_STRING,
                         ],
@@ -275,7 +277,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                             );
 
                             foreach ($exceptions as $exception) {
-                                $thrownExceptions[] = trim($exception);
+                                $thrownExceptions[] = mb_trim($exception);
                             }
                         }
                     }

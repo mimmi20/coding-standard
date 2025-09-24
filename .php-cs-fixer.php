@@ -30,6 +30,7 @@ $finder = Finder::create()
     ->name('*.php')
     ->in(__DIR__ . '/src')
     ->in(__DIR__ . '/stubs')
+    ->in(__DIR__ . '/test')
     ->append([__DIR__ . '/rector.php'])
     ->append([__FILE__]);
 
