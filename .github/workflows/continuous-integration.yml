@@ -154,7 +154,7 @@ jobs:
 
       - name: "Run squizlabs/php_codesniffer"
         id: "phpcs"
-        run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --extensions=php --report-full --report-performance --report-checkstyle=./phpcs-report.xml -v  src .php-cs-fixer.php rector.php composer-dependency-analyser.php"
+        run: "vendor/bin/phpcs -wps --colors --standard=src/Mimmi20CodingStandard/ruleset.xml --extensions=php --report-full --report-performance --report-checkstyle=./phpcs-report.xml -v  src test .php-cs-fixer.php rector.php composer-dependency-analyser.php"
 
       - name: "Show PHPCS results in PR"
         if: ${{ always() && steps.phpcs.outcome == 'failure' }}
