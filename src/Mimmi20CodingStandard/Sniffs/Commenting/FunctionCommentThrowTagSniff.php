@@ -37,6 +37,7 @@ use const T_COMMENT;
 use const T_DOC_COMMENT_CLOSE_TAG;
 use const T_DOC_COMMENT_STRING;
 use const T_FUNCTION;
+use const T_NAME_FULLY_QUALIFIED;
 use const T_NAME_QUALIFIED;
 use const T_NEW;
 use const T_NS_SEPARATOR;
@@ -220,16 +221,31 @@ final class FunctionCommentThrowTagSniff implements Sniff
                     || $tokens[$nextToken]['code'] === T_NS_SEPARATOR
                     || $tokens[$nextToken]['code'] === T_STRING
                 ) {
-                    $currException = $tokens[$nextToken]['code'] === T_NEW ? $phpcsFile->findNext(
-                        types: [
-                            T_NAME_QUALIFIED,
-                            T_NS_SEPARATOR,
-                            T_STRING,
-                        ],
-                        start: (int) ($currPos),
-                        end: (int) ($stackPtrEnd),
-                        local: true,
-                    ) : $nextToken;
+                    /* @phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed */
+                    if ($tokens[$nextToken]['code'] === T_NEW) {
+                        /*
+                        var_dump(
+                            $tokens[$nextToken],
+                            $tokens[$nextToken + 1],
+                            $tokens[$nextToken + 2],
+                        );
+                         */
+                        $currException = $phpcsFile->findNext(
+                            types: [
+                                T_NAME_QUALIFIED,
+                                T_NAME_FULLY_QUALIFIED,
+                                T_NS_SEPARATOR,
+                                T_STRING,
+                            ],
+                            start: (int) ($currPos),
+                            end: (int) ($stackPtrEnd),
+                            local: true,
+                        );
+                    } else {
+                        $currException = $nextToken;
+                    }
+
+                    /* @phpcs:enable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed */
 
                     if ($currException !== false) {
                         $endException = $phpcsFile->findNext(
