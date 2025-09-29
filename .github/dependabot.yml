@@ -46,7 +46,7 @@ updates:
       include: "scope"
       prefix: "composer (master)"
 
-    rebase-strategy: "auto"
+    rebase-strategy: "disabled"
 
   - package-ecosystem: "github-actions"
 
@@ -89,7 +89,7 @@ updates:
     ignore:
       - dependency-name: "mimmi20/ci"
 
-    rebase-strategy: "auto"
+    rebase-strategy: "disabled"
 
   - package-ecosystem: "composer"
 
@@ -132,7 +132,7 @@ updates:
       include: "scope"
       prefix: "composer (5.x)"
 
-    rebase-strategy: "auto"
+    rebase-strategy: "disabled"
 
   - package-ecosystem: "github-actions"
 
@@ -176,4 +176,4 @@ updates:
       - dependency-name: "mimmi20/ci"
       - dependency-name: "release-drafter/release-drafter"
 
-    rebase-strategy: "auto"
+    rebase-strategy: "disabled"
