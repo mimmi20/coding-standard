@@ -23,6 +23,7 @@ use function array_keys;
 use function array_unique;
 use function count;
 use function explode;
+use function is_int;
 use function is_string;
 use function mb_strlen;
 use function mb_strpos;
@@ -97,7 +98,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 $tokens[$commentEnd]['code'] === T_ATTRIBUTE_END
                 && isset($tokens[$commentEnd]['attribute_opener']) === true
             ) {
-                $commentEnd = $tokens[$commentEnd]['attribute_opener'];
+                $commentEnd = (int) $tokens[$commentEnd]['attribute_opener'];
 
                 continue;
             }
@@ -313,7 +314,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
         $commentStart = $tokens[$commentEnd]['comment_opener'];
 
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
-            if ($tokens[$tag]['content'] !== '@throws') {
+            if (!is_int($tag) || $tokens[$tag]['content'] !== '@throws') {
                 continue;
             }
 
