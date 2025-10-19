@@ -126,11 +126,11 @@ updates:
 
     versioning-strategy: "increase"
 
-    target-branch: "5.x"
+    target-branch: "6.x"
 
     commit-message:
       include: "scope"
-      prefix: "composer (5.x)"
+      prefix: "composer (6.x)"
 
     rebase-strategy: "disabled"
 
@@ -168,10 +168,10 @@ updates:
     labels:
       - "dependencies"
 
-    target-branch: "5.x"
+    target-branch: "6.x"
 
     commit-message:
-      prefix: "github-actions (5.x)"
+      prefix: "github-actions (6.x)"
 
     ignore:
       - dependency-name: "mimmi20/ci"
