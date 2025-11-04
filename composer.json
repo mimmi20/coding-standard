@@ -44,7 +44,7 @@
     "phpstan/extension-installer": "^1.4.3",
     "phpstan/phpstan": "^2.1.31",
     "phpstan/phpstan-deprecation-rules": "^2.0.3",
-    "rector/rector": "^2.2.5",
+    "rector/rector": "^2.2.6",
     "rector/type-perfect": "^2.1.1",
     "shipmonk/composer-dependency-analyser": "^1.8.3",
     "symfony/process": "^7.3.4",
