@@ -12,8 +12,8 @@
 declare(strict_types = 1);
 
 return [
-    '@PHP81Migration' => true,
-    '@PHPUnit100Migration:risky' => true,
+    '@PHP8x4Migration' => true,
+    '@PHPUnit10x0Migration:risky' => true,
     '@PSR12' => true,
     '@PSR12:risky' => true,
 
@@ -145,6 +145,7 @@ return [
     'native_function_casing' => true,
     'native_function_invocation' => false,
     'native_type_declaration_casing' => true,
+    'new_expression_parentheses' => ['use_parentheses' => true],
     'non_printable_character' => ['use_escape_sequences_in_strings' => true],
     'normalize_index_brace' => true,
     'no_alias_functions' => ['sets' => ['@all']],
@@ -197,7 +198,7 @@ return [
     'no_useless_return' => true,
     'no_useless_sprintf' => true,
     'no_whitespace_before_comma_in_array' => ['after_heredoc' => true],
-    'nullable_type_declaration_for_default_null_value' => true,
+    'nullable_type_declaration_for_default_null_value' => ['use_nullable_type_declaration' => true],
     'object_operator_without_whitespace' => true,
     'octal_notation' => false,
     'operator_linebreak' => ['only_booleans' => false, 'position' => 'beginning'],
@@ -292,6 +293,7 @@ return [
     'strict_comparison' => true,
     'strict_param' => true,
     'string_length_to_empty' => true,
+    'switch_case_semicolon_to_colon' => true,
     'string_line_ending' => true,
     'switch_continue_to_break' => true,
     'ternary_to_elvis_operator' => true,
