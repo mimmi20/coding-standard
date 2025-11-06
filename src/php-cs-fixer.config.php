@@ -198,7 +198,7 @@ return [
     'no_useless_return' => true,
     'no_useless_sprintf' => true,
     'no_whitespace_before_comma_in_array' => ['after_heredoc' => true],
-    'nullable_type_declaration_for_default_null_value' => ['use_nullable_type_declaration' => true],
+    'nullable_type_declaration_for_default_null_value' => true,
     'object_operator_without_whitespace' => true,
     'octal_notation' => false,
     'operator_linebreak' => ['only_booleans' => false, 'position' => 'beginning'],
