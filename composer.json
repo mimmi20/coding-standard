@@ -34,7 +34,7 @@
     "php": "~8.4.0 || ~8.5.0",
     "ext-mbstring": "*",
     "ext-tokenizer": "*",
-    "dealerdirect/phpcodesniffer-composer-installer": "^1.1.2",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.2.0",
     "friendsofphp/php-cs-fixer": "^3.89.2",
     "slevomat/coding-standard": "~8.24.0",
     "squizlabs/php_codesniffer": "^4.0.1"
