@@ -123,7 +123,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
             // assume they relate to that code.
             $prev = $phpcsFile->findPrevious(
                 types: $find,
-                start: (int) ($commentEnd - 1),
+                start: $commentEnd - 1,
                 exclude: true,
             );
 
