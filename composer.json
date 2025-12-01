@@ -36,7 +36,7 @@
     "ext-tokenizer": "*",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.2.0",
     "friendsofphp/php-cs-fixer": "^3.90.0",
-    "slevomat/coding-standard": "~8.24.0",
+    "slevomat/coding-standard": "~8.25.0",
     "squizlabs/php_codesniffer": "^4.0.1"
   },
   "require-dev": {
