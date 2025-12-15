@@ -40,9 +40,9 @@
     "squizlabs/php_codesniffer": "^4.0.1"
   },
   "require-dev": {
-    "nikic/php-parser": "^5.6.2",
+    "nikic/php-parser": "^5.7.0",
     "phpstan/extension-installer": "^1.4.3",
-    "phpstan/phpstan": "^2.1.32",
+    "phpstan/phpstan": "^2.1.33",
     "phpstan/phpstan-deprecation-rules": "^2.0.3",
     "rector/rector": "^2.2.11",
     "rector/type-perfect": "^2.1.1",
@@ -50,7 +50,7 @@
     "symfony/process": "^8.0.0",
     "symplify/phpstan-rules": "^14.9.3",
     "tomasvotruba/cognitive-complexity": "^1.0.0",
-    "tomasvotruba/type-coverage": "^2.0.2",
+    "tomasvotruba/type-coverage": "^2.1.0",
     "tomasvotruba/unused-public": "^2.1.1"
   },
   "minimum-stability": "stable",
