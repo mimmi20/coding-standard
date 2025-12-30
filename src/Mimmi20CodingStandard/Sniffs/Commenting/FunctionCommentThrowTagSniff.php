@@ -121,11 +121,7 @@ final class FunctionCommentThrowTagSniff implements Sniff
             // control structures or functions instead of function comments
             // using the wrong comment type. If there is other code on the line,
             // assume they relate to that code.
-            $prev = $phpcsFile->findPrevious(
-                types: $find,
-                start: (int) ($commentEnd - 1),
-                exclude: true,
-            );
+            $prev = $phpcsFile->findPrevious(types: $find, start: $commentEnd - 1, exclude: true);
 
             if ($prev !== false && $tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
                 $commentEnd = $prev;
