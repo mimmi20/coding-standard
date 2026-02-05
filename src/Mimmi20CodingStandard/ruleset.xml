@@ -151,6 +151,9 @@
     <!-- Forbid `php_sapi_name()` function -->
     <rule ref="Generic.PHP.SAPIUsage"/>
 
+    <!-- Forbid Tab Indent -->
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+
     <!-- Require there be no space between increment/decrement operator and its operand -->
     <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
 
