@@ -42,7 +42,7 @@
   "require-dev": {
     "nikic/php-parser": "^5.7.0",
     "phpstan/extension-installer": "^1.4.3",
-    "phpstan/phpstan": "^2.1.37",
+    "phpstan/phpstan": "^2.1.38",
     "phpstan/phpstan-deprecation-rules": "^2.0.3",
     "rector/rector": "^2.3.5",
     "rector/type-perfect": "^2.1.2",
