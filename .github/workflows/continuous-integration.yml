@@ -213,7 +213,7 @@ jobs:
         uses: "ramsey/composer-install@3.1.1"
         with:
           dependency-versions: "lowest"
-          composer-options: "${{ inputs.composer-options }}"
+          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Run phpstan/phpstan"
         run: "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=768M --no-progress"
@@ -266,7 +266,7 @@ jobs:
         uses: "ramsey/composer-install@3.1.1"
         with:
           dependency-versions: "lowest"
-          composer-options: "${{ inputs.composer-options }}"
+          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
 
       - name: "Run checks with rector/rector"
         run: "vendor/bin/rector process --ansi --dry-run"
