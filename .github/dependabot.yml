@@ -93,7 +93,9 @@ updates:
       - dependency-name: "mimmi20/ci/.github/workflows/review-dependency.yml"
       - dependency-name: "mimmi20/ci/.github/workflows/lint-actions.yml"
       - dependency-name: "mimmi20/ci/.github/workflows/sync-labels.yml"
-      - dependency-name: "release-drafter/release-drafter"
+      - dependency-name: "mimmi20/ci/.github/workflows/lock-issues.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/reaction-comments.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/draft-release.yml"
 
     rebase-strategy: "disabled"
 
@@ -189,6 +191,106 @@ updates:
       - dependency-name: "mimmi20/ci/.github/workflows/review-dependency.yml"
       - dependency-name: "mimmi20/ci/.github/workflows/lint-actions.yml"
       - dependency-name: "mimmi20/ci/.github/workflows/sync-labels.yml"
-      - dependency-name: "release-drafter/release-drafter"
+      - dependency-name: "mimmi20/ci/.github/workflows/lock-issues.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/reaction-comments.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/draft-release.yml"
+
+    rebase-strategy: "disabled"
+
+  - package-ecosystem: "composer"
+
+    directory: "/"
+
+    schedule:
+      interval: "cron"
+      cronjob: "0 4 30 * *"
+      timezone: "Europe/Berlin"
+
+    cooldown:
+      default-days: 7
+
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+
+    assignees:
+      - "mimmi20"
+
+    labels:
+      - "dependencies"
+
+    versioning-strategy: "increase"
+
+    target-branch: "7.x"
+
+    commit-message:
+      include: "scope"
+      prefix: "composer (7.x)"
+
+    rebase-strategy: "disabled"
+
+  - package-ecosystem: "github-actions"
+
+    directory: "/"
+
+    schedule:
+      interval: "cron"
+      cronjob: "0 4 31 * *"
+      timezone: "Europe/Berlin"
+
+    cooldown:
+      default-days: 7
+
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+      development-dependencies:
+        dependency-type: "development"
+        exclude-patterns:
+          - "friendsofphp/php-cs-fixer"
+          - "sirbrillig/phpcs-variable-analysis"
+          - "slevomat/coding-standard"
+          - "squizlabs/php_codesniffer"
+
+    assignees:
+      - "mimmi20"
+
+    labels:
+      - "dependencies"
+
+    target-branch: "7.x"
+
+    commit-message:
+      prefix: "github-actions (7.x)"
+
+    ignore:
+      - dependency-name: "mimmi20/ci/.github/workflows/validate.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/cleanup-cache.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/install.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/analytics.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/test.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/review-dependency.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/lint-actions.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/sync-labels.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/lock-issues.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/reaction-comments.yml"
+      - dependency-name: "mimmi20/ci/.github/workflows/draft-release.yml"
 
     rebase-strategy: "disabled"

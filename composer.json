@@ -31,15 +31,16 @@
     "source": "https://github.com/mimmi20/coding-standard"
   },
   "require": {
-    "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
+    "php": "~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0",
     "ext-mbstring": "*",
     "ext-tokenizer": "*",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.2.0",
     "friendsofphp/php-cs-fixer": "^3.92.5",
-    "slevomat/coding-standard": "~8.26.0",
+    "slevomat/coding-standard": "~8.28.1",
     "squizlabs/php_codesniffer": "^4.0.1"
   },
   "require-dev": {
+    "ergebnis/composer-normalize": "^2.50.0",
     "nikic/php-parser": "^5.7.0",
     "phpstan/extension-installer": "^1.4.3",
     "phpstan/phpstan": "^2.1.36",
@@ -63,10 +64,17 @@
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true,
       "phpstan/extension-installer": true
     },
     "lock": false,
     "preferred-install": "dist",
     "sort-packages": true
+  },
+  "extra": {
+    "composer-normalize": {
+      "indent-size": 2,
+      "indent-style": "space"
+    }
   }
 }
