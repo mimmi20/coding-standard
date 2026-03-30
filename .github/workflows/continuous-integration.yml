@@ -100,7 +100,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.36.0"
+        uses: "shivammathur/setup-php@2.37.0"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache, tokenizer, mbstring"
@@ -113,7 +113,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@3.1.1"
+        uses: "ramsey/composer-install@4.0.0"
         with:
           dependency-versions: "lowest"
           composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
@@ -157,7 +157,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.36.0"
+        uses: "shivammathur/setup-php@2.37.0"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache, tokenizer, mbstring"
@@ -170,7 +170,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@3.1.1"
+        uses: "ramsey/composer-install@4.0.0"
         with:
           dependency-versions: "lowest"
           composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
@@ -215,7 +215,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.36.0"
+        uses: "shivammathur/setup-php@2.37.0"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache, tokenizer, mbstring"
@@ -228,7 +228,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@3.1.1"
+        uses: "ramsey/composer-install@4.0.0"
         with:
           dependency-versions: "lowest"
           composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
@@ -268,7 +268,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.36.0"
+        uses: "shivammathur/setup-php@2.37.0"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache, tokenizer, mbstring"
@@ -281,7 +281,7 @@ jobs:
           phpts: "nts"
 
       - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@3.1.1"
+        uses: "ramsey/composer-install@4.0.0"
         with:
           dependency-versions: "lowest"
           composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
