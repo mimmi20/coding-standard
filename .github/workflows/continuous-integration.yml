@@ -36,7 +36,7 @@ jobs:
       skip-phplint: false
       skip-check-composer: false
       skip-ec-checker: false
-      dependency-analyser-options: ""
+      dependency-analyser-options: "--ignore-unknown-classes"
 
   install:
     name: "Install Project"
