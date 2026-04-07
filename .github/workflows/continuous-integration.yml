@@ -21,32 +21,22 @@ jobs:
 
     uses: "mimmi20/ci/.github/workflows/validate-all.yml@8.5"
     with:
-      extensions: "ctype, curl, iconv, mbstring, ctype, dom, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
-      ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-      composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-      skip-validate-composer: false
       skip-validate-yaml: false
       skip-validate-md: false
-      skip-phplint: false
-      skip-check-composer: true
-      skip-ec-checker: false
-      dependency-analyser-options: "--ignore-unknown-classes"
 
   validate-php:
-    name: "Validate Project"
+    name: "Validate PHP"
 
     uses: "mimmi20/ci/.github/workflows/validate-php.yml@8.5"
     with:
-      extensions: "ctype, curl, iconv, mbstring, ctype, dom, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
+      extensions: "ctype, curl, dom, fileinfo, iconv, mbstring, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
       ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
       composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-      skip-validate-composer: false
-      skip-validate-yaml: false
-      skip-validate-md: false
+      skip-validate-composer: true
       skip-phplint: false
-      skip-check-composer: true
+      skip-check-composer: false
       skip-ec-checker: false
-      dependency-analyser-options: "--ignore-unknown-classes"
+      dependency-analyser-options: ""
 
   install:
     name: "Install Project"
@@ -57,14 +47,9 @@ jobs:
 
     uses: "mimmi20/ci/.github/workflows/install-php.yml@8.5"
     with:
-      extensions: "ctype, curl, iconv, mbstring, ctype, dom, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
+      extensions: "ctype, curl, dom, fileinfo, iconv, mbstring, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
       ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
       composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-      skip-php-install: false
-      skip-npm-install: true
-      skip-nasm-install: true
-      skip-libimagequant-install: true
-      skip-libpng-install: true
       skip-librabbitmq-install: true
       skip-libgif-install: true
 
