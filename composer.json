@@ -37,7 +37,8 @@
     "dealerdirect/phpcodesniffer-composer-installer": "^1.2.0",
     "friendsofphp/php-cs-fixer": "^3.94.2",
     "slevomat/coding-standard": "~8.28.1",
-    "squizlabs/php_codesniffer": "^4.0.1"
+    "squizlabs/php_codesniffer": "^4.0.1",
+    "symfony/polyfill-mbstring": "^1.33.0"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2.50.0",
