@@ -43,7 +43,7 @@
     "ergebnis/composer-normalize": "^2.51.0",
     "nikic/php-parser": "^5.7.0",
     "phpstan/extension-installer": "^1.4.3",
-    "phpstan/phpstan": "^2.1.50",
+    "phpstan/phpstan": "^2.1.51",
     "phpstan/phpstan-deprecation-rules": "^2.0.4",
     "rector/rector": "^2.4.2",
     "rector/type-perfect": "^2.1.4",
