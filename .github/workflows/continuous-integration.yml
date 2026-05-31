@@ -19,7 +19,7 @@ jobs:
   validate-all:
     name: "Validate Project"
 
-    uses: "mimmi20/ci/.github/workflows/validate-all.yml@8.4"
+    uses: "mimmi20/ci/.github/workflows/validate-all.yml@8.5"
     with:
       skip-validate-yaml: false
       skip-validate-md: false
@@ -27,7 +27,7 @@ jobs:
   validate-php:
     name: "Validate PHP"
 
-    uses: "mimmi20/ci/.github/workflows/validate-php.yml@8.4"
+    uses: "mimmi20/ci/.github/workflows/validate-php.yml@8.5"
     with:
       extensions: "ctype, curl, dom, fileinfo, iconv, mbstring, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
       ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
@@ -45,7 +45,7 @@ jobs:
       - "validate-all"
       - "validate-php"
 
-    uses: "mimmi20/ci/.github/workflows/install-php.yml@8.4"
+    uses: "mimmi20/ci/.github/workflows/install-php.yml@8.5"
     with:
       extensions: "ctype, curl, dom, fileinfo, iconv, mbstring, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
       ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
@@ -85,7 +85,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.37.0"
+        uses: "shivammathur/setup-php@2.37.1"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache, tokenizer, mbstring"
@@ -142,7 +142,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.37.0"
+        uses: "shivammathur/setup-php@2.37.1"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache, tokenizer, mbstring"
@@ -200,7 +200,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.37.0"
+        uses: "shivammathur/setup-php@2.37.1"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache, tokenizer, mbstring"
@@ -253,7 +253,7 @@ jobs:
           persist-credentials: false
 
       - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.37.0"
+        uses: "shivammathur/setup-php@2.37.1"
         with:
           php-version: "${{ matrix.php-version }}"
           extensions: "json, opcache, tokenizer, mbstring"
