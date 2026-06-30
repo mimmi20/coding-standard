@@ -38,7 +38,7 @@
     "friendsofphp/php-cs-fixer": "^3.95.10",
     "slevomat/coding-standard": "~8.29.0",
     "squizlabs/php_codesniffer": "^4.0.1",
-    "symfony/polyfill-mbstring": "^1.37.0"
+    "symfony/polyfill-mbstring": "^1.38.2"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2.52.0",
