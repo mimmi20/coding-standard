@@ -44,7 +44,7 @@
     "nikic/php-parser": "^5.8.0",
     "phpstan/extension-installer": "^1.4.3",
     "phpstan/phpstan": "^2.2.5",
-    "phpstan/phpstan-deprecation-rules": "^2.0.4",
+    "phpstan/phpstan-deprecation-rules": "^2.0.5",
     "rector/rector": "^2.5.7",
     "rector/type-perfect": "^2.1.4",
     "shipmonk/composer-dependency-analyser": "^1.8.4",
