@@ -120,6 +120,14 @@ parameters:
 #    - '~PHP_CodeSniffer\\Files\\File~'
 #    - '~PHP_CodeSniffer\\Sniffs\\Sniff~'
 
+services:
+  errorFormatter.sarif:
+    class: PHPStanSarifErrorFormatter\SarifErrorFormatter
+    arguments:
+      relativePathHelper: @simpleRelativePathHelper
+      currentWorkingDirectory: %currentWorkingDirectory%
+      pretty: true
+
 rules:
   # code complexity
   - Symplify\PHPStanRules\Rules\NoDynamicNameRule
