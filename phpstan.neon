@@ -1,7 +1,7 @@
 parameters:
   level: max
 
-  phpVersion: 80300 # PHP 8.3
+  phpVersion: 80400 # PHP 8.4
 
   parallel:
     maximumNumberOfProcesses: 1
@@ -113,6 +113,14 @@ parameters:
 #  ignoreErrors:
 #    - '~PHP_CodeSniffer\\Files\\File~'
 #    - '~PHP_CodeSniffer\\Sniffs\\Sniff~'
+
+services:
+  errorFormatter.sarif:
+    class: PHPStanSarifErrorFormatter\SarifErrorFormatter
+    arguments:
+      relativePathHelper: @simpleRelativePathHelper
+      currentWorkingDirectory: %currentWorkingDirectory%
+      pretty: true
 
 rules:
   # code complexity
