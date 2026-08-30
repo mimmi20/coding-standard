@@ -10,6 +10,10 @@ on:
 
 permissions:
   contents: read
+  security-events: read
+  issues: read
+  pull-requests: read
+  checks: read
 
 concurrency:
   group: "${{ github.event_name }}-${{ github.workflow }}-${{ github.head_ref || github.run_id }}-${{ github.ref }}"
@@ -53,62 +57,30 @@ jobs:
       skip-librabbitmq-install: true
       skip-libgif-install: true
 
-  php-cs-fixer:
-    name: "Check Coding Standards with PHP-CS-Fixer"
+  analytics:
+    name: "Project Analysis"
+
+    permissions:
+      security-events: write
+      id-token: write
+      contents: read
+      issues: read
+      pull-requests: read
+      checks: read
 
     needs: "install"
 
-    runs-on: "${{ matrix.operating-system }}"
-
-    timeout-minutes: 10
-
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-latest"
-
-        php-version:
-          # Should use the lowest supported version
-          - "8.4"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v7"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.37.2"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache, tokenizer, mbstring"
-          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-          coverage: "none"
-          tools: "composer:v2, cs2pr"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "nts"
-
-      - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@4.0.0"
-        with:
-          dependency-versions: "lowest"
-          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-
-      - name: "Run friendsofphp/php-cs-fixer"
-        run: "vendor/bin/php-cs-fixer fix --dry-run -vv --diff"
-        continue-on-error: true
-
-      - name: "Run friendsofphp/php-cs-fixer"
-        run: "vendor/bin/php-cs-fixer fix --dry-run --format=checkstyle | cs2pr"
+    uses: "mimmi20/ci/.github/workflows/analytics-php.yml@8.4"
+    with:
+      extensions: "ctype, curl, dom, fileinfo, iconv, mbstring, intl, simplexml, tokenizer, xml, xmlwriter, pdo"
+      ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
+      composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
+      skip-php-cs-fixer: false
+      skip-phpcs: true
+      skip-phpstan: false
+      skip-rector: false
+      use-code-scanning: true
+      phpcs-options: ""
 
   phpcs:
     name: "Check Coding Standards with PHPCS"
@@ -168,116 +140,6 @@ jobs:
         if: ${{ always() && steps.phpcs.outcome == 'failure' }}
         run: "cs2pr ./phpcs-report.xml"
 
-  static-code-analysis:
-    name: "Static Code Analysis with PHPStan"
-
-    needs: "install"
-
-    runs-on: "${{ matrix.operating-system }}"
-
-    timeout-minutes: 10
-
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-latest"
-
-        php-version:
-          # Should use the lowest supported version
-          - "8.4"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v7"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.37.2"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache, tokenizer, mbstring"
-          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-          coverage: "none"
-          tools: "composer:v2"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "nts"
-
-      - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@4.0.0"
-        with:
-          dependency-versions: "lowest"
-          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-
-      - name: "Run phpstan/phpstan"
-        run: "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=768M --no-progress"
-
-  rector:
-    name: "Checks with Rector"
-
-    needs: "install"
-
-    runs-on: "${{ matrix.operating-system }}"
-
-    timeout-minutes: 10
-
-    continue-on-error: false
-
-    strategy:
-      fail-fast: false
-
-      matrix:
-        operating-system:
-          - "ubuntu-latest"
-
-        php-version:
-          # Should use the lowest supported version
-          - "8.4"
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v7"
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
-          lfs: false
-          persist-credentials: false
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@2.37.2"
-        with:
-          php-version: "${{ matrix.php-version }}"
-          extensions: "json, opcache, tokenizer, mbstring"
-          ini-values: "opcache.enable=1, opcache.fast_shutdown=0, zend.assertions=1, assert.exception=On, intl.default_locale=de, intl.use_exceptions=1, zend.exception_ignore_args=0"
-          coverage: "none"
-          tools: "composer:v2"
-        env:
-          fail-fast: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          phpts: "nts"
-
-      - name: "Update dependencies with composer"
-        uses: "ramsey/composer-install@4.0.0"
-        with:
-          dependency-versions: "lowest"
-          composer-options: "--optimize-autoloader --prefer-dist --prefer-stable -v"
-
-      - name: "Run checks with rector/rector"
-        run: "vendor/bin/rector process --ansi --dry-run"
-        continue-on-error: true
-
-      - name: "Run checks with rector/rector"
-        run: "vendor/bin/rector process --ansi --dry-run --no-diffs"
-
   # This is a meta job to avoid to have to constantly change the protection rules
   # whenever we touch the matrix.
   tests-status:
@@ -288,10 +150,8 @@ jobs:
     if: always()
 
     needs:
-      - "php-cs-fixer"
+      - "analytics"
       - "phpcs"
-      - "static-code-analysis"
-      - "rector"
 
     steps:
       - name: Failing run
