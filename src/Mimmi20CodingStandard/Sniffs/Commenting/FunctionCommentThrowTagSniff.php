@@ -23,6 +23,7 @@ use function array_keys;
 use function array_unique;
 use function count;
 use function explode;
+use function in_array;
 use function is_int;
 use function is_string;
 use function mb_strlen;
@@ -90,13 +91,13 @@ final class FunctionCommentThrowTagSniff implements Sniff
         $commentEnd = null;
 
         for ($commentEnd = $stackPtr - 1; 0 <= $commentEnd; --$commentEnd) {
-            if (isset($find[$tokens[$commentEnd]['code']]) === true) {
+            if (isset($find[$tokens[$commentEnd]['code']])) {
                 continue;
             }
 
             if (
                 $tokens[$commentEnd]['code'] === T_ATTRIBUTE_END
-                && isset($tokens[$commentEnd]['attribute_opener']) === true
+                && isset($tokens[$commentEnd]['attribute_opener'])
             ) {
                 $commentEnd = (int) $tokens[$commentEnd]['attribute_opener'];
 
@@ -217,9 +218,11 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 );
 
                 if (
-                    $tokens[$nextToken]['code'] === T_NEW
-                    || $tokens[$nextToken]['code'] === T_NS_SEPARATOR
-                    || $tokens[$nextToken]['code'] === T_STRING
+                    in_array(
+                        $tokens[$nextToken]['code'],
+                        [T_NEW, T_NS_SEPARATOR, T_STRING],
+                        strict: true,
+                    )
                 ) {
                     /* @phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed */
                     if ($tokens[$nextToken]['code'] === T_NEW) {
@@ -328,14 +331,14 @@ final class FunctionCommentThrowTagSniff implements Sniff
             $throwTags[$exception] = true;
         }
 
-        if (empty($throwTags) === true) {
+        if ($throwTags === []) {
             $error = 'Missing @throws tag in function comment';
             $phpcsFile->addError(error: $error, stackPtr: $commentEnd, code: 'MissingAtThrow');
 
             return;
         }
 
-        if (empty($thrownExceptions) === true) {
+        if ($thrownExceptions === []) {
             // If token count is zero, it means that only variables are being
             // thrown, so we need at least one @throws tag (checked above).
             // Nothing more to do.
@@ -346,8 +349,8 @@ final class FunctionCommentThrowTagSniff implements Sniff
         $thrownCount = count($thrownExceptions) + $unknownCount;
         $tagCount    = count($throwTags);
 
-        foreach ($thrownExceptions as $throw) {
-            if (isset($throwTags[$throw]) === true) {
+        foreach ($thrownExceptions as $thrownException) {
+            if (isset($throwTags[$thrownException])) {
                 continue;
             }
 
@@ -357,14 +360,16 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 }
 
                 if (
-                    mb_strrpos($tag, (string) $throw) === mb_strlen($tag) - mb_strlen((string) $throw)
+                    mb_strrpos($tag, (string) $thrownException) === mb_strlen($tag) - mb_strlen(
+                        (string) $thrownException,
+                    )
                 ) {
                     continue 2;
                 }
             }
 
             $error = 'Missing @throws tag for "%s" exception';
-            $data  = [$throw];
+            $data  = [$thrownException];
             $phpcsFile->addError(
                 error: $error,
                 stackPtr: $commentEnd,
