@@ -19,17 +19,8 @@ $config = new Configuration();
 $config
     // Adjusting scanned paths
     ->addPathToScan(__DIR__ . '/src', isDev: false)
-    ->addPathToScan(__DIR__ . '/vendor', isDev: false)
-    ->addPathToExclude(__DIR__ . '/vendor/rector/rector')
-    ->addPathToExclude(__DIR__ . '/vendor/phpstan/phpstan')
     // applies only to directory scanning, not directly listed files
     ->setFileExtensions(['php'])
-
-    // Ignoring errors in vendor directory
-    ->ignoreErrorsOnPath(__DIR__ . '/vendor', [ErrorType::SHADOW_DEPENDENCY])
-    ->ignoreErrorsOnPath(__DIR__ . '/vendor', [ErrorType::UNKNOWN_FUNCTION])
-    ->ignoreErrorsOnPath(__DIR__ . '/vendor', [ErrorType::UNKNOWN_CLASS])
-    ->ignoreErrorsOnPath(__DIR__ . '/vendor', [ErrorType::DEV_DEPENDENCY_IN_PROD])
 
     ->ignoreErrorsOnPath(
         __DIR__ . '/src/Mimmi20CodingStandard/Sniffs/Commenting',
@@ -43,7 +34,18 @@ $config
     )
     ->ignoreErrorsOnPackage('phpstan/extension-installer', [ErrorType::UNUSED_DEPENDENCY])
     ->ignoreErrorsOnPackage('phpstan/phpstan-deprecation-rules', [ErrorType::UNUSED_DEPENDENCY])
-    ->ignoreErrorsOnPackage('squizlabs/php_codesniffer', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage('ergebnis/composer-normalize', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage('phpstan/phpstan', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage('rector/rector', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage('shipmonk/composer-dependency-analyser', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage('symplify/phpstan-rules', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage('tomasvotruba/cognitive-complexity', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage('tomasvotruba/type-coverage', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage('tomasvotruba/unused-public', [ErrorType::UNUSED_DEPENDENCY])
+    ->ignoreErrorsOnPackage(
+        'jbelien/phpstan-sarif-formatter',
+        [ErrorType::UNUSED_DEPENDENCY],
+    )
 
     // Adjust analysis
     // dev packages are often used only in CI, so this is not enabled by default

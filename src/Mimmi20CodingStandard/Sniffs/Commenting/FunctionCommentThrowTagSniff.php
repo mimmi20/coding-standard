@@ -23,6 +23,7 @@ use function array_keys;
 use function array_unique;
 use function count;
 use function explode;
+use function in_array;
 use function is_int;
 use function is_string;
 use function mb_strlen;
@@ -217,9 +218,11 @@ final class FunctionCommentThrowTagSniff implements Sniff
                 );
 
                 if (
-                    $tokens[$nextToken]['code'] === T_NEW
-                    || $tokens[$nextToken]['code'] === T_NS_SEPARATOR
-                    || $tokens[$nextToken]['code'] === T_STRING
+                    in_array(
+                        $tokens[$nextToken]['code'],
+                        [T_NEW, T_NS_SEPARATOR, T_STRING],
+                        strict: true,
+                    )
                 ) {
                     /* @phpcs:disable SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed */
                     if ($tokens[$nextToken]['code'] === T_NEW) {
@@ -328,14 +331,14 @@ final class FunctionCommentThrowTagSniff implements Sniff
             $throwTags[$exception] = true;
         }
 
-        if (empty($throwTags)) {
+        if ($throwTags === []) {
             $error = 'Missing @throws tag in function comment';
             $phpcsFile->addError(error: $error, stackPtr: $commentEnd, code: 'MissingAtThrow');
 
             return;
         }
 
-        if (empty($thrownExceptions)) {
+        if ($thrownExceptions === []) {
             // If token count is zero, it means that only variables are being
             // thrown, so we need at least one @throws tag (checked above).
             // Nothing more to do.
