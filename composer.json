@@ -41,13 +41,13 @@
     "symfony/polyfill-mbstring": "^1.38.2"
   },
   "require-dev": {
-    "ergebnis/composer-normalize": "^2.52.0",
+    "ergebnis/composer-normalize": "^2.53.0",
     "jbelien/phpstan-sarif-formatter": "^1.2.0",
-    "nikic/php-parser": "^5.8.0",
+    "nikic/php-parser": "^5.9.0",
     "phpstan/extension-installer": "^1.4.3",
-    "phpstan/phpstan": "^2.2.9",
+    "phpstan/phpstan": "^2.2.14",
     "phpstan/phpstan-deprecation-rules": "^2.0.5",
-    "rector/rector": "^2.6.3",
+    "rector/rector": "^2.6.7",
     "rector/type-perfect": "^2.2.0",
     "shipmonk/composer-dependency-analyser": "^1.8.4",
     "symfony/process": "^7.3.4",
