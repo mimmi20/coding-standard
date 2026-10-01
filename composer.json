@@ -44,7 +44,7 @@
     "jbelien/phpstan-sarif-formatter": "^1.2.0",
     "nikic/php-parser": "^5.9.0",
     "phpstan/extension-installer": "^1.4.3",
-    "phpstan/phpstan": "^2.2.14",
+    "phpstan/phpstan": "^2.2.15",
     "phpstan/phpstan-deprecation-rules": "^2.0.5",
     "rector/rector": "^2.6.7",
     "shipmonk/composer-dependency-analyser": "^1.8.4",
