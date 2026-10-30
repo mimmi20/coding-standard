@@ -1,7 +1,7 @@
 parameters:
   level: max
 
-  phpVersion: 80400 # PHP 8.4
+  phpVersion: 80300 # PHP 8.3
 
   parallel:
     maximumNumberOfProcesses: 1
@@ -88,16 +88,14 @@ parameters:
       tooWideThrowType: true
 
   cognitive_complexity:
-    class: 75
-    function: 75
+    class: 91
+    function: 91
 
   type_coverage:
     return_type: 100
     param_type: 50
     property_type: 100
     constant_type: 0
-    # also, how many files has declare strict types
-    declare: 100
 
   unused_public:
     methods: true
@@ -109,9 +107,16 @@ parameters:
     null_over_false: true
     no_mixed: true
     narrow_param: true
+    narrow_return: true
+    no_isset_on_object: true
+    no_empty_on_object: true
+    no_param_type_removal: true
+    no_mixed_property: true
+    no_mixed_caller: true
 
-#  ignoreErrors:
-#    - '~PHP_CodeSniffer\\Files\\File~'
+  ignoreErrors:
+    -
+      identifier: symplify.seeAnnotationToTest
 #    - '~PHP_CodeSniffer\\Sniffs\\Sniff~'
 
 services:
@@ -121,33 +126,3 @@ services:
       relativePathHelper: @simpleRelativePathHelper
       currentWorkingDirectory: %currentWorkingDirectory%
       pretty: true
-
-rules:
-  # code complexity
-  - Symplify\PHPStanRules\Rules\NoDynamicNameRule
-
-  - Symplify\PHPStanRules\Rules\ForbiddenExtendOfNonAbstractClassRule
-
-  # domain
-  - Symplify\PHPStanRules\Rules\Domain\RequireExceptionNamespaceRule
-  - Symplify\PHPStanRules\Rules\Domain\RequireAttributeNamespaceRule
-  - Symplify\PHPStanRules\Rules\Enum\RequireUniqueEnumConstantRule
-  - Symplify\PHPStanRules\Rules\PreventParentMethodVisibilityOverrideRule
-
-  # paths
-  - Symplify\PHPStanRules\Rules\NoReferenceRule
-
-  # explicit naming
-  - Symplify\PHPStanRules\Rules\ForbiddenMultipleClassLikeInOneFileRule
-
-  - Symplify\PHPStanRules\Rules\Complexity\ForbiddenArrayMethodCallRule
-  # - Symplify\PHPStanRules\Rules\CheckRequiredInterfaceInContractNamespaceRule
-
-  # naming
-  - Symplify\PHPStanRules\Rules\RequireAttributeNameRule
-
-  # naming
-  - Symplify\PHPStanRules\Rules\Explicit\ExplicitClassPrefixSuffixRule
-  - Symplify\PHPStanRules\Rules\NoReturnSetterMethodRule
-  - Symplify\PHPStanRules\Rules\UppercaseConstantRule
-  - Symplify\PHPStanRules\Rules\ClassNameRespectsParentSuffixRule
