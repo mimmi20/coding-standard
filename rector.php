@@ -11,7 +11,6 @@
 
 declare(strict_types = 1);
 
-use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DeadCode\Rector\If_\RemoveDeadInstanceOfRector;
@@ -29,7 +28,7 @@ return RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/src',
     ])
-    ->withPhpVersion(PhpVersion::PHP_84)
+    ->withPhpVersion(PhpVersion::PHP_83)
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
@@ -44,7 +43,7 @@ return RectorConfig::configure()
         phpunitNarrowAsserts: true,
         phpunitMockToStub: true,
     )
-    ->withPhpSets(php84: true)
+    ->withPhpSets(php83: true)
     ->withAttributesSets(phpunit: true)
     ->withComposerBased(phpunit: true)
     ->withSkip([
@@ -57,7 +56,6 @@ return RectorConfig::configure()
         YieldDataProviderRector::class,
         RenamePropertyToMatchTypeRector::class,
         RenameParamToMatchTypeRector::class,
-        ExplicitBoolCompareRector::class,
         NoSetupWithParentCallOverrideRector::class,
     ])
     ->withoutParallel()
