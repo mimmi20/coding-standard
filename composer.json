@@ -40,7 +40,7 @@
     "squizlabs/php_codesniffer": "^4.0.4"
   },
   "require-dev": {
-    "ergebnis/composer-normalize": "^2.56.1",
+    "ergebnis/composer-normalize": "^2.57.0",
     "jbelien/phpstan-sarif-formatter": "^1.2.0",
     "nikic/php-parser": "^5.9.0",
     "phpstan/extension-installer": "^1.4.3",
